@@ -21,7 +21,7 @@ report.addTable(function(table) {
   table.addHeader(function(header) {
     header.addCell().addText('Date');
     header.addCell().addText('Participant');
-    header.addCell().addText('Statut');
+    header.addCell().addText('Status');
   });
   table.addRow(function(row) {
     row.addCell().addText('01/01/01 10:20');
