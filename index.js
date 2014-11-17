@@ -1,9 +1,9 @@
 "use strict";
 
 var _ = require('lodash');
-var KindaObject = require('kinda-object');
+var Component = require('./component');
 
-var KindaReport = KindaObject.extend('KindaReport', function() {
+var KindaReport = Component.extend('KindaReport', function() {
   this.setCreator(function(options, fn)) {
     if (_.isFunction(options)) {
       fn = options;
