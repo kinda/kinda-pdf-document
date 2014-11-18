@@ -77,28 +77,34 @@ yield report.renderToPDFFile('/tmp/report.pdf');
 //   parentComponent: undefined
 //   childComponents: []
 //   Properties with inheritance:
-//     fontTypeFace: 'Helvetica'
-//     fontSize: 10 // pt
-//     fontStyle: [] // could be ['bold', 'italic']
-//     alignment: 'left' // could be 'center' or 'right'
-//     color: 'black' // could be '#abc'
-//     backgroundColor: 'white'
+//     fontTypeFace: undefined
+//     fontSize: undefined
+//     fontStyle: undefined
+//     alignment: undefined
+//     color: undefined
+//     backgroundColor: undefined
 //   Properties without inheritance:
-//     paddingTop: undefined // mm
+//     paddingTop: undefined
 //     paddingBottom: undefined
 //     paddingLeft: undefined
 //     paddingRight: undefined
-//     marginTop: undefined // mm
+//     marginTop: undefined
 
 // KindaReport
 //   title: undefined
 //   width: 210 // mm
 //   height: 297
-//   paddingTop: 10
+//   paddingTop: 10 // mm
 //   paddingBottom: 10
 //   paddingLeft: 10
 //   paddingRight: 10
 //   orientation: 'portrait' // could be also 'landscape'
+//   fontTypeFace: 'Helvetica'
+//   fontSize: 10 // pt
+//   fontStyle: [] // could be ['bold', 'italic']
+//   alignment: 'left' // could be 'center' or 'right'
+//   color: 'black' // could be '#abc'
+//   backgroundColor: 'white'
 
 // ReportBody
 //   marginTop: 5 // mm

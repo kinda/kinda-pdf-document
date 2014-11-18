@@ -10,7 +10,8 @@ var KindaReport = Component.extend('KindaReport', function() {
       options = undefined;
     }
     if (!options) options = {};
-    // ...
+
+    if (fn) fn(this);
   };
 });
 
