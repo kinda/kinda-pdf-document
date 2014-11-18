@@ -47,6 +47,18 @@ var Component = KindaObject.extend('Component', function() {
       this._fontTypeFace = value;
     }
   });
+
+  Object.defineProperty(this, 'alignment', {
+    get: function() {
+      if (!_.isUndefined(this._alignment))
+        return this._alignment;
+      else if (this.parentComponent)
+        return this.parentComponent.alignment;
+    },
+    set: function(value) {
+      this._alignment = value;
+    }
+  });
 });
 
 
