@@ -9,20 +9,18 @@
 var report = KindaReport.create();
 
 report.addHeader(function(header) {
-  header.addRow(function(row) {
-    row.addText(
-      'Lunch Friday 20th, 2014',
-      { alignment: 'left', style: 'bold' }
-    );
-    row.addText(
-      '5 chekings',
-      { alignment: 'center' }
-    );
-    row.addText(
-      'Page 1 of 1',
-      { alignment: 'right' }
-    );
-  });
+  row.addText(
+    'Lunch Friday 20th, 2014',
+    { alignment: 'left', style: 'bold' }
+  );
+  row.addText(
+    '5 chekings',
+    { alignment: 'center' }
+  );
+  row.addText(
+    'Page 1 of 1',
+    { alignment: 'right' }
+  );
 });
 
 report.addBody(function(body) {
@@ -61,7 +59,6 @@ yield report.renderToPDFFile('/tmp/report.pdf');
 //   ReportBody
 //   Table
 //   TableHeader
-//   Row???
 //   TableBody
 //   TableFooter
 //   TableRow

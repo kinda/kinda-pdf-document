@@ -1,21 +1,23 @@
 "use strict";
 
 var _ = require('lodash');
-var KindaObject = require('kinda-object');
+var Component = require('./component');
 
-var Text = KindaObject.extend('Text', function() {
+var Text = Component.extend('Text', function() {
+  var superCreator = this.getCreator();
+  this.setCreator(function(value, options, fn) {
+    superCreator.call(this, options, fn);
+    this.value = value;
+  });
 
-});
-
-Object.defineProperty(Text, 'value', {
-  get: function() {
-    return Text._value;
-  },
-  set: function(newValue) {
-    Text._value = newValue;
-  },
-  enumerable: true,
-  configurable: true
+  Object.defineProperty(this, 'value', {
+    get: function() {
+      return this._value;
+    },
+    set: function(value) {
+      this._value = value;
+    }
+  });
 });
 
 module.exports = Text;

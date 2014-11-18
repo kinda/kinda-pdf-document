@@ -1,9 +1,9 @@
 "use strict";
 
 var _ = require('lodash');
-var KindaObject = require('kinda-object');
+var Component = require('./component');
 
-var Box = KindaObject.extend('Box', function() {
+var Box = Component.extend('Box', function() {
 
 });
 
