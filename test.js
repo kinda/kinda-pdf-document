@@ -1,10 +1,20 @@
 var co = require('co');
 var Component = require('./component');
 var Report = require('./');
+var ReportHeader = require('./report-header');
 var Box = require('./box');
 var Text = require('./text');
 
 var report = Report.create();
+
+var reportHeader = ReportHeader.create();
+report.addChildComponent(reportHeader);
+var text = Text.create('Hello', { alignment: 'left' });
+reportHeader.addChildComponent(text);
+var text = Text.create('Hello', { alignment: 'center' });
+reportHeader.addChildComponent(text);
+var text = Text.create('Hello', { alignment: 'right' });
+reportHeader.addChildComponent(text);
 
 for (var i = 0; i < 300; i++) {
   var box = Box.create();

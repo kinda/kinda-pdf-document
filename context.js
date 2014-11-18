@@ -21,12 +21,16 @@ var Context = KindaObject.extend('Context', function() {
     this.pdfDocument.pipe(stream);
     this.x = 0;
     this.y = 0;
+    this.headerFunctions = [];
   });
 
   this.addPage = function() {
     this.pdfDocument.addPage();
     this.x = 0;
     this.y = 0;
+    this.headerFunctions.forEach(function(fn) {
+      fn.call();
+    })
   };
 
   this.end = function() {
