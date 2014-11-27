@@ -4,37 +4,17 @@ var _ = require('lodash');
 var KindaObject = require('kinda-object');
 
 var Component = KindaObject.extend('Component', function() {
-  this.setCreator(function(options, fn) {
+  this.setCreator(function(parent, options, fn) {
     if (_.isFunction(options)) {
       fn = options;
       options = undefined;
     }
     if (!options) options = {};
+    if (parent) this.parentComponent = parent;
     _.defaults(options, this.defaults);
     _.assign(this, options);
     if (fn) fn(this);
   });
-
-  Object.defineProperty(this, 'parentComponent', {
-    get: function() {
-      return this._parentComponent;
-    },
-    set: function(component) {
-      this._parentComponent = component;
-    }
-  });
-
-  Object.defineProperty(this, 'childComponents', {
-    get: function() {
-      if(!this._childComponents) this._childComponents = [];
-      return this._childComponents;
-    }
-  });
-
-  this.addChildComponent = function(component) {
-    component.parentComponent = this;
-    this.childComponents.push(component);
-  };
 
   Object.defineProperty(this, 'fontTypeFace', {
     get: function() {
@@ -59,6 +39,15 @@ var Component = KindaObject.extend('Component', function() {
       this._alignment = value;
     }
   });
+
+  this.findComponent = function(name) {
+    if (this.getClass().name === name)
+      return this;
+    else if (this.parentComponent)
+      return this.parentComponent.findComponent(name);
+    else
+      throw new Error("component '" + name + "' not found");
+  };
 });
 
 

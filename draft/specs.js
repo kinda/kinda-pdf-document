@@ -1,23 +1,23 @@
 // === Progress ===
 
 // 80% specifications
-// 40% analysis
-// 0%  implementation
+// 70% analysis
+// 70%  implementation
 
 // === API ===
 
 var report = KindaReport.create();
 
 report.addHeader(function(header) {
-  row.addText(
+  header.addText(
     'Lunch Friday 20th, 2014',
     { alignment: 'left', style: 'bold' }
   );
-  row.addText(
+  header.addText(
     '5 chekings',
     { alignment: 'center' }
   );
-  row.addText(
+  header.addText(
     'Page 1 of 1',
     { alignment: 'right' }
   );
@@ -68,6 +68,11 @@ yield report.renderToPDFFile('/tmp/report.pdf');
 //     TableCell
 //   Text
 
+// Block
+//   Document
+//   HorizontalBlock
+//   VerticalBlock
+
 // === Properties ===
 
 // Component
@@ -79,13 +84,14 @@ yield report.renderToPDFFile('/tmp/report.pdf');
 //     fontStyle: undefined
 //     alignment: undefined
 //     color: undefined
-//     backgroundColor: undefined
+//     backgroundColor: undefined // For future
 //   Properties without inheritance:
-//     paddingTop: undefined
+//     paddingTop: undefined // For now, only one padding
 //     paddingBottom: undefined
 //     paddingLeft: undefined
 //     paddingRight: undefined
 //     marginTop: undefined
+//     marginBottom: undefined
 
 // KindaReport
 //   title: undefined
@@ -104,9 +110,9 @@ yield report.renderToPDFFile('/tmp/report.pdf');
 //   backgroundColor: 'white'
 
 // ReportBody
-//   marginTop: 5 // mm
 
 // ReportHeader
+//   marginBottom: 5 // mm
 
 // ReportFooter
 //   marginTop: 5 // mm
@@ -165,8 +171,6 @@ var blob = yield report.renderToPDFBlob(); // For the future
 // Text values can contains special variables:
 //   {{reportTitle}}
 //   Page {{pageNumber}} of {{numberOfPages}}
-
-// For now, only one table is allowed but this may change in the future
 
 // Two steps rendering:
 //   1) For automatic columns, calculate maximum width.
