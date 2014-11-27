@@ -57,6 +57,7 @@ var VerticalBlock = Block.extend('VerticalBlock', function() {
         // if page break
         if (this.y + height > this.document.top + this.document.height) {
           this.document.addPage();
+          this.y = this.document.y;
         }
       }
       this._height = height;
