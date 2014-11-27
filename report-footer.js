@@ -4,18 +4,18 @@ var _ = require('lodash');
 var misc = require('./misc');
 var Box = require('./box');
 
-var ReportHeader = Box.extend('ReportHeader', function() {
+var ReportFooter = Box.extend('ReportFooter', function() {
   this.defaults = {
-    marginBottom: 5
+    marginTop: 5
   };
 
   var superRender = this.render;
   this.render = function(block) {
-    block.addRow(undefined, function(block) {
+    block.addRow({ isFloating: true }, function(block) {
+      block.y = block.document.top + block.document.height + this.marginTop;
       superRender.call(this, block);
-      if (block.height) block.height += this.marginBottom;
     }.bind(this));
   };
 });
 
-module.exports = ReportHeader;
+module.exports = ReportFooter;
