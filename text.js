@@ -19,7 +19,7 @@ var Text = Component.extend('Text', function() {
       var y = block.mmToPt(block.y + block.padding);
       pdf.font(this.fontTypeFace)
           // .fontSize(this.fontSize)
-          // .fillColor(this.color)
+          .fillColor(this.color)
           .text(this.value, x, y, {
             width: block.mmToPt(block.width - block.padding * 2),
             align: this.alignment

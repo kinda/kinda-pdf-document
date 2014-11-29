@@ -4,8 +4,15 @@ var Table = require('../table');
 var _ = require('lodash');
 
 var fonts = ['Times-Roman', 'Courier', 'Helvetica'];
-var fontSizes = [12, 18, 24];
+var fontSizes = [36, 14, 24];
 var colors = ['red', '#FFCC33', 'grey'];
+
+var getFontSize = function(index, pdf) {
+  console.log(pdf);
+  var baseSize = pdf.fontSize;
+  console.log(pdf);
+  return parseInt(baseSize * (1 + fontSizes[i%fontSizes.length]));
+};
 
 
 var report = Report.create();
@@ -44,16 +51,16 @@ report.addBody(function(body) {
         body.addRow(function(row) {
           row.addCell(function(cell) {
             cell.addText('Hello\nBonjour', {
-              fontTypeFace: fonts[i%(fonts.length + 1)],
-              fontSize: fontSizes[i%(fontSizes.length + 1)],
-              color: colors[i%(colors.length + 1)]
+              fontTypeFace: fonts[i%fonts.length],
+              fontSize: fontSizes[i%fontSizes.length],
+              color: colors[i%colors.length]
             });
           });
           row.addCell(function(cell) {
             cell.addText('Bye', {
-              fontTypeFace: fonts[i%(fonts.length + 1)],
-              fontSize: fontSizes[i%(fontSizes.length + 1)],
-              color: colors[i%(colors.length + 1)]
+              fontTypeFace: fonts[i%fonts.length],
+              fontSize: fontSizes[i%fontSizes.length],
+              color: colors[i%colors.length]
             });
           });
         });
