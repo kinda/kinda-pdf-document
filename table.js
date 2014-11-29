@@ -5,6 +5,7 @@ var misc = require('./misc');
 var Component = require('./component');
 var TableHeader = require('./table-header');
 var TableBody = require('./table-body');
+var TableFooter = require('./table-footer');
 
 var Table = Component.extend('Table', function() {
   Object.defineProperty(this, 'columns', {
@@ -39,6 +40,17 @@ var Table = Component.extend('Table', function() {
     return this._body;
   };
 
+  this.addFooter = function(options, fn) {
+    if (this._footer) {
+      throw new Error('a table cannot have more than one footer');
+    }
+    this._footer = TableFooter.create(this, options, fn);
+  };
+
+  this.getFooter = function() {
+    return this._footer;
+  };
+
   this.render = function(block) {
     var renderHeader;
     if (this.getHeader()) {
@@ -50,6 +62,9 @@ var Table = Component.extend('Table', function() {
     }
     if (this.getBody()) this.getBody().render(block);
     // TODO: table footer rendering
+
+    if (this.getFooter()) this.getFooter().render(block);
+
     if (renderHeader) {
       block.document.off('didAddPage', renderHeader);
     }

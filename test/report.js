@@ -45,6 +45,18 @@ report.addBody(function(body) {
         });
       }
     });
+
+    table.addFooter(function(footer) {
+      footer.addRow(function(row) {
+        row.addCell(function(cell) {
+          cell.addText('footer abc');
+        });
+
+        row.addCell(function(cell) {
+          cell.addText('footer efg');
+        });
+      });
+    });
   });
 });
 
