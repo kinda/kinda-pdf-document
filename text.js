@@ -17,9 +17,12 @@ var Text = Component.extend('Text', function() {
     block.draw(function(pdf) {
       var x = block.mmToPt(block.x + block.padding);
       var y = block.mmToPt(block.y + block.padding);
-      pdf.text(this.value, x, y, {
-        width: block.mmToPt(block.width - block.padding * 2),
-        align: this.alignment
+      pdf.font(this.fontTypeFace)
+          // .fontSize(this.fontSize)
+          // .fillColor(this.color)
+          .text(this.value, x, y, {
+            width: block.mmToPt(block.width - block.padding * 2),
+            align: this.alignment
       });
     }.bind(this));
   };

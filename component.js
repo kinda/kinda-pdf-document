@@ -28,6 +28,34 @@ var Component = KindaObject.extend('Component', function() {
     }
   });
 
+  Object.defineProperty(this, 'fontSize', {
+    get: function() {
+      if (!_.isUndefined(this._fontSize)) {
+        return this._fontSize;
+      }
+      else if (this.parentComponent) {
+        return this.parentComponent.fontSize;
+      }
+    },
+    set: function(value) {
+      this._fontSize = value;
+    }
+  });
+
+  Object.defineProperty(this, 'color', {
+    get: function() {
+      if (!_.isUndefined(this._color)) {
+        return this._color;
+      }
+      else if (this.parentComponent) {
+        return this.parentComponent.color;
+      }
+    },
+    set: function(value) {
+      this._color = value;
+    }
+  });
+
   Object.defineProperty(this, 'alignment', {
     get: function() {
       if (!_.isUndefined(this._alignment))

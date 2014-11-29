@@ -1,6 +1,12 @@
 var co = require('co');
 var Report = require('../');
 var Table = require('../table');
+var _ = require('lodash');
+
+var fonts = ['Times-Roman', 'Courier', 'Helvetica'];
+var fontSizes = [12, 18, 24];
+var colors = ['red', '#FFCC33', 'grey'];
+
 
 var report = Report.create();
 
@@ -37,10 +43,18 @@ report.addBody(function(body) {
       for (var i = 1; i <= 40; i++) {
         body.addRow(function(row) {
           row.addCell(function(cell) {
-            cell.addText('Hello\nBonjour');
+            cell.addText('Hello\nBonjour', {
+              fontTypeFace: fonts[i%(fonts.length + 1)],
+              fontSize: fontSizes[i%(fontSizes.length + 1)],
+              color: colors[i%(colors.length + 1)]
+            });
           });
           row.addCell(function(cell) {
-            cell.addText('Bye');
+            cell.addText('Bye', {
+              fontTypeFace: fonts[i%(fonts.length + 1)],
+              fontSize: fontSizes[i%(fontSizes.length + 1)],
+              color: colors[i%(colors.length + 1)]
+            });
           });
         });
       }
