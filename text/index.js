@@ -1,7 +1,7 @@
 "use strict";
 
 var _ = require('lodash');
-var Component = require('./component');
+var Component = require('../component');
 
 var Text = Component.extend('Text', function() {
   var superCreator = this.getCreator();
@@ -34,4 +34,4 @@ var Text = Component.extend('Text', function() {
   };
 });
 
-module.exports = Text;
+module.exports.Text = Text;

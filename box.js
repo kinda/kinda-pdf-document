@@ -2,7 +2,7 @@
 
 var _ = require('lodash');
 var Component = require('./component');
-var Text = require('./text');
+var Text = require('./text').Text;
 
 var Box = Component.extend('Box', function() {
   Object.defineProperty(this, 'components', {
