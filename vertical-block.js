@@ -1,7 +1,6 @@
 "use strict";
 
 var _ = require('lodash');
-var misc = require('./misc');
 var Block = require('./block');
 var HorizontalBlock = require('./horizontal-block');
 

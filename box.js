@@ -1,7 +1,6 @@
 "use strict";
 
 var _ = require('lodash');
-var misc = require('./misc');
 var Component = require('./component');
 var Text = require('./text');
 

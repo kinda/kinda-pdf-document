@@ -2,7 +2,6 @@
 
 var _ = require('lodash');
 var KindaObject = require('kinda-object');
-var misc = require('./misc');
 
 var Block = KindaObject.extend('Block', function() {
   Object.defineProperty(this, 'x', {

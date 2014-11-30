@@ -1,11 +1,10 @@
 "use strict";
 
 var _ = require('lodash');
-var misc = require('./misc');
-var Component = require('./component');
+var Component = require('../component');
 var TableRow = require('./table-row');
 
-var TableBody = Component.extend('TableBody', function() {
+var TableFooter = Component.extend('TableFooter', function() {
   Object.defineProperty(this, 'rows', {
     get: function() {
       if(!this._rows) this._rows = [];
@@ -27,4 +26,4 @@ var TableBody = Component.extend('TableBody', function() {
   };
 });
 
-module.exports = TableBody;
+module.exports = TableFooter;

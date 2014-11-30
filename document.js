@@ -3,7 +3,6 @@
 var fs = require('fs');
 var _ = require('lodash');
 var PDFDocument = require('pdfkit');
-var misc = require('./misc');
 var Block = require('./block');
 var VerticalBlock = require('./vertical-block');
 

@@ -1,8 +1,7 @@
 "use strict";
 
 var _ = require('lodash');
-var misc = require('./misc');
-var Component = require('./component');
+var Component = require('../component');
 var TableRow = require('./table-row');
 
 var TableHeader = Component.extend('TableHeader', function() {

@@ -1,8 +1,7 @@
 "use strict";
 
 var _ = require('lodash');
-var misc = require('./misc');
-var Component = require('./component');
+var Component = require('../component');
 var TableHeader = require('./table-header');
 var TableBody = require('./table-body');
 var TableFooter = require('./table-footer');
@@ -71,4 +70,4 @@ var Table = Component.extend('Table', function() {
   };
 });
 
-module.exports = Table;
+module.exports.Table = Table;

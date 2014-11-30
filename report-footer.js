@@ -1,7 +1,6 @@
 "use strict";
 
 var _ = require('lodash');
-var misc = require('./misc');
 var Box = require('./box');
 
 var ReportFooter = Box.extend('ReportFooter', function() {
