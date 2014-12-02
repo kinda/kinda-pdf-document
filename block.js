@@ -85,12 +85,20 @@ var Block = KindaObject.extend('Block', function() {
     this.drawBuffer.length = 0;
   };
 
-  this.computeHeightOfString = function(str, text) {
-    if (text) {
-      this.pdf.font(text.fontTypeFace)
-                .fontSize(text.fontSize)
-    }
+  this.computeWidthOfString = function(str, options) {
+    this.pdf.font(options.fontTypeFace)
+                .fontSize(options.fontSize);
 
+    var width = this.pdf.widthOfString(str, {
+      width: this.mmToPt(this.width)
+    });
+
+    return this.ptToMm(width);
+  };
+
+  this.computeHeightOfString = function(str, options) {
+    this.pdf.font(options.fontTypeFace)
+                .fontSize(options.fontSize);
 
     var height = this.pdf.heightOfString(
       str, { width: this.mmToPt(this.width) }

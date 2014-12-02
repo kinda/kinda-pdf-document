@@ -50,7 +50,54 @@ var Table = Component.extend('Table', function() {
     return this._footer;
   };
 
+  this.computeAllColumnWidth = function(block) {
+    var restTableWidth = block.ptToMm(block.pdf.page.width) - 20; // hack for padding left && right
+    var sumOfUnknownWidth = 0;
+    var matrix = [];
+
+    this.getBody().rows.forEach(function(row, rowIndex) {
+      row.cells.forEach(function(cell, columnIndex) {
+        if (!matrix[rowIndex]) {
+          matrix[rowIndex] = [];
+        }
+
+        matrix[rowIndex][columnIndex] = block.ptToMm(cell.computeWidth(block));
+      });
+    });
+
+    this.columns.forEach(function(column, index) {
+      var maxColumnWidth = 0;
+      if (!column.width) {
+        maxColumnWidth = _.max(matrix.map(function(row) {
+          return row[index];
+        }));
+
+        sumOfUnknownWidth += maxColumnWidth;
+        this.columns[index].maxWidth = maxColumnWidth;
+      } else {
+
+        restTableWidth -= column.width;
+      }
+    }.bind(this));
+
+    this.columns.forEach(function(column, index) {
+      if (!column.width) {
+        this.columns[index].computedWidth = column.maxWidth * restTableWidth / sumOfUnknownWidth;
+      }
+    }.bind(this));
+
+    // console.log(this.columns);
+  };
+
   this.render = function(block) {
+    var isWidthUndefined = this.columns.some(function(column) {
+      return !!column.width;
+    });
+
+    if (isWidthUndefined) {
+      this.computeAllColumnWidth(block);
+    }
+
     var renderHeader;
     if (this.getHeader()) {
       renderHeader = function() {

@@ -23,16 +23,23 @@ var Box = Component.extend('Box', function() {
     }.bind(this));
   };
 
-  this.computeHeight = function(block) {
-    // if (block.maxHeight) return block.maxHeight;
+  this.computeWidth = function(block) {
+    if (!this.maxWidth) {
+      this.maxWidth = _.max(this.components.map(function(component) {
+        return component.computeWidth(block);
+      }));
+    }
 
+    return this.maxWidth;
+  };
+
+  this.computeHeight = function(block) {
     var maxHeight = 0;
     this.components.forEach(function(component) {
       var height = component.computeHeight(block);
       if (height > maxHeight) maxHeight = height;
     }.bind(this));
 
-    // block.maxHeight = maxHeight;
     return maxHeight;
   };
 });

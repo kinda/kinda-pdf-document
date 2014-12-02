@@ -3,17 +3,10 @@ var Report = require('../');
 var Table = require('../table');
 var _ = require('lodash');
 
-var fonts = ['Times-Roman', 'Courier', 'Helvetica'];
+var fonts = ['Times-Roman', 'Helvetica'];
 var fontSizes = [24, 14, 18];
-// var fontSizes = [24, 24, 24];
+// var fontSizes = [36, 36, 36];
 var colors = ['red', '#FFCC33', 'grey'];
-
-var getFontSize = function(index, pdf) {
-  console.log(pdf);
-  var baseSize = pdf.fontSize;
-  console.log(pdf);
-  return parseInt(baseSize * (1 + fontSizes[i%fontSizes.length]));
-};
 
 
 var report = Report.create();
@@ -34,18 +27,21 @@ report.addHeader(function(header) {
 });
 
 report.addBody(function(body) {
-  var options = { columns: [{ width: 40 }, { width: 40 }, { width: 40 }] };
+  var options = { columns: [{ width: 40 }, { width: undefined }, { width: 70 }, { width: undefined }] };
   body.addTable(options, function(table) {
     table.addHeader(function(header) {
       header.addRow(function(row) {
         row.addCell(function(cell) {
-          cell.addText('Column A');
+          cell.addText('Size 40 Column A');
         });
         row.addCell(function(cell) {
-          cell.addText('Column B');
+          cell.addText('Automatic Column B');
         });
         row.addCell(function(cell) {
-          cell.addText('Column C');
+          cell.addText('Size 70 Column C');
+        });
+        row.addCell(function(cell) {
+          cell.addText('Automatic Column D');
         });
       });
     });
@@ -61,7 +57,7 @@ report.addBody(function(body) {
             });
           });
           row.addCell(function(cell) {
-            cell.addText('Bye', {
+            cell.addText('It is a looooooooooooooooooong story', {
               fontTypeFace: fonts[i%fonts.length],
               fontSize: fontSizes[i%fontSizes.length],
               color: colors[i%colors.length]
@@ -69,6 +65,14 @@ report.addBody(function(body) {
           });
           row.addCell(function(cell) {
             cell.addText('Blah', {
+              fontTypeFace: fonts[i%fonts.length],
+              fontSize: fontSizes[i%fontSizes.length],
+              color: colors[i%colors.length]
+            });
+          });
+
+          row.addCell(function(cell) {
+            cell.addText('Pirate Bay', {
               fontTypeFace: fonts[i%fonts.length],
               fontSize: fontSizes[i%fontSizes.length],
               color: colors[i%colors.length]
@@ -90,6 +94,10 @@ report.addBody(function(body) {
 
         row.addCell(function(cell) {
           cell.addText('footer ijk');
+        });
+
+        row.addCell(function(cell) {
+          cell.addText('footer mno');
         });
       });
     });

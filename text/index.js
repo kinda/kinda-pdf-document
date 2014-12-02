@@ -16,6 +16,9 @@ var Text = Component.extend('Text', function() {
     block.draw(function(pdf) {
       var x = block.mmToPt(block.x + block.padding);
       var y = block.mmToPt(block.y + block.padding);
+
+      // console.log([this.value, x, y, block.width, block.height, block.padding]);
+
       pdf.font(this.fontTypeFace)
           .fontSize(this.fontSize)
           .fillColor(this.color)
@@ -26,10 +29,26 @@ var Text = Component.extend('Text', function() {
     }.bind(this));
   };
 
+
+  this.computeWidth = function(block) {
+    var options = {
+      fontTypeFace: this.fontTypeFace,
+      fontSize: this.fontSize
+    };
+    var width = block.computeWidthOfString(this.value, options);
+    width += block.padding * 2;
+    
+    return width;
+  };
+
   this.computeHeight = function(block) {
-    var height = block.computeHeightOfString(this.value, this);
-    height -= 1.5; // little adjustment
+    var options = {
+      fontTypeFace: this.fontTypeFace,
+      fontSize: this.fontSize
+    };
+    var height = block.computeHeightOfString(this.value, options);
     height += block.padding * 2;
+
     return height;
   };
 });
