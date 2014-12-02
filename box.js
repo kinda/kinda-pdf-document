@@ -24,11 +24,15 @@ var Box = Component.extend('Box', function() {
   };
 
   this.computeHeight = function(block) {
+    // if (block.maxHeight) return block.maxHeight;
+
     var maxHeight = 0;
     this.components.forEach(function(component) {
       var height = component.computeHeight(block);
       if (height > maxHeight) maxHeight = height;
     }.bind(this));
+
+    // block.maxHeight = maxHeight;
     return maxHeight;
   };
 });

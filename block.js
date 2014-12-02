@@ -85,7 +85,13 @@ var Block = KindaObject.extend('Block', function() {
     this.drawBuffer.length = 0;
   };
 
-  this.computeHeightOfString = function(str) {
+  this.computeHeightOfString = function(str, text) {
+    if (text) {
+      this.pdf.font(text.fontTypeFace)
+                .fontSize(text.fontSize)
+    }
+
+
     var height = this.pdf.heightOfString(
       str, { width: this.mmToPt(this.width) }
     );

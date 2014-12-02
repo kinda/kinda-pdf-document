@@ -17,7 +17,7 @@ var Text = Component.extend('Text', function() {
       var x = block.mmToPt(block.x + block.padding);
       var y = block.mmToPt(block.y + block.padding);
       pdf.font(this.fontTypeFace)
-          // .fontSize(this.fontSize)
+          .fontSize(this.fontSize)
           .fillColor(this.color)
           .text(this.value, x, y, {
             width: block.mmToPt(block.width - block.padding * 2),
@@ -27,7 +27,7 @@ var Text = Component.extend('Text', function() {
   };
 
   this.computeHeight = function(block) {
-    var height = block.computeHeightOfString(this.value);
+    var height = block.computeHeightOfString(this.value, this);
     height -= 1.5; // little adjustment
     height += block.padding * 2;
     return height;

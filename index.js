@@ -15,7 +15,7 @@ var KindaReport = Component.extend('KindaReport', function() {
 
   this.defaults = {
     fontTypeFace: 'Helvetica',
-    // fontSize: 14,
+    fontSize: 14,
     color: 'black',
     width: 210,
     height: 297,

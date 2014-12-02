@@ -60,7 +60,6 @@ var Table = Component.extend('Table', function() {
       block.document.on('didAddPage', renderHeader);
     }
     if (this.getBody()) this.getBody().render(block);
-    // TODO: table footer rendering
 
     if (this.getFooter()) this.getFooter().render(block);
 

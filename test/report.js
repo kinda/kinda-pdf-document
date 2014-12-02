@@ -4,7 +4,8 @@ var Table = require('../table');
 var _ = require('lodash');
 
 var fonts = ['Times-Roman', 'Courier', 'Helvetica'];
-var fontSizes = [36, 14, 24];
+var fontSizes = [24, 14, 18];
+// var fontSizes = [24, 24, 24];
 var colors = ['red', '#FFCC33', 'grey'];
 
 var getFontSize = function(index, pdf) {
@@ -33,7 +34,7 @@ report.addHeader(function(header) {
 });
 
 report.addBody(function(body) {
-  var options = { columns: [{ width: 40 }, { width: 40 }] };
+  var options = { columns: [{ width: 40 }, { width: 40 }, { width: 40 }] };
   body.addTable(options, function(table) {
     table.addHeader(function(header) {
       header.addRow(function(row) {
@@ -42,6 +43,9 @@ report.addBody(function(body) {
         });
         row.addCell(function(cell) {
           cell.addText('Column B');
+        });
+        row.addCell(function(cell) {
+          cell.addText('Column C');
         });
       });
     });
@@ -63,6 +67,13 @@ report.addBody(function(body) {
               color: colors[i%colors.length]
             });
           });
+          row.addCell(function(cell) {
+            cell.addText('Blah', {
+              fontTypeFace: fonts[i%fonts.length],
+              fontSize: fontSizes[i%fontSizes.length],
+              color: colors[i%colors.length]
+            });
+          });
         });
       }
     });
@@ -75,6 +86,10 @@ report.addBody(function(body) {
 
         row.addCell(function(cell) {
           cell.addText('footer efg');
+        });
+
+        row.addCell(function(cell) {
+          cell.addText('footer ijk');
         });
       });
     });
