@@ -32,23 +32,21 @@ var Document = Block.extend('Document', function() {
 
   Object.defineProperty(this, 'textVariables', {
     get: function() {
-      if (!this._textVariables) {
-        this._textVariables = [
-          {
-            placeholder: '{{currentPage}}',
-            replacement: this.currentPage
-          },
-          {
-            placeholder: '{{totalPages}}',
-            replacement: this.totalPages
-          },
-          {
-            placeholder: '{{reportTitle}}',
-            replacement: this.title
-          }
-        ];
+      this._textVariables = [
+      {
+        placeholder: '{{currentPage}}',
+        replacement: this.currentPage
+      },
+      {
+        placeholder: '{{totalPages}}',
+        replacement: this.totalPages
+      },
+      {
+        placeholder: '{{reportTitle}}',
+        replacement: this.title
       }
-
+      ];
+      
       return this._textVariables;
     }
   });
