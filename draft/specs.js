@@ -6,11 +6,11 @@
 
 // === API ===
 
-var report = KindaReport.create();
+var report = KindaReport.create({ title: 'Lunch Friday 20th, 2014' });
 
 report.addHeader(function(header) {
   header.addText(
-    'Lunch Friday 20th, 2014',
+    '{{reportTitle}}',
     { alignment: 'left', style: 'bold' }
   );
   header.addText(

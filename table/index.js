@@ -87,8 +87,6 @@ var Table = Component.extend('Table', function() {
           this.columns[index].computedWidth = column.maxWidth;
       }
     }.bind(this));
-
-    // console.log(this.columns);
   };
 
   this.render = function(block) {

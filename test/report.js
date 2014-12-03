@@ -9,11 +9,11 @@ var fontSizes = [12, 12, 12];
 var colors = ['red', '#FFCC33', 'grey'];
 
 
-var report = Report.create();
+var report = Report.create({ title: 'Lunch Friday 20th, 2014' });
 
 report.addHeader(function(header) {
   header.addText(
-    'Lunch Friday 20th, 2014',
+    '{{reportTitle}}',
     { alignment: 'left', style: 'bold' }
   );
   header.addText(
@@ -21,7 +21,7 @@ report.addHeader(function(header) {
     { alignment: 'center' }
   );
   header.addText(
-    'Page 1 of 1',
+    'Page {{currentPage}} of {{totalPages}}',
     { alignment: 'right' }
   );
 });

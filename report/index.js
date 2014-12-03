@@ -59,18 +59,21 @@ var KindaReport = Component.extend('KindaReport', function() {
   this.generatePDFFile = function *(path) {
     yield Document.generatePDFFile(
       path,
-      { width: this.width, height: this.height, paddings: this.paddings.top },
+      { width: this.width,
+        height: this.height,
+        paddings: this.paddings.top,
+        title: this.title },
       function(document) {
-        var renderHeader;
         if (this.getHeader()) {
-          renderHeader = function() {
-            this.getHeader().render(document);
-          }.bind(this);
-          renderHeader();
-          document.on('didAddPage', renderHeader);
+          var headerHeight;
+          document.addRow({ isFloating: true }, function(block) {
+            headerHeight = this.getHeader().computeHeight(block);
+          }.bind(this));
+          headerHeight += this.getHeader().margins.bottom;
+          document.headerHeight = headerHeight;
+          document.y += headerHeight;
         }
 
-        var renderFooter;
         if (this.getFooter()) {
           var footerHeight;
           document.addRow({ isFloating: true }, function(block) {
@@ -78,23 +81,19 @@ var KindaReport = Component.extend('KindaReport', function() {
           }.bind(this));
           footerHeight += this.getFooter().margins.top;
           document.height -= footerHeight; // Adjust document height
-          renderFooter = function() {
-            this.getFooter().render(document);
-          }.bind(this);
-          renderFooter();
-          document.on('didAddPage', renderFooter);
         }
 
         if (this.getBody()) {
           this.getBody().render(document);
         }
 
-        if (renderHeader) {
-          document.off('didAddPage', renderHeader);
-        }
-
-        if (renderFooter) {
-          document.off('didAddPage', renderFooter);
+        var bufferedPageRange = document.pdf.bufferedPageRange();
+        document.totalPages = bufferedPageRange.count;
+        for (var i=bufferedPageRange.start; i<bufferedPageRange.count; i+=1) {
+          document.currentPage = i + 1;
+          document.pdf.switchToPage(i);
+          this.getHeader().render(document);
+          this.getFooter().render(document);
         }
       }.bind(this)
     );

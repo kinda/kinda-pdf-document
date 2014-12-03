@@ -22,7 +22,13 @@ var Text = Component.extend('Text', function() {
       pdf.font(this.fontTypeFace);
       pdf.fontSize(this.fontSize);
       pdf.fillColor(this.color);
-      pdf.text(this.value, x, y, {
+
+      var text = this.value + '';
+      block.document.textVariables.forEach(function(textVariable) {
+        text = text.replace(textVariable.placeholder, textVariable.replacement);
+      });
+
+      pdf.text(text, x, y, {
         width: block.mmToPt(width),
         align: this.alignment
       });
