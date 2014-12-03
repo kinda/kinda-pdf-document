@@ -31,16 +31,12 @@ var TableRow = Component.extend('TableRow', function() {
 
       var options = {
         width: cellWidth,
-        padding: cell.padding
+        padding: [cell.padding.top, cell.padding.right, cell.padding.bottom, cell.padding.left]
       };
       block.addColumn(options, function(block) {
         cell.render(block);
       }.bind(this));
     }.bind(this));
-
-
-    // console.log(block.x, block.y, block.width, block.height);
-    // console.log(block.mmToPt(block.x), block.mmToPt(block.y), block.mmToPt(block.width), block.mmToPt(block.height));
 
 
     // Render borders

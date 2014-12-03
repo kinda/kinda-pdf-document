@@ -59,7 +59,7 @@ var KindaReport = Component.extend('KindaReport', function() {
   this.generatePDFFile = function *(path) {
     Document.generatePDFFile(
       path,
-      { width: this.width, height: this.height, padding: this.padding },
+      { width: this.width, height: this.height, padding: this.padding.top },
       function(document) {
         var renderHeader;
         if (this.getHeader()) {
@@ -73,7 +73,7 @@ var KindaReport = Component.extend('KindaReport', function() {
         var renderFooter;
         if (this.getFooter()) {
           var footerHeight = this.getFooter().computeHeight(document);
-          footerHeight += this.getFooter().marginTop;
+          footerHeight += this.getFooter().margin.top;
           document.height -= footerHeight; // Adjust document height
           renderFooter = function() {
             this.getFooter().render(document);

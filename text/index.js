@@ -13,17 +13,16 @@ var Text = Component.extend('Text', function() {
   this.render = function(block) {
     var height = this.computeHeight(block);
     if (height > block.height) block.height = height;
-    block.draw(function(pdf) {
-      var x = block.mmToPt(block.x + block.padding);
-      var y = block.mmToPt(block.y + block.padding);
 
-      // console.log([this.value, x, y, block.width, block.height, block.padding]);
+    block.draw(function(pdf) {
+      var x = block.mmToPt(block.x + block.padding.left);
+      var y = block.mmToPt(block.y + block.padding.top);
 
       pdf.font(this.fontTypeFace)
           .fontSize(this.fontSize)
           .fillColor(this.color)
           .text(this.value, x, y, {
-            width: block.mmToPt(block.width - block.padding * 2),
+            width: block.mmToPt(block.width - (block.padding.left + block.padding.right)),
             align: this.alignment
       });
     }.bind(this));
@@ -36,8 +35,8 @@ var Text = Component.extend('Text', function() {
       fontSize: this.fontSize
     };
     var width = block.computeWidthOfString(this.value, options);
-    width += block.padding * 2;
-    
+    width += block.padding.left + block.padding.right;
+
     return width;
   };
 
@@ -47,7 +46,7 @@ var Text = Component.extend('Text', function() {
       fontSize: this.fontSize
     };
     var height = block.computeHeightOfString(this.value, options);
-    height += block.padding * 2;
+    height += block.padding.top + block.padding.bottom;
 
     return height;
   };

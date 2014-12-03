@@ -44,6 +44,47 @@ var Block = KindaObject.extend('Block', function() {
     configurable: true
   });
 
+  Object.defineProperty(this, 'margin', {
+    get: function() {
+      // console.log(this._margin);
+      return this._margin;
+    },
+    set: function(margin) {
+      if (!_.isArray(margin)) {
+        margin = [margin];
+      }
+      if (!this._margin) {
+        this._margin = {};
+      }
+      this._margin.top = margin[0];
+      this._margin.right = margin[1] || this._margin.top;
+      this._margin.bottom = margin[2] || this._margin.top;
+      this._margin.left = margin[3] || this._margin.right;
+    },
+    configurable: true
+  });
+
+  Object.defineProperty(this, 'padding', {
+    get: function() {
+      // console.log(this._padding);
+      return this._padding;
+    },
+    set: function(padding) {
+      if (!_.isArray(padding)) {
+        padding = [padding];
+      }
+
+      if (!this._padding) {
+        this._padding = {};
+      }
+      this._padding.top = padding[0];
+      this._padding.right = padding[1] || this._padding.top;
+      this._padding.bottom = padding[2] || this._padding.top;
+      this._padding.left = padding[3] || this._padding.right;
+    },
+    configurable: true
+  });
+
   Object.defineProperty(this, 'pdf', {
     get: function() {
       return this.parentBlock.pdf;
@@ -101,7 +142,7 @@ var Block = KindaObject.extend('Block', function() {
                 .fontSize(options.fontSize);
 
     var height = this.pdf.heightOfString(
-      str, { width: this.mmToPt(this.width) }
+      str, { width: this.mmToPt(this.width - (this.padding.left + this.padding.right)) }
     );
     return this.ptToMm(height);
   };

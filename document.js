@@ -16,9 +16,10 @@ var Document = Block.extend('Document', function() {
     });
     this.left = options.padding;
     this.top = options.padding;
-    this.width = options.width - options.padding * 2;
-    this.height = options.height - options.padding * 2;
+    this.width = options.width - (options.padding + options.padding) ;
+    this.height = options.height - (options.padding + options.padding);
     this.padding = 0;
+    this.margin = 0;
     this.drawBuffer = [];
     this.document = this;
     this.x = this.left;
