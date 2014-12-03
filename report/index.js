@@ -1,11 +1,11 @@
 "use strict";
 
 var _ = require('lodash');
-var Component = require('./component');
+var Component = require('../component');
 var ReportHeader = require('./report-header');
 var ReportBody = require('./report-body');
 var ReportFooter = require('./report-footer');
-var Document = require('./document');
+var Document = require('../block/document');
 
 var KindaReport = Component.extend('KindaReport', function() {
   var superCreator = this.getCreator();
@@ -19,7 +19,7 @@ var KindaReport = Component.extend('KindaReport', function() {
     color: 'black',
     width: 210,
     height: 297,
-    padding: 10,
+    paddings: 10,
     alignment: 'left'
   };
 
@@ -57,9 +57,9 @@ var KindaReport = Component.extend('KindaReport', function() {
   };
 
   this.generatePDFFile = function *(path) {
-    Document.generatePDFFile(
+    yield Document.generatePDFFile(
       path,
-      { width: this.width, height: this.height, padding: this.padding.top },
+      { width: this.width, height: this.height, paddings: this.paddings.top },
       function(document) {
         var renderHeader;
         if (this.getHeader()) {
@@ -72,8 +72,11 @@ var KindaReport = Component.extend('KindaReport', function() {
 
         var renderFooter;
         if (this.getFooter()) {
-          var footerHeight = this.getFooter().computeHeight(document);
-          footerHeight += this.getFooter().margin.top;
+          var footerHeight;
+          document.addRow({ isFloating: true }, function(block) {
+            footerHeight = this.getFooter().computeHeight(block);
+          }.bind(this));
+          footerHeight += this.getFooter().margins.top;
           document.height -= footerHeight; // Adjust document height
           renderFooter = function() {
             this.getFooter().render(document);

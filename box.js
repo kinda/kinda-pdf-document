@@ -24,23 +24,19 @@ var Box = Component.extend('Box', function() {
   };
 
   this.computeWidth = function(block) {
-    if (!this.maxWidth) {
-      this.maxWidth = _.max(this.components.map(function(component) {
+    if (this.components.length) {
+      return _.max(this.components.map(function(component) {
         return component.computeWidth(block);
       }));
-    }
-
-    return this.maxWidth;
+    } else return 0;
   };
 
   this.computeHeight = function(block) {
-    var maxHeight = 0;
-    this.components.forEach(function(component) {
-      var height = component.computeHeight(block);
-      if (height > maxHeight) maxHeight = height;
-    }.bind(this));
-
-    return maxHeight;
+    if (this.components.length) {
+      return _.max(this.components.map(function(component) {
+        return component.computeHeight(block);
+      }));
+    } else return 0;
   };
 });
 

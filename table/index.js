@@ -51,7 +51,7 @@ var Table = Component.extend('Table', function() {
   };
 
   this.computeAllColumnWidth = function(block) {
-    var restTableWidth = block.ptToMm(block.pdf.page.width) - 20; // hack for padding left && right
+    var restTableWidth = block.document.width;
     var sumOfUnknownWidth = 0;
     var matrix = [];
 
@@ -61,14 +61,13 @@ var Table = Component.extend('Table', function() {
           matrix[rowIndex] = [];
         }
 
-        matrix[rowIndex][columnIndex] = block.ptToMm(cell.computeWidth(block));
+        matrix[rowIndex][columnIndex] = cell.computeWidth(block);
       });
     });
 
     this.columns.forEach(function(column, index) {
-      var maxColumnWidth = 0;
       if (!column.width) {
-        maxColumnWidth = _.max(matrix.map(function(row) {
+        var maxColumnWidth = _.max(matrix.map(function(row) {
           return row[index];
         }));
 
@@ -82,7 +81,10 @@ var Table = Component.extend('Table', function() {
 
     this.columns.forEach(function(column, index) {
       if (!column.width) {
-        this.columns[index].computedWidth = column.maxWidth * restTableWidth / sumOfUnknownWidth;
+        if (restTableWidth < 0)
+          this.columns[index].computedWidth = column.maxWidth * restTableWidth / sumOfUnknownWidth;
+        else
+          this.columns[index].computedWidth = column.maxWidth;
       }
     }.bind(this));
 
@@ -90,11 +92,10 @@ var Table = Component.extend('Table', function() {
   };
 
   this.render = function(block) {
-    var isWidthUndefined = this.columns.some(function(column) {
-      return !!column.width;
+    var hasUndefinedWidth = _.some(this.columns, function(column) {
+      return column.width == null;
     });
-
-    if (isWidthUndefined) {
+    if (hasUndefinedWidth) {
       this.computeAllColumnWidth(block);
     }
 
@@ -106,6 +107,7 @@ var Table = Component.extend('Table', function() {
       renderHeader();
       block.document.on('didAddPage', renderHeader);
     }
+
     if (this.getBody()) this.getBody().render(block);
 
     if (this.getFooter()) this.getFooter().render(block);

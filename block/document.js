@@ -3,23 +3,22 @@
 var fs = require('fs');
 var _ = require('lodash');
 var PDFDocument = require('pdfkit');
-var Block = require('./block');
+var Block = require('./');
 var VerticalBlock = require('./vertical-block');
 
 var Document = Block.extend('Document', function() {
   this.setCreator(function(options) {
     if (!options) options = {};
-    _.defaults(options, { width: 210, height: 297, padding: 10 });
+    _.defaults(options, { width: 210, height: 297, paddings: 10 });
     this.pdf = new PDFDocument({
       size: [this.mmToPt(options.width), this.mmToPt(options.height)],
       margin: 0
     });
-    this.left = options.padding;
-    this.top = options.padding;
-    this.width = options.width - (options.padding + options.padding) ;
-    this.height = options.height - (options.padding + options.padding);
-    this.padding = 0;
-    this.margin = 0;
+    this.paddings = options.paddings;
+    this.left = this.paddings.left;
+    this.top = this.paddings.top;
+    this.width = options.width - (this.paddings.left + this.paddings.right) ;
+    this.height = options.height - (this.paddings.top + this.paddings.bottom);
     this.drawBuffer = [];
     this.document = this;
     this.x = this.left;
@@ -105,12 +104,15 @@ var Document = Block.extend('Document', function() {
   };
 });
 
-Document.generatePDFFile = function(path, options, fn) {
+Document.generatePDFFile = function *(path, options, fn) {
   var stream = fs.createWriteStream(path);
   var document = this.create(options);
   document.pdf.pipe(stream);
   fn(document);
   document.pdf.end();
+  yield function(cb) {
+    stream.on('finish', cb);
+  };
 };
 
 module.exports = Document;

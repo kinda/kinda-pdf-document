@@ -1,7 +1,7 @@
 "use strict";
 
 var _ = require('lodash');
-var Block = require('./block');
+var Block = require('./');
 var HorizontalBlock = require('./horizontal-block');
 
 var VerticalBlock = Block.extend('VerticalBlock', function() {
@@ -10,7 +10,7 @@ var VerticalBlock = Block.extend('VerticalBlock', function() {
     this.parentBlock = parent;
     this.height = options.height || 0;
     this.isFloating = !!options.isFloating;
-    this.padding = 0;
+    this.paddings = 0;
     this.resetPosition();
   });
 

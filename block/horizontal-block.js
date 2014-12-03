@@ -1,14 +1,14 @@
 "use strict";
 
 var _ = require('lodash');
-var Block = require('./block');
+var Block = require('./');
 
 var HorizontalBlock = Block.extend('HorizontalBlock', function() {
   this.setCreator(function(parent, options) {
     if (!options) options = {};
     this.parentBlock = parent;
     this.width = options.width || 0;
-    this.padding = options.padding || 0;
+    this.paddings = options.paddings || 0;
     this.x = parent.x;
   });
 

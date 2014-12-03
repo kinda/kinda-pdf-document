@@ -1,8 +1,8 @@
 "use strict";
 
 var _ = require('lodash');
-var Component = require('./component');
-var Table = require('./table').Table;
+var Component = require('../component');
+var Table = require('../table').Table;
 
 var ReportBody = Component.extend('ReportBody', function() {
   Object.defineProperty(this, 'components', {

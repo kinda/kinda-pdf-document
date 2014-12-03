@@ -68,42 +68,60 @@ var Component = KindaObject.extend('Component', function() {
     }
   });
 
-  Object.defineProperty(this, 'margin', {
+  Object.defineProperty(this, 'margins', {
     get: function() {
-      // console.log(this._margin);
-      return this._margin;
+      if (!this._margins) this._margins = {};
+      return this._margins;
     },
-    set: function(margin) {
-      if (!_.isArray(margin)) {
-        margin = [margin];
-      }
-      if (!this._margin) {
-        this._margin = {};
-      }
-      this._margin.top = margin[0];
-      this._margin.right = margin[1] || this._margin.top;
-      this._margin.bottom = margin[2] || this._margin.top;
-      this._margin.left = margin[3] || this._margin.right;
+    set: function(margins) {
+      if (!_.isArray(margins)) margins = [margins];
+
+      var top = margins[0];
+      var right = margins[1];
+      var bottom = margins[2];
+      var left = margins[3];
+
+      if (right == null) right = top;
+      if (bottom == null) bottom = top;
+      if (left == null) left = right;
+
+      this.margins.top = top;
+      this.margins.right = right;
+      this.margins.bottom = bottom;
+      this.margins.left = left;
     }
   });
 
-  Object.defineProperty(this, 'padding', {
+  Object.defineProperty(this, 'marginTop', {
     get: function() {
-      // console.log(this._padding);
-      return this._padding;
+      return this.margins.top;
     },
-    set: function(padding) {
-      if (!_.isArray(padding)) {
-        padding = [padding];
-      }
+    set: function(marginTop) {
+      this.margins.top = marginTop;
+    }
+  });
 
-      if (!this._padding) {
-        this._padding = {};
-      }
-      this._padding.top = padding[0];
-      this._padding.right = padding[1] || this._padding.top;
-      this._padding.bottom = padding[2] || this._padding.top;
-      this._padding.left = padding[3] || this._padding.right;
+  Object.defineProperty(this, 'paddings', {
+    get: function() {
+      if (!this._paddings) this._paddings = {};
+      return this._paddings;
+    },
+    set: function(paddings) {
+      if (!_.isArray(paddings)) paddings = [paddings];
+
+      var top = paddings[0];
+      var right = paddings[1];
+      var bottom = paddings[2];
+      var left = paddings[3];
+
+      if (right == null) right = top;
+      if (bottom == null) bottom = top;
+      if (left == null) left = right;
+
+      this.paddings.top = top;
+      this.paddings.right = right;
+      this.paddings.bottom = bottom;
+      this.paddings.left = left;
     }
   });
 

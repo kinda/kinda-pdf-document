@@ -44,43 +44,27 @@ var Block = KindaObject.extend('Block', function() {
     configurable: true
   });
 
-  Object.defineProperty(this, 'margin', {
+  Object.defineProperty(this, 'paddings', {
     get: function() {
-      // console.log(this._margin);
-      return this._margin;
+      if (!this._paddings) this._paddings = {};
+      return this._paddings;
     },
-    set: function(margin) {
-      if (!_.isArray(margin)) {
-        margin = [margin];
-      }
-      if (!this._margin) {
-        this._margin = {};
-      }
-      this._margin.top = margin[0];
-      this._margin.right = margin[1] || this._margin.top;
-      this._margin.bottom = margin[2] || this._margin.top;
-      this._margin.left = margin[3] || this._margin.right;
-    },
-    configurable: true
-  });
+    set: function(paddings) {
+      if (!_.isArray(paddings)) paddings = [paddings];
 
-  Object.defineProperty(this, 'padding', {
-    get: function() {
-      // console.log(this._padding);
-      return this._padding;
-    },
-    set: function(padding) {
-      if (!_.isArray(padding)) {
-        padding = [padding];
-      }
+      var top = paddings[0];
+      var right = paddings[1];
+      var bottom = paddings[2];
+      var left = paddings[3];
 
-      if (!this._padding) {
-        this._padding = {};
-      }
-      this._padding.top = padding[0];
-      this._padding.right = padding[1] || this._padding.top;
-      this._padding.bottom = padding[2] || this._padding.top;
-      this._padding.left = padding[3] || this._padding.right;
+      if (right == null) right = top;
+      if (bottom == null) bottom = top;
+      if (left == null) left = right;
+
+      this.paddings.top = top;
+      this.paddings.right = right;
+      this.paddings.bottom = bottom;
+      this.paddings.left = left;
     },
     configurable: true
   });
@@ -142,7 +126,7 @@ var Block = KindaObject.extend('Block', function() {
                 .fontSize(options.fontSize);
 
     var height = this.pdf.heightOfString(
-      str, { width: this.mmToPt(this.width - (this.padding.left + this.padding.right)) }
+      str, { width: this.mmToPt(this.width - (this.paddings.left + this.paddings.right)) }
     );
     return this.ptToMm(height);
   };

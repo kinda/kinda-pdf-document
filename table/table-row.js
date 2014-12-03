@@ -31,7 +31,7 @@ var TableRow = Component.extend('TableRow', function() {
 
       var options = {
         width: cellWidth,
-        padding: [cell.padding.top, cell.padding.right, cell.padding.bottom, cell.padding.left]
+        paddings: [cell.paddings.top, cell.paddings.right, cell.paddings.bottom, cell.paddings.left]
       };
       block.addColumn(options, function(block) {
         cell.render(block);

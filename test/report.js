@@ -4,7 +4,7 @@ var Table = require('../table');
 var _ = require('lodash');
 
 var fonts = ['Times-Roman', 'Helvetica'];
-var fontSizes = [24, 14, 18];
+var fontSizes = [12, 12, 12];
 // var fontSizes = [36, 36, 36];
 var colors = ['red', '#FFCC33', 'grey'];
 
@@ -27,21 +27,21 @@ report.addHeader(function(header) {
 });
 
 report.addBody(function(body) {
-  var options = { columns: [{ width: 40 }, { width: undefined }, { width: 70 }, { width: undefined }] };
+  var options = { columns: [{ width: 20 }, { width: undefined }, { width: 20 }, { width: undefined }] };
   body.addTable(options, function(table) {
     table.addHeader(function(header) {
       header.addRow(function(row) {
         row.addCell(function(cell) {
-          cell.addText('Size 40 Column A');
+          cell.addText('Number');
         });
         row.addCell(function(cell) {
-          cell.addText('Automatic Column B');
+          cell.addText('Column B');
         });
         row.addCell(function(cell) {
-          cell.addText('Size 70 Column C');
+          cell.addText('Column C');
         });
         row.addCell(function(cell) {
-          cell.addText('Automatic Column D');
+          cell.addText('Column D');
         });
       });
     });
@@ -50,14 +50,14 @@ report.addBody(function(body) {
       for (var i = 1; i <= 40; i++) {
         body.addRow(function(row) {
           row.addCell(function(cell) {
-            cell.addText('Hello\nBonjour', {
+            cell.addText(i, {
               fontTypeFace: fonts[i%fonts.length],
               fontSize: fontSizes[i%fontSizes.length],
               color: colors[i%colors.length]
             });
           });
           row.addCell(function(cell) {
-            cell.addText('It is a looooooooooooooooooong story', {
+            cell.addText('It', {
               fontTypeFace: fonts[i%fonts.length],
               fontSize: fontSizes[i%fontSizes.length],
               color: colors[i%colors.length]
@@ -116,6 +116,7 @@ report.addFooter(function(footer) {
 
 co(function *() {
   yield report.generatePDFFile('test.pdf');
+  console.log('Report generated');
 }).catch(function(err) {
   console.error(err.stack);
 });
