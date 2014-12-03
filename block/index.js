@@ -69,6 +69,42 @@ var Block = KindaObject.extend('Block', function() {
     configurable: true
   });
 
+  Object.defineProperty(this, 'paddingLeft', {
+    get: function() {
+      return this.paddings.left;
+    },
+    set: function(paddingLeft) {
+      this.paddings.left = paddingLeft;
+    }
+  });
+
+  Object.defineProperty(this, 'paddingRight', {
+    get: function() {
+      return this.paddings.right;
+    },
+    set: function(paddingRight) {
+      this.paddings.right = paddingRight;
+    }
+  });
+
+  Object.defineProperty(this, 'paddingTop', {
+    get: function() {
+      return this.paddings.top;
+    },
+    set: function(paddingTop) {
+      this.paddings.top = paddingTop;
+    }
+  });
+
+  Object.defineProperty(this, 'paddingBottom', {
+    get: function() {
+      return this.paddings.bottom;
+    },
+    set: function(paddingBottom) {
+      this.paddings.bottom = paddingBottom;
+    }
+  });
+
   Object.defineProperty(this, 'pdf', {
     get: function() {
       return this.parentBlock.pdf;

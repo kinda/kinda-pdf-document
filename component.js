@@ -101,6 +101,33 @@ var Component = KindaObject.extend('Component', function() {
     }
   });
 
+  Object.defineProperty(this, 'marginLeft', {
+    get: function() {
+      return this.margins.left;
+    },
+    set: function(marginLeft) {
+      this.margins.left = marginLeft;
+    }
+  });
+
+  Object.defineProperty(this, 'marginRight', {
+    get: function() {
+      return this.margins.right;
+    },
+    set: function(marginRight) {
+      this.margins.right = marginRight;
+    }
+  });
+
+  Object.defineProperty(this, 'marginBottom', {
+    get: function() {
+      return this.margins.bottom;
+    },
+    set: function(marginBottom) {
+      this.margins.bottom = marginBottom;
+    }
+  });
+
   Object.defineProperty(this, 'paddings', {
     get: function() {
       if (!this._paddings) this._paddings = {};
@@ -122,6 +149,42 @@ var Component = KindaObject.extend('Component', function() {
       this.paddings.right = right;
       this.paddings.bottom = bottom;
       this.paddings.left = left;
+    }
+  });
+
+  Object.defineProperty(this, 'paddingLeft', {
+    get: function() {
+      return this.paddings.left;
+    },
+    set: function(paddingLeft) {
+      this.paddings.left = paddingLeft;
+    }
+  });
+
+  Object.defineProperty(this, 'paddingRight', {
+    get: function() {
+      return this.paddings.right;
+    },
+    set: function(paddingRight) {
+      this.paddings.right = paddingRight;
+    }
+  });
+
+  Object.defineProperty(this, 'paddingTop', {
+    get: function() {
+      return this.paddings.top;
+    },
+    set: function(paddingTop) {
+      this.paddings.top = paddingTop;
+    }
+  });
+
+  Object.defineProperty(this, 'paddingBottom', {
+    get: function() {
+      return this.paddings.bottom;
+    },
+    set: function(paddingBottom) {
+      this.paddings.bottom = paddingBottom;
     }
   });
 
