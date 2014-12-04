@@ -41,6 +41,7 @@ var Text = Component.extend('Text', function() {
       fontSize: this.fontSize
     };
     var width = block.computeWidthOfString(this.value, options);
+    // console.log(block.paddings.left + block.paddings.right);
     width += block.paddings.left + block.paddings.right;
     return width;
   };

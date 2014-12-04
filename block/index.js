@@ -151,7 +151,7 @@ var Block = KindaObject.extend('Block', function() {
     this.pdf.fontSize(options.fontSize);
 
     var width = this.pdf.widthOfString(
-      str + '', { width: this.mmToPt(this.width - (this.paddings.left + this.paddings.right)) }
+      str + '', { width: this.mmToPt(this.width) }
     );
 
     return this.ptToMm(width);

@@ -34,6 +34,10 @@ var TableRow = Component.extend('TableRow', function() {
     block.x = (block.document.width - tableWidth) / 2 + block.document.left;
     /***************end**************/
 
+
+    // console.log('============');
+
+
     this.cells.forEach(function(cell, index) {
       var thisColumn = table.columns[index];
       var cellWidth = thisColumn.width || thisColumn.computedWidth;
@@ -47,6 +51,7 @@ var TableRow = Component.extend('TableRow', function() {
       }.bind(this));
     }.bind(this));
 
+    // console.log('============');
 
     // Render borders
     // block.resetPosition();

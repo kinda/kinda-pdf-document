@@ -28,7 +28,7 @@ report.addHeader(function(header) {
 
 report.addBody(function(body) {
   var options = { columns: [{ width: 20 }, { width: undefined }, { width: 20 }, { width: undefined }] };
-  body.addTable(options, function(table) {
+  body.addTable({}, function(table) {
     table.addHeader(function(header) {
       header.addRow(function(row) {
         row.addCell(function(cell) {
@@ -47,7 +47,7 @@ report.addBody(function(body) {
     });
 
     table.addBody(function(body) {
-      for (var i = 1; i <= 40; i++) {
+      for (var i = 1; i <= 50; i++) {
         body.addRow(function(row) {
           row.addCell(function(cell) {
             cell.addText(i, {
@@ -70,7 +70,6 @@ report.addBody(function(body) {
               color: colors[i%colors.length]
             });
           });
-
           row.addCell(function(cell) {
             cell.addText('Pirate Bay', {
               fontTypeFace: fonts[i%fonts.length],
@@ -101,7 +100,7 @@ report.addBody(function(body) {
         });
       });
     });
-  });
+   });
 });
 
 report.addFooter(function(footer) {

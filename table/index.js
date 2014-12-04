@@ -51,58 +51,62 @@ var Table = Component.extend('Table', function() {
   };
 
   this.computeAllColumnWidth = function(block) {
-    var restTableWidth = block.document.width;
-    var sumOfUnknownWidth = 0;
-    var matrix = [];
+    block.document.addRow({ isFloating: true }, function(block) {
+      var restTableWidth = block.document.width;
+      var sumOfUnknownWidth = 0;
+      var matrix = [];
 
-    var rows = this.getBody().rows;
+      var rows = this.getBody().rows;
 
-    if (this.getHeader()) {
-      rows = rows.concat(this.getHeader().rows);
-    }
+      if (this.getHeader()) {
+        rows = rows.concat(this.getHeader().rows);
+      }
 
-    if (this.getFooter()) {
-      rows = rows.concat(this.getFooter().rows);
-    }
+      if (this.getFooter()) {
+        rows = rows.concat(this.getFooter().rows);
+      }
 
-    rows.forEach(function(row, rowIndex) {
-      row.cells.forEach(function(cell, columnIndex) {
-        if (!matrix[rowIndex]) {
-          matrix[rowIndex] = [];
-        }
+      rows.forEach(function(row, rowIndex) {
+        row.cells.forEach(function(cell, columnIndex) {
+          if (!matrix[rowIndex]) {
+            matrix[rowIndex] = [];
+          }
 
-        matrix[rowIndex][columnIndex] = cell.computeWidth(block);
-        // console.log(matrix[rowIndex][columnIndex]);
+          matrix[rowIndex][columnIndex] = cell.computeWidth(block) + cell.paddings.left + cell.paddings.right;
+          // console.log(matrix[rowIndex][columnIndex]);
+        });
       });
-    });
 
-    // console.log(matrix.length);
+      // console.log(matrix);
 
-    this.columns.forEach(function(column, index) {
-      if (!column.width) {
-        var maxColumnWidth = _.max(matrix.map(function(row) {
-          // console.log(row[index]);
-          return row[index];
-        }));
+      // console.log(matrix.length);
 
-        sumOfUnknownWidth += maxColumnWidth;
-        this.columns[index].maxWidth = maxColumnWidth;
-      } else {
+      this.columns.forEach(function(column, index) {
+        if (!column.width) {
+          var maxColumnWidth = _.max(matrix.map(function(row) {
+            // console.log(row[index]);
+            return row[index];
+          }));
 
-        restTableWidth -= column.width;
-      }
+          sumOfUnknownWidth += maxColumnWidth;
+          this.columns[index].maxWidth = maxColumnWidth;
+        } else {
+
+          restTableWidth -= column.width;
+        }
+      }.bind(this));
+
+      this.columns.forEach(function(column, index) {
+        if (!column.width) {
+          if (restTableWidth < 0)
+            this.columns[index].computedWidth = column.maxWidth * restTableWidth / sumOfUnknownWidth;
+            else
+              this.columns[index].computedWidth = column.maxWidth;
+            }
+          }.bind(this));
+
+          // console.log(this.columns);
     }.bind(this));
-
-    this.columns.forEach(function(column, index) {
-      if (!column.width) {
-        if (restTableWidth < 0)
-          this.columns[index].computedWidth = column.maxWidth * restTableWidth / sumOfUnknownWidth;
-        else
-          this.columns[index].computedWidth = column.maxWidth;
-      }
-    }.bind(this));
-
-    // console.log(this.columns);
   };
 
   this.render = function(block) {

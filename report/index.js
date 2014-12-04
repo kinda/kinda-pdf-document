@@ -92,8 +92,12 @@ var KindaReport = Component.extend('KindaReport', function() {
         for (var i=bufferedPageRange.start; i<bufferedPageRange.count; i+=1) {
           document.currentPage = i + 1;
           document.pdf.switchToPage(i);
-          this.getHeader().render(document);
-          this.getFooter().render(document);
+          if (this.getHeader()) {
+            this.getHeader().render(document);
+          }
+          if (this.getFooter()) {
+            this.getFooter().render(document);
+          }
         }
       }.bind(this)
     );
