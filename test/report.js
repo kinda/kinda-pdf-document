@@ -7,9 +7,14 @@ var fonts = ['Times-Roman', 'Helvetica'];
 var fontSizes = [12, 12, 12];
 // var fontSizes = [36, 36, 36];
 var colors = ['red', '#FFCC33', 'grey'];
+var reportInfo = {
+  Title: 'Lunch Friday 20th, 2014',
+  Author: 'fishead <zhchuan7@gmail.com>',
+  Subject: 'Just a report',
+  Keywords: 'Visitor PDFKit Node.js'
+}
 
-
-var report = Report.create({ title: 'Lunch Friday 20th, 2014' });
+var report = Report.create({ info: reportInfo});
 
 report.addHeader(function(header) {
   header.addText(

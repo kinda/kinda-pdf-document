@@ -10,11 +10,7 @@ var Document = Block.extend('Document', function() {
   this.setCreator(function(options) {
     if (!options) options = {};
     _.defaults(options, { width: 210, height: 297, paddings: 10 });
-    this.pdf = new PDFDocument({
-      size: [this.mmToPt(options.width), this.mmToPt(options.height)],
-      margin: 0,
-      bufferPages: true
-    });
+
     this.paddings = options.paddings;
     this.left = this.paddings.left;
     this.top = this.paddings.top;
@@ -27,7 +23,14 @@ var Document = Block.extend('Document', function() {
     this.headerHeight = 0;
     this.currentPage = 1;
     this.totalPages = 1;
-    this.title = options.title || '';
+    this.info = options.info;
+
+    this.pdf = new PDFDocument({
+      size: [this.mmToPt(options.width), this.mmToPt(options.height)],
+      margin: 0,
+      bufferPages: true,
+      info: this.info
+    });
   });
 
   Object.defineProperty(this, 'textVariables', {
@@ -43,10 +46,10 @@ var Document = Block.extend('Document', function() {
       },
       {
         placeholder: '{{reportTitle}}',
-        replacement: this.title
+        replacement: this.info.Title
       }
       ];
-      
+
       return this._textVariables;
     }
   });
