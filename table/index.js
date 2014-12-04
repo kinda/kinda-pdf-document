@@ -55,19 +55,33 @@ var Table = Component.extend('Table', function() {
     var sumOfUnknownWidth = 0;
     var matrix = [];
 
-    this.getBody().rows.forEach(function(row, rowIndex) {
+    var rows = this.getBody().rows;
+
+    if (this.getHeader()) {
+      rows = rows.concat(this.getHeader().rows);
+    }
+
+    if (this.getFooter()) {
+      rows = rows.concat(this.getFooter().rows);
+    }
+
+    rows.forEach(function(row, rowIndex) {
       row.cells.forEach(function(cell, columnIndex) {
         if (!matrix[rowIndex]) {
           matrix[rowIndex] = [];
         }
 
         matrix[rowIndex][columnIndex] = cell.computeWidth(block);
+        // console.log(matrix[rowIndex][columnIndex]);
       });
     });
+
+    // console.log(matrix.length);
 
     this.columns.forEach(function(column, index) {
       if (!column.width) {
         var maxColumnWidth = _.max(matrix.map(function(row) {
+          // console.log(row[index]);
           return row[index];
         }));
 
@@ -87,6 +101,8 @@ var Table = Component.extend('Table', function() {
           this.columns[index].computedWidth = column.maxWidth;
       }
     }.bind(this));
+
+    // console.log(this.columns);
   };
 
   this.render = function(block) {
@@ -105,12 +121,6 @@ var Table = Component.extend('Table', function() {
       renderHeader();
       block.document.on('didAddPage', renderHeader);
     }
-
-    // var tableWidth = 0;
-    // this.columns.forEach(function(column) {
-    //   tableWidth += column.width || column.computedWidth;
-    // });
-    // block.x = (block.document.width - tableWidth) / 2;
 
     if (this.getBody()) this.getBody().render(block);
 

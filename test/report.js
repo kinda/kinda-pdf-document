@@ -35,7 +35,7 @@ report.addBody(function(body) {
           cell.addText('Number');
         });
         row.addCell(function(cell) {
-          cell.addText('Column B');
+          cell.addText('B');
         });
         row.addCell(function(cell) {
           cell.addText('Column C');
@@ -89,7 +89,7 @@ report.addBody(function(body) {
         });
 
         row.addCell(function(cell) {
-          cell.addText('footer efg');
+          cell.addText('f');
         });
 
         row.addCell(function(cell) {

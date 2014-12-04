@@ -30,6 +30,7 @@ var TableRow = Component.extend('TableRow', function() {
     table.columns.forEach(function(column) {
       tableWidth += column.width || column.computedWidth;
     });
+    block.width = tableWidth;
     block.x = (block.document.width - tableWidth) / 2 + block.document.left;
     /***************end**************/
 
@@ -55,10 +56,16 @@ var TableRow = Component.extend('TableRow', function() {
     table.columns.forEach(function(column) {
       tableWidth += column.width || column.computedWidth;
     });
+
+    block.width = tableWidth;
     block.x = (block.document.width - tableWidth) / 2 + block.document.left;
     /********end**********/
 
+
+
     block.draw(function(pdf) {
+      // console.log(block.x, block.y, block.width, block.height);
+
       pdf.rect(
         block.mmToPt(block.x),
         block.mmToPt(block.y),
@@ -66,6 +73,7 @@ var TableRow = Component.extend('TableRow', function() {
         block.mmToPt(block.height)
       );
       pdf.stroke();
+
       var x = block.x;
       for (var i = 0; i < table.columns.length - 1; i++) {
         x += table.columns[i].width || table.columns[i].computedWidth;

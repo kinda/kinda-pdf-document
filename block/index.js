@@ -147,22 +147,22 @@ var Block = KindaObject.extend('Block', function() {
   };
 
   this.computeWidthOfString = function(str, options) {
-    this.pdf.font(options.fontTypeFace)
-                .fontSize(options.fontSize);
+    this.pdf.font(options.fontTypeFace);
+    this.pdf.fontSize(options.fontSize);
 
-    var width = this.pdf.widthOfString(str, {
-      width: this.mmToPt(this.width)
-    });
+    var width = this.pdf.widthOfString(
+      str + '', { width: this.mmToPt(this.width - (this.paddings.left + this.paddings.right)) }
+    );
 
     return this.ptToMm(width);
   };
 
   this.computeHeightOfString = function(str, options) {
-    this.pdf.font(options.fontTypeFace)
-                .fontSize(options.fontSize);
+    this.pdf.font(options.fontTypeFace);
+    this.pdf.fontSize(options.fontSize);
 
     var height = this.pdf.heightOfString(
-      str, { width: this.mmToPt(this.width - (this.paddings.left + this.paddings.right)) }
+      str + '', { width: this.mmToPt(this.width - (this.paddings.left + this.paddings.right)) }
     );
     return this.ptToMm(height);
   };
