@@ -9,20 +9,24 @@ var VerticalBlock = require('./vertical-block');
 var Document = Block.extend('Document', function() {
   this.setCreator(function(options) {
     if (!options) options = {};
-    _.defaults(options, { width: 210, height: 297, paddings: 10 });
+    _.defaults(options, { width: 210, height: 297, paddings: 10, orientation: 'portrait' });
 
     this.paddings = options.paddings;
     this.left = this.paddings.left;
     this.top = this.paddings.top;
 
-    if (options.orientation === 'landscape') {
-      this.width = options.height - (this.paddings.left + this.paddings.right) ;
-      this.height = options.width - (this.paddings.top + this.paddings.bottom);
+    if (options.orientation === 'portrait') {
+      this.width = options.width;
+      this.height = options.height;
+    } else if (options.orientation === 'landscape') {
+      this.width = options.height;
+      this.height = options.width;
     } else {
-      options.orientation = 'portrait';
-      this.width = options.width - (this.paddings.left + this.paddings.right) ;
-      this.height = options.height - (this.paddings.top + this.paddings.bottom);
+      throw new Error('invalid orientation');
     }
+
+    this.width -= this.paddings.left + this.paddings.right;
+    this.height -= this.paddings.top + this.paddings.bottom;
 
     this.drawBuffer = [];
     this.document = this;
@@ -31,14 +35,23 @@ var Document = Block.extend('Document', function() {
     this.headerHeight = 0;
     this.currentPage = 1;
     this.totalPages = 1;
-    this.info = options.info;
+    this.author = options.author;
+    this.title = options.title;
+    this.keywords = options.keywords;
+    this.subject = options.subject;
+    this.orientation = options.orientation;
 
     this.pdf = new PDFDocument({
       size: [this.mmToPt(options.width), this.mmToPt(options.height)],
       margin: 0,
       bufferPages: true,
-      info: options.info,
-      layout: options.orientation
+      info: {
+        Title: this.title,
+        Author: this.author,
+        Subject: this.subject,
+        Keywords: this.keywords
+      },
+      layout: this.orientation
     });
   });
 
@@ -55,7 +68,7 @@ var Document = Block.extend('Document', function() {
       },
       {
         placeholder: '{{reportTitle}}',
-        replacement: this.info.Title
+        replacement: this.title
       }
       ];
 
