@@ -106,6 +106,12 @@ var Table = Component.extend('Table', function() {
       block.document.on('didAddPage', renderHeader);
     }
 
+    // var tableWidth = 0;
+    // this.columns.forEach(function(column) {
+    //   tableWidth += column.width || column.computedWidth;
+    // });
+    // block.x = (block.document.width - tableWidth) / 2;
+
     if (this.getBody()) this.getBody().render(block);
 
     if (this.getFooter()) this.getFooter().render(block);
