@@ -54,7 +54,22 @@ var Table = Component.extend('Table', function() {
     block.document.addRow({ isFloating: true }, function(block) {
       var restTableWidth = block.document.width;
       var sumOfUnknownWidth = 0;
+      var sumOfMaxWidth = 0;
       var matrix = [];
+
+      var sumOfKnownWidth = 0;
+      var countOfUnknownColumn = 0;
+      this.columns.forEach(function(column) {
+        if (!column.width) {
+          countOfUnknownColumn += 1;
+        } else {
+          sumOfKnownWidth += column.width;
+        }
+      });
+
+      if (countOfUnknownColumn > 0 && sumOfKnownWidth > restTableWidth) {
+        throw new Error('defined column width is too big');
+      }
 
       var rows = this.getBody().rows;
 
@@ -77,26 +92,27 @@ var Table = Component.extend('Table', function() {
       });
 
       this.columns.forEach(function(column, index) {
-        if (!column.width) {
-          var maxColumnWidth = _.max(matrix.map(function(row) {
-            return row[index];
-          }));
+        var maxColumnWidth = _.max(matrix.map(function(row) {
+          return row[index];
+        }));
 
+        this.columns[index].maxWidth = maxColumnWidth;
+        if (!column.width) {
           sumOfUnknownWidth += maxColumnWidth;
-          this.columns[index].maxWidth = maxColumnWidth;
         } else {
           restTableWidth -= column.width;
         }
       }.bind(this));
 
       this.columns.forEach(function(column, index) {
-        if (!column.width) {
-          if (restTableWidth < 0) {
-            this.columns[index].computedWidth = column.maxWidth * restTableWidth / sumOfUnknownWidth;
-          }
-          else {
+        if (restTableWidth < sumOfUnknownWidth) {
+          if (!column.width) {
+            this.columns[index].computedWidth = column.maxWidth / sumOfUnknownWidth * restTableWidth;
+          } else {
             this.columns[index].computedWidth = column.maxWidth;
           }
+        } else {
+          this.columns[index].computedWidth = column.maxWidth;
         }
       }.bind(this));
     }.bind(this));

@@ -34,21 +34,21 @@ report.addHeader(function(header) {
 
 report.addBody(function(body) {
   var options = { columns: [{ width: undefined }, { width: undefined },
-                            { width: undefined }, { width: undefined }] };
+                            { width: 50 }, { width: undefined }] };
   body.addTable(options, function(table) {
     table.addHeader(function(header) {
       header.addRow(function(row) {
         row.addCell(function(cell) {
-          cell.addText('Number');
+          cell.addText('Numffffffffffffffffffffffffffffffffffffffffffffffffffffber');
         });
         row.addCell(function(cell) {
-          cell.addText('B');
+          cell.addText('Numfffffffffffffffffffffber');
         });
         row.addCell(function(cell) {
-          cell.addText('longer Column header');
+          cell.addText('looooooooooooooooooooooooooooooooonger Column header');
         });
         row.addCell(function(cell) {
-          cell.addText('Column D');
+          cell.addText('Colooooooooooooooooooooooooooooooooumn D');
         });
       });
     });

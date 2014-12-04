@@ -17,7 +17,7 @@ var Text = Component.extend('Text', function() {
     block.draw(function(pdf) {
       var x = block.mmToPt(block.x + block.paddings.left);
       var y = block.mmToPt(block.y + block.paddings.top);
-      var width = block.width; // - (block.paddings.left + block.paddings.right)
+      var width = block.width - (block.paddings.left + block.paddings.right)
 
       pdf.font(this.fontTypeFace);
       pdf.fontSize(this.fontSize);
