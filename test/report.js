@@ -14,7 +14,7 @@ var reportInfo = {
   Keywords: 'Visitor PDFKit Node.js'
 }
 
-var report = Report.create({ info: reportInfo});
+var report = Report.create({ info: reportInfo, orientation: 'landscape' });
 
 report.addHeader(function(header) {
   header.addText(

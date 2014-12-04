@@ -62,7 +62,9 @@ var KindaReport = Component.extend('KindaReport', function() {
       { width: this.width,
         height: this.height,
         paddings: this.paddings.top,
-        info: this.info },
+        info: this.info,
+        orientation: this.orientation
+      },
       function(document) {
         if (this.getHeader()) {
           var headerHeight;

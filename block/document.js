@@ -14,8 +14,16 @@ var Document = Block.extend('Document', function() {
     this.paddings = options.paddings;
     this.left = this.paddings.left;
     this.top = this.paddings.top;
-    this.width = options.width - (this.paddings.left + this.paddings.right) ;
-    this.height = options.height - (this.paddings.top + this.paddings.bottom);
+
+    if (options.orientation === 'landscape') {
+      this.width = options.height - (this.paddings.left + this.paddings.right) ;
+      this.height = options.width - (this.paddings.top + this.paddings.bottom);
+    } else {
+      options.orientation = 'portrait';
+      this.width = options.width - (this.paddings.left + this.paddings.right) ;
+      this.height = options.height - (this.paddings.top + this.paddings.bottom);
+    }
+
     this.drawBuffer = [];
     this.document = this;
     this.x = this.left;
@@ -29,7 +37,8 @@ var Document = Block.extend('Document', function() {
       size: [this.mmToPt(options.width), this.mmToPt(options.height)],
       margin: 0,
       bufferPages: true,
-      info: this.info
+      info: options.info,
+      layout: options.orientation
     });
   });
 
