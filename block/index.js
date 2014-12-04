@@ -162,7 +162,7 @@ var Block = KindaObject.extend('Block', function() {
     this.pdf.fontSize(options.fontSize);
 
     var height = this.pdf.heightOfString(
-      str + '', { width: this.mmToPt(this.width - (this.paddings.left + this.paddings.right)) }
+      str + '', { width: this.mmToPt(this.width) }
     );
     return this.ptToMm(height);
   };

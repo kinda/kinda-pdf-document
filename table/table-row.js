@@ -22,21 +22,21 @@ var TableRow = Component.extend('TableRow', function() {
     }
   };
 
-  this.render = function(block) {
+  this.setCursor = function(block) {
     var table = this.findComponent('Table');
-
-    /*************set cursor**************/
     var tableWidth = 0;
+
     table.columns.forEach(function(column) {
       tableWidth += column.width || column.computedWidth;
     });
     block.width = tableWidth;
     block.x = (block.document.width - tableWidth) / 2 + block.document.left;
-    /***************end**************/
+  };
 
+  this.render = function(block) {
+    var table = this.findComponent('Table');
 
-    // console.log('============');
-
+    this.setCursor(block);
 
     this.cells.forEach(function(cell, index) {
       var thisColumn = table.columns[index];
@@ -51,26 +51,9 @@ var TableRow = Component.extend('TableRow', function() {
       }.bind(this));
     }.bind(this));
 
-    // console.log('============');
-
     // Render borders
-    // block.resetPosition();
-
-    /*********set cursor**********/
-    var tableWidth = 0;
-    table.columns.forEach(function(column) {
-      tableWidth += column.width || column.computedWidth;
-    });
-
-    block.width = tableWidth;
-    block.x = (block.document.width - tableWidth) / 2 + block.document.left;
-    /********end**********/
-
-
-
+    this.setCursor(block);
     block.draw(function(pdf) {
-      // console.log(block.x, block.y, block.width, block.height);
-
       pdf.rect(
         block.mmToPt(block.x),
         block.mmToPt(block.y),

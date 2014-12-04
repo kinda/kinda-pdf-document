@@ -73,39 +73,32 @@ var Table = Component.extend('Table', function() {
           }
 
           matrix[rowIndex][columnIndex] = cell.computeWidth(block) + cell.paddings.left + cell.paddings.right;
-          // console.log(matrix[rowIndex][columnIndex]);
         });
       });
-
-      // console.log(matrix);
-
-      // console.log(matrix.length);
 
       this.columns.forEach(function(column, index) {
         if (!column.width) {
           var maxColumnWidth = _.max(matrix.map(function(row) {
-            // console.log(row[index]);
             return row[index];
           }));
 
           sumOfUnknownWidth += maxColumnWidth;
           this.columns[index].maxWidth = maxColumnWidth;
         } else {
-
           restTableWidth -= column.width;
         }
       }.bind(this));
 
       this.columns.forEach(function(column, index) {
         if (!column.width) {
-          if (restTableWidth < 0)
+          if (restTableWidth < 0) {
             this.columns[index].computedWidth = column.maxWidth * restTableWidth / sumOfUnknownWidth;
-            else
-              this.columns[index].computedWidth = column.maxWidth;
-            }
-          }.bind(this));
-
-          // console.log(this.columns);
+          }
+          else {
+            this.columns[index].computedWidth = column.maxWidth;
+          }
+        }
+      }.bind(this));
     }.bind(this));
   };
 

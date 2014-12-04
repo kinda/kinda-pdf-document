@@ -27,8 +27,9 @@ report.addHeader(function(header) {
 });
 
 report.addBody(function(body) {
-  var options = { columns: [{ width: 20 }, { width: undefined }, { width: 20 }, { width: undefined }] };
-  body.addTable({}, function(table) {
+  var options = { columns: [{ width: undefined }, { width: undefined },
+                            { width: undefined }, { width: undefined }] };
+  body.addTable(options, function(table) {
     table.addHeader(function(header) {
       header.addRow(function(row) {
         row.addCell(function(cell) {
@@ -38,7 +39,7 @@ report.addBody(function(body) {
           cell.addText('B');
         });
         row.addCell(function(cell) {
-          cell.addText('Column C');
+          cell.addText('longer Column header');
         });
         row.addCell(function(cell) {
           cell.addText('Column D');
@@ -50,7 +51,7 @@ report.addBody(function(body) {
       for (var i = 1; i <= 50; i++) {
         body.addRow(function(row) {
           row.addCell(function(cell) {
-            cell.addText(i, {
+            cell.addText("Drizzt Do'Urden", {
               fontTypeFace: fonts[i%fonts.length],
               fontSize: fontSizes[i%fontSizes.length],
               color: colors[i%colors.length]
@@ -88,11 +89,11 @@ report.addBody(function(body) {
         });
 
         row.addCell(function(cell) {
-          cell.addText('f');
+          cell.addText('fooooooter');
         });
 
         row.addCell(function(cell) {
-          cell.addText('footer ijk');
+          cell.addText('footer');
         });
 
         row.addCell(function(cell) {
