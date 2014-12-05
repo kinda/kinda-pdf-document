@@ -3,7 +3,7 @@
 var _ = require('lodash');
 var Block = require('./');
 
-var HorizontalBlock = Block.extend('HorizontalBlock', function() {
+var Column = Block.extend('Column', function() {
   this.setCreator(function(parent, options) {
     if (!options) options = {};
     this.parentBlock = parent;
@@ -31,4 +31,4 @@ var HorizontalBlock = Block.extend('HorizontalBlock', function() {
   });
 });
 
-module.exports = HorizontalBlock;
+module.exports = Column;

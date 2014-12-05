@@ -3,19 +3,20 @@ var Report = require('../');
 var Table = require('../table');
 var _ = require('lodash');
 
-var fonts = ['Times-Roman', 'Helvetica'];
-var fontSizes = [12, 12, 12];
+var fonts = ['Helvetica']; // 'Times-Roman',
+var fontSizes = [10, 10, 10];
 // var fontSizes = [36, 36, 36];
 var colors = ['red', '#FFCC33', 'grey'];
-var reportInfo = {
+var options = {
+  fontTypeFace: 'Helvetica',
   title: 'Lunch Friday 20th, 2014',
   author: 'fishead <zhchuan7@gmail.com>',
   subject: 'Just a report',
   keywords: 'Visitor PDFKit Node.js',
-  orientation: 'landscape'
+  orientation: 'portrait'
 }
 
-var report = Report.create(reportInfo);
+var report = Report.create(options);
 
 report.addHeader(function(header) {
   header.addText(
@@ -27,30 +28,33 @@ report.addHeader(function(header) {
     { alignment: 'center' }
   );
   header.addText(
-    'Page {{currentPage}} of {{totalPages}}',
+    'Page {{pageNumber}} of {{numberOfPages}}',
     { alignment: 'right' }
   );
 });
 
 report.addBody(function(body) {
-  var options = { columns: [{ width: undefined }, { width: undefined },
-                            { width: 50 }, { width: undefined }],
-                  borderWidth: 8,
-                  borderColor: 'red'};
+  var options = {
+    columns: [
+      { width: undefined }, { width: undefined },
+      { width: undefined }, { width: undefined }
+    ],
+    position: 'left'
+  };
   body.addTable(options, function(table) {
     table.addHeader(function(header) {
       header.addRow(function(row) {
         row.addCell(function(cell) {
-          cell.addText('Numffffffffffffffffffffffffffffffffffffffffffffffffffffber');
+          cell.addText('A');
         });
         row.addCell(function(cell) {
-          cell.addText('Numfffffffffffffffffffffber');
+          cell.addText('B');
         });
         row.addCell(function(cell) {
-          cell.addText('looooooooooooooooooooooooooooooooonger Column header');
+          cell.addText('C');
         });
         row.addCell(function(cell) {
-          cell.addText('Colooooooooooooooooooooooooooooooooumn D');
+          cell.addText('D');
         });
       });
     });
@@ -66,7 +70,7 @@ report.addBody(function(body) {
             });
           });
           row.addCell(function(cell) {
-            cell.addText('It', {
+            cell.addText('Bbbbbbbbbbbbbbbbbbbbb', {
               fontTypeFace: fonts[i%fonts.length],
               fontSize: fontSizes[i%fontSizes.length],
               color: colors[i%colors.length]

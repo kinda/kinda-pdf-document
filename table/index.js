@@ -7,6 +7,12 @@ var TableBody = require('./table-body');
 var TableFooter = require('./table-footer');
 
 var Table = Component.extend('Table', function() {
+  this.defaults = {
+    borderWidth: 0.25,
+    borderColor: 'gray',
+    position: 'left'
+  };
+
   Object.defineProperty(this, 'columns', {
     get: function() {
       if (!this._columns) this._columns = [];
@@ -19,7 +25,7 @@ var Table = Component.extend('Table', function() {
 
   Object.defineProperty(this, 'borderWidth', {
     get: function() {
-      return this._borderWidth || 1;
+      return this._borderWidth;
     },
     set: function(borderWidth) {
       this._borderWidth = borderWidth;
@@ -28,7 +34,7 @@ var Table = Component.extend('Table', function() {
 
   Object.defineProperty(this, 'borderColor', {
     get: function() {
-      return this._borderColor || 'grey';
+      return this._borderColor;
     },
     set: function(borderColor) {
       this._borderColor = borderColor;
@@ -70,79 +76,76 @@ var Table = Component.extend('Table', function() {
 
   this.computeAllColumnWidth = function(block) {
     block.document.addRow({ isFloating: true }, function(block) {
-      var restTableWidth = block.document.width;
-      var sumOfUnknownWidth = 0;
-      var sumOfMaxWidth = 0;
-      var matrix = [];
-
-      var sumOfKnownWidth = 0;
-      var countOfUnknownColumn = 0;
+      var sumOfDefinedWidths = 0;
+      var hasUndefinedWidth;
       this.columns.forEach(function(column) {
-        if (!column.width) {
-          countOfUnknownColumn += 1;
+        if (column.width) {
+          sumOfDefinedWidths += column.width;
+          column.computedWidth = column.width;
         } else {
-          sumOfKnownWidth += column.width;
+          hasUndefinedWidth = true;
         }
       });
 
-      if (countOfUnknownColumn > 0 && sumOfKnownWidth > restTableWidth) {
+      if (sumOfDefinedWidths > block.document.width) {
         throw new Error('defined column width is too big');
       }
 
-      var rows = this.getBody().rows;
+      if (!hasUndefinedWidth) return;
 
+      var rows = [];
+      if (this.getBody()) {
+        rows = rows.concat(this.getBody().rows);
+      }
       if (this.getHeader()) {
         rows = rows.concat(this.getHeader().rows);
       }
-
       if (this.getFooter()) {
         rows = rows.concat(this.getFooter().rows);
       }
 
+      var matrix = [];
+
       rows.forEach(function(row, rowIndex) {
         row.cells.forEach(function(cell, columnIndex) {
-          if (!matrix[rowIndex]) {
-            matrix[rowIndex] = [];
-          }
-
-          matrix[rowIndex][columnIndex] = cell.computeWidth(block) + cell.paddings.left + cell.paddings.right;
+          if (!matrix[rowIndex]) matrix[rowIndex] = [];
+          var width = cell.computeWidth(block);
+          width += cell.paddings.left + cell.paddings.right;
+          matrix[rowIndex][columnIndex] = width;
         });
       });
+
+      var remainingTableWidth = block.document.width;
+      var sumOfUnknownWidths = 0;
 
       this.columns.forEach(function(column, index) {
         var maxColumnWidth = _.max(matrix.map(function(row) {
           return row[index];
         }));
-
-        this.columns[index].maxWidth = maxColumnWidth;
+        column.maxWidth = maxColumnWidth;
         if (!column.width) {
-          sumOfUnknownWidth += maxColumnWidth;
+          sumOfUnknownWidths += maxColumnWidth;
         } else {
-          restTableWidth -= column.width;
+          remainingTableWidth -= column.width;
         }
       }.bind(this));
 
-      this.columns.forEach(function(column, index) {
-        if (restTableWidth < sumOfUnknownWidth) {
-          if (!column.width) {
-            this.columns[index].computedWidth = column.maxWidth / sumOfUnknownWidth * restTableWidth;
+      this.columns.forEach(function(column) {
+        if (!column.width) {
+          if (remainingTableWidth < sumOfUnknownWidths) {
+            column.computedWidth = (
+              column.maxWidth / sumOfUnknownWidths * remainingTableWidth
+            );
           } else {
-            this.columns[index].computedWidth = column.maxWidth;
+            column.computedWidth = column.maxWidth;
           }
-        } else {
-          this.columns[index].computedWidth = column.maxWidth;
         }
       }.bind(this));
     }.bind(this));
   };
 
   this.render = function(block) {
-    var hasUndefinedWidth = _.some(this.columns, function(column) {
-      return column.width == null;
-    });
-    if (hasUndefinedWidth) {
-      this.computeAllColumnWidth(block);
-    }
+    this.computeAllColumnWidth(block);
 
     var renderHeader;
     if (this.getHeader()) {

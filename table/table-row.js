@@ -27,24 +27,52 @@ var TableRow = Component.extend('TableRow', function() {
     var tableWidth = 0;
 
     table.columns.forEach(function(column) {
-      tableWidth += column.width || column.computedWidth;
+      tableWidth += column.computedWidth;
     });
     block.width = tableWidth;
-    block.x = (block.document.width - tableWidth) / 2 + block.document.left;
+    // TODO: center alignment
+    // block.x =
+    block.x = block.document.left;
   };
 
   this.render = function(block) {
     var table = this.findComponent('Table');
 
-    this.setCursor(block);
+    var tableWidth = 0;
+    table.columns.forEach(function(column) {
+      tableWidth += column.computedWidth;
+    });
+
+    block.width = tableWidth;
+
+    var tableLeft;
+    switch (table.position) {
+    case 'left':
+      tableLeft = block.document.left;
+      break;
+    case 'center':
+      tableLeft = block.document.left + (block.document.width - tableWidth) / 2;
+      break;
+    case 'right':
+      tableLeft = block.document.left + block.document.width - tableWidth;
+      break;
+    default:
+      throw new Error('invalid table position');
+    }
+
+    block.x = tableLeft;
 
     this.cells.forEach(function(cell, index) {
       var thisColumn = table.columns[index];
-      var cellWidth = thisColumn.width || thisColumn.computedWidth;
-
+      var cellWidth = thisColumn.computedWidth;
       var options = {
         width: cellWidth,
-        paddings: [cell.paddings.top, cell.paddings.right, cell.paddings.bottom, cell.paddings.left]
+        paddings: [
+          cell.paddings.top,
+          cell.paddings.right,
+          cell.paddings.bottom,
+          cell.paddings.left
+        ]
       };
       block.addColumn(options, function(block) {
         cell.render(block);
@@ -52,7 +80,8 @@ var TableRow = Component.extend('TableRow', function() {
     }.bind(this));
 
     // Render borders
-    this.setCursor(block);
+    block.x = tableLeft;
+
     block.draw(function(pdf) {
       pdf.lineWidth(table.borderWidth);
       pdf.strokeColor(table.borderColor);
@@ -67,7 +96,7 @@ var TableRow = Component.extend('TableRow', function() {
 
       var x = block.x;
       for (var i = 0; i < table.columns.length - 1; i++) {
-        x += table.columns[i].width || table.columns[i].computedWidth;
+        x += table.columns[i].computedWidth;
         pdf.moveTo(block.mmToPt(x), block.mmToPt(block.y));
         pdf.lineTo(block.mmToPt(x), block.mmToPt(block.y + block.height));
         pdf.stroke();

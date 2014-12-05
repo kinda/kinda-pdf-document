@@ -4,12 +4,17 @@ var fs = require('fs');
 var _ = require('lodash');
 var PDFDocument = require('pdfkit');
 var Block = require('./');
-var VerticalBlock = require('./vertical-block');
+var Row = require('./row');
 
 var Document = Block.extend('Document', function() {
   this.setCreator(function(options) {
     if (!options) options = {};
-    _.defaults(options, { width: 210, height: 297, paddings: 10, orientation: 'portrait' });
+    _.defaults(options, {
+      width: 210,
+      height: 297,
+      paddings: 10,
+      orientation: 'portrait'
+    });
 
     this.paddings = options.paddings;
     this.left = this.paddings.left;
@@ -28,52 +33,33 @@ var Document = Block.extend('Document', function() {
     this.width -= this.paddings.left + this.paddings.right;
     this.height -= this.paddings.top + this.paddings.bottom;
 
-    this.drawBuffer = [];
-    this.document = this;
-    this.x = this.left;
-    this.y = this.top;
-    this.headerHeight = 0;
-    this.currentPage = 1;
-    this.totalPages = 1;
     this.author = options.author;
     this.title = options.title;
     this.keywords = options.keywords;
     this.subject = options.subject;
     this.orientation = options.orientation;
 
+    this.document = this;
+    this.drawBuffer = [];
+    this.pageNumber = 1;
+    this.numberOfPages = 1;
+
+    this.x = this.left;
+    this.y = this.top;
+
+    var info = {};
+    if (this.title) info.Title = this.title;
+    if (this.author) info.Author = this.author;
+    if (this.subject) info.Subject = this.subject;
+    if (this.keywords) info.Keywords = this.keywords;
+
     this.pdf = new PDFDocument({
       size: [this.mmToPt(options.width), this.mmToPt(options.height)],
       margin: 0,
       bufferPages: true,
-      info: {
-        Title: this.title,
-        Author: this.author,
-        Subject: this.subject,
-        Keywords: this.keywords
-      },
-      layout: this.orientation
+      layout: this.orientation,
+      info: info
     });
-  });
-
-  Object.defineProperty(this, 'textVariables', {
-    get: function() {
-      this._textVariables = [
-      {
-        placeholder: '{{currentPage}}',
-        replacement: this.currentPage
-      },
-      {
-        placeholder: '{{totalPages}}',
-        replacement: this.totalPages
-      },
-      {
-        placeholder: '{{reportTitle}}',
-        replacement: this.title
-      }
-      ];
-
-      return this._textVariables;
-    }
   });
 
   Object.defineProperty(this, 'x', {
@@ -140,7 +126,7 @@ var Document = Block.extend('Document', function() {
   });
 
   this.addRow = function(options, fn) {
-    var block = VerticalBlock.create(this, options);
+    var block = Row.create(this, options);
     fn(block);
     block.flush();
     if (!block.isFloating) {
@@ -150,7 +136,8 @@ var Document = Block.extend('Document', function() {
 
   this.addPage = function() {
     this.pdf.addPage();
-    this.y = this.top + this.headerHeight;
+    this.y = this.top;
+    this.numberOfPages++;
     this.emit('didAddPage');
   };
 });

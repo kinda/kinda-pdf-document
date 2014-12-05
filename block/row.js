@@ -2,9 +2,9 @@
 
 var _ = require('lodash');
 var Block = require('./');
-var HorizontalBlock = require('./horizontal-block');
+var Column = require('./column');
 
-var VerticalBlock = Block.extend('VerticalBlock', function() {
+var Row = Block.extend('Row', function() {
   this.setCreator(function(parent, options) {
     if (!options) options = {};
     this.parentBlock = parent;
@@ -64,11 +64,10 @@ var VerticalBlock = Block.extend('VerticalBlock', function() {
   });
 
   this.addColumn = function(options, fn) {
-    var block = HorizontalBlock.create(this, options);
+    var block = Column.create(this, options);
     fn(block);
     this.x += block.width;
-    this.width -= block.width;
   };
 });
 
-module.exports = VerticalBlock;
+module.exports = Row;

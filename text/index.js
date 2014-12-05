@@ -6,6 +6,8 @@ var Component = require('../component');
 var Text = Component.extend('Text', function() {
   var superCreator = this.getCreator();
   this.setCreator(function(parent, value, options, fn) {
+    if (value == null) throw new Error('undefined value');
+    value = String(value);
     superCreator.call(this, parent, options, fn);
     this.value = value;
   });
@@ -23,16 +25,35 @@ var Text = Component.extend('Text', function() {
       pdf.fontSize(this.fontSize);
       pdf.fillColor(this.color);
 
-      var text = this.value + '';
-      block.document.textVariables.forEach(function(textVariable) {
-        text = text.replace(textVariable.placeholder, textVariable.replacement);
-      });
-
-      pdf.text(text, x, y, {
+      var str = this.parseVariables(this.value, block);
+      pdf.text(str, x, y, {
         width: block.mmToPt(width),
         align: this.alignment
       });
     }.bind(this));
+  };
+
+  this.parseVariables = function(str, block) {
+    var variables = [
+      {
+        placeholder: '{{reportTitle}}',
+        replacement: function() { return block.document.title; }
+      },
+      {
+        placeholder: '{{pageNumber}}',
+        replacement: function() { return block.document.pageNumber; }
+      },
+      {
+        placeholder: '{{numberOfPages}}',
+        replacement: function() { return block.document.numberOfPages; }
+      }
+    ];
+
+    variables.forEach(function(variable) {
+      str = str.replace(variable.placeholder, variable.replacement);
+    });
+
+    return str;
   };
 
   this.computeWidth = function(block) {
@@ -40,7 +61,8 @@ var Text = Component.extend('Text', function() {
       fontTypeFace: this.fontTypeFace,
       fontSize: this.fontSize
     };
-    var width = block.computeWidthOfString(this.value, options);
+    var str = this.parseVariables(this.value, block);
+    var width = block.computeWidthOfString(str, options);
     width += block.paddings.left + block.paddings.right;
     return width;
   };
@@ -50,7 +72,8 @@ var Text = Component.extend('Text', function() {
       fontTypeFace: this.fontTypeFace,
       fontSize: this.fontSize
     };
-    var height = block.computeHeightOfString(this.value, options);
+    var str = this.parseVariables(this.value, block);
+    var height = block.computeHeightOfString(str, options);
     height += block.paddings.top + block.paddings.bottom;
     return height;
   };

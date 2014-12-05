@@ -168,11 +168,15 @@ var Block = KindaObject.extend('Block', function() {
   };
 
   this.mmToPt = function(mm) {
-    return mm * 0.0393701 * 72;
+    var inch = mm / 25.4;
+    var pt = inch * 72;
+    return pt;
   };
 
   this.ptToMm = function(pt) {
-    return pt / (0.0393701 * 72);
+    var inch = pt / 72;
+    var mm = inch * 25.4;
+    return mm;
   };
 });
 

@@ -15,7 +15,7 @@ var KindaReport = Component.extend('KindaReport', function() {
 
   this.defaults = {
     fontTypeFace: 'Helvetica',
-    fontSize: 14,
+    fontSize: 10,
     color: 'black',
     width: 210,
     height: 297,
@@ -57,55 +57,53 @@ var KindaReport = Component.extend('KindaReport', function() {
   };
 
   this.generatePDFFile = function *(path) {
-    yield Document.generatePDFFile(
-      path,
-      { width: this.width,
-        height: this.height,
-        paddings: this.paddings.top,
-        title: this.title,
-        author: this.author,
-        subject: this.subject,
-        keywords: this.keywords,
-        orientation: this.orientation
-      },
-      function(document) {
+    var options = {
+      width: this.width,
+      height: this.height,
+      paddings: this.paddings.top,
+      title: this.title,
+      author: this.author,
+      subject: this.subject,
+      keywords: this.keywords,
+      orientation: this.orientation
+    };
+    yield Document.generatePDFFile(path, options, function(document) {
+      if (this.getHeader()) {
+        var headerHeight;
+        document.addRow({ isFloating: true }, function(block) {
+          headerHeight = this.getHeader().computeHeight(block);
+        }.bind(this));
+        headerHeight += this.getHeader().margins.bottom;
+        document.top += headerHeight; // Adjust document top
+        document.height -= headerHeight; // Adjust document height
+        document.y = document.top;
+      }
+
+      if (this.getFooter()) {
+        var footerHeight;
+        document.addRow({ isFloating: true }, function(block) {
+          footerHeight = this.getFooter().computeHeight(block);
+        }.bind(this));
+        footerHeight += this.getFooter().margins.top;
+        document.height -= footerHeight; // Adjust document height
+      }
+
+      if (this.getBody()) {
+        this.getBody().render(document);
+      }
+
+      var range = document.pdf.bufferedPageRange();
+      for (var i = range.start; i < range.count; i += 1) {
+        document.pageNumber = i + 1;
+        document.pdf.switchToPage(i);
         if (this.getHeader()) {
-          var headerHeight;
-          document.addRow({ isFloating: true }, function(block) {
-            headerHeight = this.getHeader().computeHeight(block);
-          }.bind(this));
-          headerHeight += this.getHeader().margins.bottom;
-          document.headerHeight = headerHeight;
-          document.y += headerHeight;
+          this.getHeader().render(document);
         }
-
         if (this.getFooter()) {
-          var footerHeight;
-          document.addRow({ isFloating: true }, function(block) {
-            footerHeight = this.getFooter().computeHeight(block);
-          }.bind(this));
-          footerHeight += this.getFooter().margins.top;
-          document.height -= footerHeight; // Adjust document height
+          this.getFooter().render(document);
         }
-
-        if (this.getBody()) {
-          this.getBody().render(document);
-        }
-
-        var bufferedPageRange = document.pdf.bufferedPageRange();
-        document.totalPages = bufferedPageRange.count;
-        for (var i=bufferedPageRange.start; i<bufferedPageRange.count; i+=1) {
-          document.currentPage = i + 1;
-          document.pdf.switchToPage(i);
-          if (this.getHeader()) {
-            this.getHeader().render(document);
-          }
-          if (this.getFooter()) {
-            this.getFooter().render(document);
-          }
-        }
-      }.bind(this)
-    );
+      }
+    }.bind(this));
   };
 });
 

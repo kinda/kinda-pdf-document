@@ -11,9 +11,8 @@ var ReportHeader = Box.extend('ReportHeader', function() {
   var superRender = this.render;
   this.render = function(block) {
     block.addRow({ isFloating: true }, function(block) {
-      block.y = block.document.top;
       superRender.call(this, block);
-      if (block.height) block.height += this.margins.bottom;
+      block.y = block.document.top - (block.height + this.margins.bottom);
     }.bind(this));
   };
 });

@@ -92,6 +92,7 @@ yield report.renderToPDFFile('/tmp/report.pdf');
 //     paddingRight: undefined
 //     marginTop: undefined
 //     marginBottom: undefined
+//     position: undefined
 
 // KindaReport
 //   title: undefined
@@ -121,7 +122,7 @@ yield report.renderToPDFFile('/tmp/report.pdf');
 //   columns: []
 //   borderWidth: 0.25 // pt
 //   borderColor: 'gray'
-//   marginTop: 5 // mm
+//   position: 'left'
 
 // TableBody
 
