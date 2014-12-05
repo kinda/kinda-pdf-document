@@ -54,6 +54,9 @@ var TableRow = Component.extend('TableRow', function() {
     // Render borders
     this.setCursor(block);
     block.draw(function(pdf) {
+      pdf.lineWidth(table.borderWidth);
+      pdf.strokeColor(table.borderColor);
+
       pdf.rect(
         block.mmToPt(block.x),
         block.mmToPt(block.y),

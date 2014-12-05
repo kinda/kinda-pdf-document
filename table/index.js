@@ -17,6 +17,24 @@ var Table = Component.extend('Table', function() {
     }
   });
 
+  Object.defineProperty(this, 'borderWidth', {
+    get: function() {
+      return this._borderWidth || 1;
+    },
+    set: function(borderWidth) {
+      this._borderWidth = borderWidth;
+    }
+  });
+
+  Object.defineProperty(this, 'borderColor', {
+    get: function() {
+      return this._borderColor || 'grey';
+    },
+    set: function(borderColor) {
+      this._borderColor = borderColor;
+    }
+  });
+
   this.addHeader = function(options, fn) {
     if (this._header) {
       throw new Error('a report cannot have more than one header');

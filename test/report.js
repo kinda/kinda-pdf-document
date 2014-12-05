@@ -34,7 +34,9 @@ report.addHeader(function(header) {
 
 report.addBody(function(body) {
   var options = { columns: [{ width: undefined }, { width: undefined },
-                            { width: 50 }, { width: undefined }] };
+                            { width: 50 }, { width: undefined }],
+                  borderWidth: 8,
+                  borderColor: 'red'};
   body.addTable(options, function(table) {
     table.addHeader(function(header) {
       header.addRow(function(row) {

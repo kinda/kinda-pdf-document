@@ -1,8 +1,8 @@
 // === Progress ===
 
 // 80% specifications
-// 70% analysis
-// 70%  implementation
+// 80% analysis
+// 80%  implementation
 
 // === API ===
 
