@@ -24,6 +24,8 @@ report.addHeader(function(header) {
 });
 
 report.addBody(function(body) {
+  body.addTitle().addText('Titre');
+
   body.addTable(function(table) {
     table.addHeader(function(header) {
       header.addRow(function(row) {
@@ -65,6 +67,7 @@ yield report.renderToPDFFile('/tmp/report.pdf');
 //   Box
 //     ReportHeader
 //     ReportFooter
+//     Title
 //     TableCell
 //   Text
 
@@ -118,6 +121,12 @@ yield report.renderToPDFFile('/tmp/report.pdf');
 // ReportFooter
 //   marginTop: 5 // mm
 //   alignment: 'left'
+
+// Title
+//   marginTop: 10
+//   marginBottom: 5
+//   fontSize: 14
+//   fontStyle: ['bold']
 
 // Table
 //   columns: []
