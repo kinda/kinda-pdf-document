@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "",
   "author": "Manuel Vila <mvila@3base.com>",
-  "main": "report/index.js",
+  "main": "component/report.js",
   "repository": "git://github.com/kinda/kinda-report",
   "scripts": {
     "test": "node test.js"

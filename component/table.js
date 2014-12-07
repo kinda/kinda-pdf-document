@@ -1,7 +1,7 @@
 "use strict";
 
 var _ = require('lodash');
-var Component = require('../component');
+var Component = require('./');
 var TableHeader = require('./table-header');
 var TableBody = require('./table-body');
 var TableFooter = require('./table-footer');

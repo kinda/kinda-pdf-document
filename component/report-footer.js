@@ -1,20 +1,20 @@
 "use strict";
 
 var _ = require('lodash');
-var Box = require('../box');
+var Box = require('./box');
 
-var ReportHeader = Box.extend('ReportHeader', function() {
+var ReportFooter = Box.extend('ReportFooter', function() {
   this.defaults = {
-    margins: [0, 0, 5, 0]
+    marginTop: 5
   };
 
   var superRender = this.render;
   this.render = function(block) {
     block.addRow({ isFloating: true }, function(block) {
+      block.y = block.document.top + block.document.height + this.margins.top;
       superRender.call(this, block);
-      block.y = block.document.top - (block.height + this.margins.bottom);
     }.bind(this));
   };
 });
 
-module.exports = ReportHeader;
+module.exports = ReportFooter;

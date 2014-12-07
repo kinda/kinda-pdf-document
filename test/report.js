@@ -1,7 +1,7 @@
+var _ = require('lodash');
 var co = require('co');
 var Report = require('../');
-var Table = require('../table');
-var _ = require('lodash');
+var Table = require('../component/table');
 
 var fonts = ['Helvetica']; // 'Times-Roman',
 var fontSizes = [10, 10, 10];
