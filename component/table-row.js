@@ -64,15 +64,10 @@ var TableRow = Component.extend('TableRow', function() {
 
     this.cells.forEach(function(cell, index) {
       var thisColumn = table.columns[index];
-      var cellWidth = thisColumn.computedWidth;
+      var width = thisColumn.computedWidth;
       var options = {
-        width: cellWidth,
-        paddings: [
-          cell.paddings.top,
-          cell.paddings.right,
-          cell.paddings.bottom,
-          cell.paddings.left
-        ]
+        width: width,
+        paddings: cell.paddings
       };
       block.addColumn(options, function(block) {
         cell.render(block);

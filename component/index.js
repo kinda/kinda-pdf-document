@@ -74,21 +74,18 @@ var Component = KindaObject.extend('Component', function() {
       return this._margins;
     },
     set: function(margins) {
-      if (!_.isArray(margins)) margins = [margins];
-
-      var top = margins[0];
-      var right = margins[1];
-      var bottom = margins[2];
-      var left = margins[3];
-
-      if (right == null) right = top;
-      if (bottom == null) bottom = top;
-      if (left == null) left = right;
-
-      this.margins.top = top;
-      this.margins.right = right;
-      this.margins.bottom = bottom;
-      this.margins.left = left;
+      if (_.isNumber(margins)) margins = [margins];
+      if (_.isArray(margins)) {
+        var top = margins[0];
+        var right = margins[1];
+        var bottom = margins[2];
+        var left = margins[3];
+        if (right == null) right = top;
+        if (bottom == null) bottom = top;
+        if (left == null) left = right;
+        margins = { top: top, right: right, bottom: bottom, left: left};
+      }
+      this._margins = margins;
     }
   });
 
@@ -134,21 +131,18 @@ var Component = KindaObject.extend('Component', function() {
       return this._paddings;
     },
     set: function(paddings) {
-      if (!_.isArray(paddings)) paddings = [paddings];
-
-      var top = paddings[0];
-      var right = paddings[1];
-      var bottom = paddings[2];
-      var left = paddings[3];
-
-      if (right == null) right = top;
-      if (bottom == null) bottom = top;
-      if (left == null) left = right;
-
-      this.paddings.top = top;
-      this.paddings.right = right;
-      this.paddings.bottom = bottom;
-      this.paddings.left = left;
+      if (_.isNumber(paddings)) paddings = [paddings];
+      if (_.isArray(paddings)) {
+        var top = paddings[0];
+        var right = paddings[1];
+        var bottom = paddings[2];
+        var left = paddings[3];
+        if (right == null) right = top;
+        if (bottom == null) bottom = top;
+        if (left == null) left = right;
+        paddings = { top: top, right: right, bottom: bottom, left: left};
+      }
+      this._paddings = paddings;
     }
   });
 

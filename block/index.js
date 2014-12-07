@@ -50,23 +50,19 @@ var Block = KindaObject.extend('Block', function() {
       return this._paddings;
     },
     set: function(paddings) {
-      if (!_.isArray(paddings)) paddings = [paddings];
-
-      var top = paddings[0];
-      var right = paddings[1];
-      var bottom = paddings[2];
-      var left = paddings[3];
-
-      if (right == null) right = top;
-      if (bottom == null) bottom = top;
-      if (left == null) left = right;
-
-      this.paddings.top = top;
-      this.paddings.right = right;
-      this.paddings.bottom = bottom;
-      this.paddings.left = left;
-    },
-    configurable: true
+      if (_.isNumber(paddings)) paddings = [paddings];
+      if (_.isArray(paddings)) {
+        var top = paddings[0];
+        var right = paddings[1];
+        var bottom = paddings[2];
+        var left = paddings[3];
+        if (right == null) right = top;
+        if (bottom == null) bottom = top;
+        if (left == null) left = right;
+        paddings = { top: top, right: right, bottom: bottom, left: left};
+      }
+      this._paddings = paddings;
+    }
   });
 
   Object.defineProperty(this, 'paddingLeft', {

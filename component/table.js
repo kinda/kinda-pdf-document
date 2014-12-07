@@ -108,14 +108,7 @@ var Table = Component.extend('Table', function() {
       rows.forEach(function(row, rowIndex) {
         if (!matrix[rowIndex]) matrix[rowIndex] = [];
         row.cells.forEach(function(cell, columnIndex) {
-          var options = {
-            paddings: [
-              cell.paddings.top,
-              cell.paddings.right,
-              cell.paddings.bottom,
-              cell.paddings.left
-            ]
-          };
+          var options = { paddings: cell.paddings };
           block.addColumn(options, function(block) {
             var width = cell.computeWidth(block);
             matrix[rowIndex][columnIndex] = width;
