@@ -106,11 +106,20 @@ var Table = Component.extend('Table', function() {
       var matrix = [];
 
       rows.forEach(function(row, rowIndex) {
+        if (!matrix[rowIndex]) matrix[rowIndex] = [];
         row.cells.forEach(function(cell, columnIndex) {
-          if (!matrix[rowIndex]) matrix[rowIndex] = [];
-          var width = cell.computeWidth(block);
-          width += cell.paddings.left + cell.paddings.right;
-          matrix[rowIndex][columnIndex] = width;
+          var options = {
+            paddings: [
+              cell.paddings.top,
+              cell.paddings.right,
+              cell.paddings.bottom,
+              cell.paddings.left
+            ]
+          };
+          block.addColumn(options, function(block) {
+            var width = cell.computeWidth(block);
+            matrix[rowIndex][columnIndex] = width;
+          }.bind(this));
         });
       });
 

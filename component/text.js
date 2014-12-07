@@ -62,21 +62,16 @@ var Text = Component.extend('Text', function() {
       fontTypeFace: this.fontTypeFace,
       fontSize: this.fontSize
     };
-    var width = block.document.computeWidthOfString(str, options);
-    width += block.paddings.left + block.paddings.right;
-    return width;
+    return block.computeWidthOfString(str, options);;
   };
 
   this.computeHeight = function(block) {
     var str = this.parseVariables(this.value, block);
     var options = {
-      width: block.width,
       fontTypeFace: this.fontTypeFace,
       fontSize: this.fontSize
     };
-    var height = block.document.computeHeightOfString(str, options);
-    height += block.paddings.top + block.paddings.bottom;
-    return height;
+    return block.computeHeightOfString(str, options);
   };
 });
 

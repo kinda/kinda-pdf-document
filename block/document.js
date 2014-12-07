@@ -140,23 +140,6 @@ var Document = Block.extend('Document', function() {
     }.bind(this));
     this.drawBuffer.length = 0;
   };
-
-  this.computeWidthOfString = function(str, options) {
-    this.pdf.font(options.fontTypeFace);
-    this.pdf.fontSize(options.fontSize);
-    var width = this.pdf.widthOfString(str);
-    return this.ptToMm(width);
-  };
-
-  this.computeHeightOfString = function(str, options) {
-    this.pdf.font(options.fontTypeFace);
-    this.pdf.fontSize(options.fontSize);
-    var height = this.pdf.heightOfString(
-      str,
-      { width: this.mmToPt(options.width) }
-    );
-    return this.ptToMm(height);
-  };
 });
 
 Document.generatePDFFile = function *(path, options, fn) {

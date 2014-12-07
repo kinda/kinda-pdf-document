@@ -63,7 +63,7 @@ report.addBody(function(body) {
       for (var i = 1; i <= 50; i++) {
         body.addRow(function(row) {
           row.addCell(function(cell) {
-            cell.addText("Drizzt Do'Urden", {
+            cell.addText(i, {
               fontTypeFace: fonts[i%fonts.length],
               fontSize: fontSizes[i%fontSizes.length],
               color: colors[i%colors.length]
