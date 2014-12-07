@@ -9,8 +9,7 @@ var TableFooter = require('./table-footer');
 var Table = Component.extend('Table', function() {
   this.defaults = {
     borderWidth: 0.25,
-    borderColor: 'gray',
-    position: 'left'
+    borderColor: 'gray'
   };
 
   Object.defineProperty(this, 'columns', {
@@ -74,7 +73,7 @@ var Table = Component.extend('Table', function() {
     return this._footer;
   };
 
-  this.computeAllColumnWidth = function(block) {
+  this.computeColumnWidths = function(block) {
     block.document.addRow({ isFloating: true }, function(block) {
       var sumOfDefinedWidths = 0;
       var hasUndefinedWidth;
@@ -145,7 +144,7 @@ var Table = Component.extend('Table', function() {
   };
 
   this.render = function(block) {
-    this.computeAllColumnWidth(block);
+    this.computeColumnWidths(block);
 
     var renderHeader;
     if (this.getHeader()) {

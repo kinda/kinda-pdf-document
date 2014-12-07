@@ -46,7 +46,7 @@ var TableRow = Component.extend('TableRow', function() {
     block.width = tableWidth;
 
     var tableLeft;
-    switch (table.position) {
+    switch (table.alignment) {
     case 'left':
       tableLeft = block.document.left;
       break;
@@ -57,7 +57,7 @@ var TableRow = Component.extend('TableRow', function() {
       tableLeft = block.document.left + block.document.width - tableWidth;
       break;
     default:
-      throw new Error('invalid table position');
+      throw new Error('invalid table alignment');
     }
 
     block.x = tableLeft;

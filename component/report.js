@@ -14,13 +14,12 @@ var KindaReport = Component.extend('KindaReport', function() {
   });
 
   this.defaults = {
-    fontTypeFace: 'Helvetica',
-    fontSize: 10,
-    color: 'black',
     width: 210,
     height: 297,
     paddings: 10,
-    alignment: 'left'
+    fontTypeFace: 'Helvetica',
+    fontSize: 10,
+    color: 'black'
   };
 
   this.addHeader = function(options, fn) {

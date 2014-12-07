@@ -5,6 +5,10 @@ var Component = require('./');
 var TableRow = require('./table-row');
 
 var TableFooter = Component.extend('TableFooter', function() {
+  this.defaults = {
+    alignment: 'left'
+  };
+
   Object.defineProperty(this, 'rows', {
     get: function() {
       if(!this._rows) this._rows = [];

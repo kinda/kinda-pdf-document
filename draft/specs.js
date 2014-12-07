@@ -92,7 +92,6 @@ yield report.renderToPDFFile('/tmp/report.pdf');
 //     paddingRight: undefined
 //     marginTop: undefined
 //     marginBottom: undefined
-//     position: undefined
 
 // KindaReport
 //   title: undefined
@@ -106,27 +105,27 @@ yield report.renderToPDFFile('/tmp/report.pdf');
 //   fontTypeFace: 'Helvetica'
 //   fontSize: 10 // pt
 //   fontStyle: [] // could be ['bold', 'italic']
-//   alignment: 'left' // could be 'center' or 'right'
 //   color: 'black' // could be '#abc'
 //   backgroundColor: 'white'
 
 // ReportBody
+//   alignment: 'left' // could be 'center' or 'right'
 
 // ReportHeader
 //   marginBottom: 5 // mm
+//   alignment: 'left'
 
 // ReportFooter
 //   marginTop: 5 // mm
+//   alignment: 'left'
 
 // Table
 //   columns: []
 //   borderWidth: 0.25 // pt
 //   borderColor: 'gray'
-//   position: 'left'
 
-// TableBody
-
-// TableHeader, TableFooter and TableRow
+// TableBody, TableHeader and TableFooter
+//   alignment: 'left'
 
 // TableCell
 //   span: 1 // implemented in the future?

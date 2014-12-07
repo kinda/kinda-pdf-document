@@ -21,7 +21,7 @@ var report = Report.create(options);
 report.addHeader(function(header) {
   header.addText(
     '{{reportTitle}}',
-    { alignment: 'left', style: 'bold' }
+    { style: 'bold' }
   );
   header.addText(
     '5 chekings',
@@ -39,10 +39,10 @@ report.addBody(function(body) {
       { width: undefined }, { width: undefined },
       { width: undefined }, { width: undefined }
     ],
-    position: 'left'
+    alignment: 'left'
   };
   body.addTable(options, function(table) {
-    table.addHeader(function(header) {
+    table.addHeader({ alignment: 'center' }, function(header) {
       header.addRow(function(row) {
         row.addCell(function(cell) {
           cell.addText('A');

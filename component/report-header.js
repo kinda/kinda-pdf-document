@@ -5,7 +5,8 @@ var Box = require('./box');
 
 var ReportHeader = Box.extend('ReportHeader', function() {
   this.defaults = {
-    margins: [0, 0, 5, 0]
+    marginBottom: 5,
+    alignment: 'left'
   };
 
   var superRender = this.render;

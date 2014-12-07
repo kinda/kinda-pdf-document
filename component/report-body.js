@@ -5,6 +5,10 @@ var Component = require('./');
 var Table = require('./table').Table;
 
 var ReportBody = Component.extend('ReportBody', function() {
+  this.defaults = {
+    alignment: 'left'
+  };
+
   Object.defineProperty(this, 'components', {
     get: function() {
       if(!this._components) this._components = [];
