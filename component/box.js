@@ -15,6 +15,7 @@ var Box = Component.extend('Box', function() {
   this.addText = function(value, options, fn) {
     var text = Text.create(this, value, options, fn);
     this.components.push(text);
+    return text;
   };
 
   this.render = function(block) {

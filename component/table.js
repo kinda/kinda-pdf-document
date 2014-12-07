@@ -45,6 +45,7 @@ var Table = Component.extend('Table', function() {
       throw new Error('a report cannot have more than one header');
     }
     this._header = TableHeader.create(this, options, fn);
+    return this._header;
   };
 
   this.getHeader = function() {
@@ -56,6 +57,7 @@ var Table = Component.extend('Table', function() {
       throw new Error('a report cannot have more than one body');
     }
     this._body = TableBody.create(this, options, fn);
+    return this._body;
   };
 
   this.getBody = function() {
@@ -67,6 +69,7 @@ var Table = Component.extend('Table', function() {
       throw new Error('a table cannot have more than one footer');
     }
     this._footer = TableFooter.create(this, options, fn);
+    return this._footer;
   };
 
   this.getFooter = function() {

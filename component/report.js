@@ -27,6 +27,7 @@ var KindaReport = Component.extend('KindaReport', function() {
       throw new Error('a report cannot have more than one header');
     }
     this._header = ReportHeader.create(this, options, fn);
+    return this._header;
   };
 
   this.getHeader = function() {
@@ -38,6 +39,7 @@ var KindaReport = Component.extend('KindaReport', function() {
       throw new Error('a report cannot have more than one body');
     }
     this._body = ReportBody.create(this, options, fn);
+    return this._body;
   };
 
   this.getBody = function() {
@@ -49,6 +51,7 @@ var KindaReport = Component.extend('KindaReport', function() {
       throw new Error('a report cannot have more than one footer');
     }
     this._footer = ReportFooter.create(this, options, fn);
+    return this._footer;
   };
 
   this.getFooter = function() {

@@ -19,6 +19,7 @@ var TableFooter = Component.extend('TableFooter', function() {
   this.addRow = function(options, fn) {
     var row = TableRow.create(this, options, fn);
     this.rows.push(row);
+    return row;
   };
 
   this.render = function(block) {

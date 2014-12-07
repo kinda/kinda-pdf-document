@@ -19,6 +19,7 @@ var ReportBody = Component.extend('ReportBody', function() {
   this.addTable = function(options, fn) {
     var table = Table.create(this, options, fn);
     this.components.push(table);
+    return table;
   };
 
   this.render = function(block) {

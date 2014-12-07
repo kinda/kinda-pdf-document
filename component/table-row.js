@@ -15,11 +15,11 @@ var TableRow = Component.extend('TableRow', function() {
   this.addCell = function(options, fn) {
     var cell = TableCell.create(this, options, fn);
     this.cells.push(cell);
-
     var table = this.findComponent('Table');
     if (this.cells.length > table.columns.length) {
       table.columns.push({ width: undefined });
     }
+    return cell;
   };
 
   this.setCursor = function(block) {
