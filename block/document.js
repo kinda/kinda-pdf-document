@@ -62,51 +62,6 @@ var Document = Block.extend('Document', function() {
     });
   });
 
-  Object.defineProperty(this, 'x', {
-    get: function() {
-      return this._x;
-    },
-    set: function(x) {
-      this._x = x;
-    }
-  });
-
-  Object.defineProperty(this, 'y', {
-    get: function() {
-      return this._y;
-    },
-    set: function(y) {
-      this._y = y;
-    }
-  });
-
-  Object.defineProperty(this, 'width', {
-    get: function() {
-      return this._width;
-    },
-    set: function(width) {
-      this._width = width;
-    }
-  });
-
-  Object.defineProperty(this, 'height', {
-    get: function() {
-      return this._height;
-    },
-    set: function(height) {
-      this._height = height;
-    }
-  });
-
-  Object.defineProperty(this, 'pdf', {
-    get: function() {
-      return this._pdf;
-    },
-    set: function(pdf) {
-      this._pdf = pdf;
-    }
-  });
-
   this.addPage = function() {
     this.pdf.addPage();
     this.y = this.top;

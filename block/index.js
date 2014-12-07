@@ -4,46 +4,6 @@ var _ = require('lodash');
 var KindaObject = require('kinda-object');
 
 var Block = KindaObject.extend('Block', function() {
-  Object.defineProperty(this, 'x', {
-    get: function() {
-      return this.parentBlock.x;
-    },
-    set: function(x) {
-      this.parentBlock.x = x;
-    },
-    configurable: true
-  });
-
-  Object.defineProperty(this, 'y', {
-    get: function() {
-      return this.parentBlock.y;
-    },
-    set: function(y) {
-      this.parentBlock.y = y;
-    },
-    configurable: true
-  });
-
-  Object.defineProperty(this, 'width', {
-    get: function() {
-      return this.parentBlock.width;
-    },
-    set: function(width) {
-      this.parentBlock.width = width;
-    },
-    configurable: true
-  });
-
-  Object.defineProperty(this, 'height', {
-    get: function() {
-      return this.parentBlock.height;
-    },
-    set: function(height) {
-      this.parentBlock.height = height;
-    },
-    configurable: true
-  });
-
   Object.defineProperty(this, 'paddings', {
     get: function() {
       if (!this._paddings) this._paddings = {};

@@ -6,29 +6,30 @@ var Block = require('./');
 var Column = Block.extend('Column', function() {
   this.setCreator(function(parent, options) {
     if (!options) options = {};
-    this.parentBlock = parent;
+    this.row = parent;
     this.document = parent.document;
     this.width = options.width || 0;
     this.paddings = options.paddings || 0;
     this.x = parent.x;
   });
 
-  Object.defineProperty(this, 'x', {
+  Object.defineProperty(this, 'y', {
     get: function() {
-      return this._x;
+      return this.row.y;
     },
-    set: function(x) {
-      this._x = x;
+    set: function(y) {
+      this.row.y = y;
     }
   });
 
-  Object.defineProperty(this, 'width', {
+  Object.defineProperty(this, 'height', {
     get: function() {
-      return this._width;
+      return this.row.height;
     },
-    set: function(width) {
-      this._width = width;
-    }
+    set: function(height) {
+      this.row.height = height;
+    },
+    configurable: true
   });
 });
 
