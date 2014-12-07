@@ -16,6 +16,8 @@ var Document = Block.extend('Document', function() {
       orientation: 'portrait'
     });
 
+    this.document = this;
+
     this.paddings = options.paddings;
     this.left = this.paddings.left;
     this.top = this.paddings.top;
@@ -39,8 +41,6 @@ var Document = Block.extend('Document', function() {
     this.subject = options.subject;
     this.orientation = options.orientation;
 
-    this.document = this;
-    this.drawBuffer = [];
     this.pageNumber = 1;
     this.numberOfPages = 1;
 
@@ -107,38 +107,55 @@ var Document = Block.extend('Document', function() {
     }
   });
 
-  Object.defineProperty(this, 'drawBuffer', {
-    get: function() {
-      return this._drawBuffer;
-    },
-    set: function(drawBuffer) {
-      this._drawBuffer = drawBuffer;
-    }
-  });
-
-  Object.defineProperty(this, 'document', {
-    get: function() {
-      return this._document;
-    },
-    set: function(document) {
-      this._document = document;
-    }
-  });
-
-  this.addRow = function(options, fn) {
-    var block = Row.create(this, options);
-    fn(block);
-    block.flush();
-    if (!block.isFloating) {
-      this.y += block.height;
-    }
-  };
-
   this.addPage = function() {
     this.pdf.addPage();
     this.y = this.top;
     this.numberOfPages++;
     this.emit('didAddPage');
+  };
+
+  this.addRow = function(options, fn) {
+    var block = Row.create(this, options);
+    fn(block);
+    this.flush();
+    if (!block.isFloating) {
+      this.y += block.height;
+    }
+  };
+
+  Object.defineProperty(this, 'drawBuffer', {
+    get: function() {
+      if (!this._drawBuffer) this._drawBuffer = [];
+      return this._drawBuffer;
+    }
+  });
+
+  this.draw = function(fn) {
+    this.drawBuffer.push(fn);
+  };
+
+  this.flush = function() {
+    this.drawBuffer.forEach(function(fn) {
+      fn.call(undefined, this.pdf);
+    }.bind(this));
+    this.drawBuffer.length = 0;
+  };
+
+  this.computeWidthOfString = function(str, options) {
+    this.pdf.font(options.fontTypeFace);
+    this.pdf.fontSize(options.fontSize);
+    var width = this.pdf.widthOfString(str);
+    return this.ptToMm(width);
+  };
+
+  this.computeHeightOfString = function(str, options) {
+    this.pdf.font(options.fontTypeFace);
+    this.pdf.fontSize(options.fontSize);
+    var height = this.pdf.heightOfString(
+      str,
+      { width: this.mmToPt(options.width) }
+    );
+    return this.ptToMm(height);
   };
 });
 

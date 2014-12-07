@@ -10,14 +10,14 @@ co(function *() {
         document.addRow({ height: undefined }, function(row) {
           row.addColumn({ width: 50 }, function(col) {
             col.height = 5;
-            col.draw(function(pdf) {
+            document.draw(function(pdf) {
               var x = col.mmToPt(col.x);
               var y = col.mmToPt(col.y);
               pdf.text('A' + i, x, y, { width: col.mmToPt(col.width) });
             });
           });
           row.addColumn({ width: 50 }, function(col) {
-            col.draw(function(pdf) {
+            document.draw(function(pdf) {
               var x = col.mmToPt(col.x);
               var y = col.mmToPt(col.y);
               pdf.text('B' + i, x, y, { width: col.mmToPt(col.width) });

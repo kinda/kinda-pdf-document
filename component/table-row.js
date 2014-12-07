@@ -82,7 +82,7 @@ var TableRow = Component.extend('TableRow', function() {
     // Render borders
     block.x = tableLeft;
 
-    block.draw(function(pdf) {
+    block.document.draw(function(pdf) {
       pdf.lineWidth(table.borderWidth);
       pdf.strokeColor(table.borderColor);
 

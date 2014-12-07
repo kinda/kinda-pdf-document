@@ -105,68 +105,6 @@ var Block = KindaObject.extend('Block', function() {
     }
   });
 
-  Object.defineProperty(this, 'pdf', {
-    get: function() {
-      return this.parentBlock.pdf;
-    },
-    set: function(pdf) {
-      this.parentBlock.pdf = pdf;
-    },
-    configurable: true
-  });
-
-  Object.defineProperty(this, 'drawBuffer', {
-    get: function() {
-      return this.parentBlock.drawBuffer;
-    },
-    set: function(drawBuffer) {
-      this.parentBlock.drawBuffer = drawBuffer;
-    },
-    configurable: true
-  });
-
-  Object.defineProperty(this, 'document', {
-    get: function() {
-      return this.parentBlock.document;
-    },
-    set: function(document) {
-      this.parentBlock.document = document;
-    },
-    configurable: true
-  });
-
-  this.draw = function(fn) {
-    this.drawBuffer.push(fn);
-  };
-
-  this.flush = function() {
-    this.drawBuffer.forEach(function(fn) {
-      fn.call(undefined, this.pdf);
-    }.bind(this));
-    this.drawBuffer.length = 0;
-  };
-
-  this.computeWidthOfString = function(str, options) {
-    this.pdf.font(options.fontTypeFace);
-    this.pdf.fontSize(options.fontSize);
-
-    var width = this.pdf.widthOfString(
-      str + '', { width: this.mmToPt(this.width) }
-    );
-
-    return this.ptToMm(width);
-  };
-
-  this.computeHeightOfString = function(str, options) {
-    this.pdf.font(options.fontTypeFace);
-    this.pdf.fontSize(options.fontSize);
-
-    var height = this.pdf.heightOfString(
-      str + '', { width: this.mmToPt(this.width) }
-    );
-    return this.ptToMm(height);
-  };
-
   this.mmToPt = function(mm) {
     var inch = mm / 25.4;
     var pt = inch * 72;

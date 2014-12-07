@@ -7,6 +7,7 @@ var Column = Block.extend('Column', function() {
   this.setCreator(function(parent, options) {
     if (!options) options = {};
     this.parentBlock = parent;
+    this.document = parent.document;
     this.width = options.width || 0;
     this.paddings = options.paddings || 0;
     this.x = parent.x;

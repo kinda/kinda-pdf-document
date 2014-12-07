@@ -16,7 +16,7 @@ var Text = Component.extend('Text', function() {
     var height = this.computeHeight(block);
     if (height > block.height) block.height = height;
 
-    block.draw(function(pdf) {
+    block.document.draw(function(pdf) {
       var x = block.mmToPt(block.x + block.paddings.left);
       var y = block.mmToPt(block.y + block.paddings.top);
       var width = block.width - (block.paddings.left + block.paddings.right)
@@ -57,23 +57,24 @@ var Text = Component.extend('Text', function() {
   };
 
   this.computeWidth = function(block) {
+    var str = this.parseVariables(this.value, block);
     var options = {
       fontTypeFace: this.fontTypeFace,
       fontSize: this.fontSize
     };
-    var str = this.parseVariables(this.value, block);
-    var width = block.computeWidthOfString(str, options);
+    var width = block.document.computeWidthOfString(str, options);
     width += block.paddings.left + block.paddings.right;
     return width;
   };
 
   this.computeHeight = function(block) {
+    var str = this.parseVariables(this.value, block);
     var options = {
+      width: block.width,
       fontTypeFace: this.fontTypeFace,
       fontSize: this.fontSize
     };
-    var str = this.parseVariables(this.value, block);
-    var height = block.computeHeightOfString(str, options);
+    var height = block.document.computeHeightOfString(str, options);
     height += block.paddings.top + block.paddings.bottom;
     return height;
   };

@@ -8,6 +8,7 @@ var Row = Block.extend('Row', function() {
   this.setCreator(function(parent, options) {
     if (!options) options = {};
     this.parentBlock = parent;
+    this.document = parent;
     this.height = options.height || 0;
     this.isFloating = !!options.isFloating;
     this.paddings = 0;
