@@ -11,6 +11,23 @@ var KindaReport = Component.extend('KindaReport', function() {
   var superCreator = this.getCreator();
   this.setCreator(function(options, fn) {
     superCreator.call(this, undefined, options, fn);
+
+    this.registeredFonts = [];
+
+    this.registerFont(
+      'Helvetica', [], undefined, 'Helvetica'
+    );
+    this.registerFont(
+      'Helvetica', ['bold'], undefined, 'Helvetica-Bold'
+    );
+    this.registerFont(
+      'Helvetica', ['italic'], undefined, 'Helvetica-Oblique'
+    );
+    this.registerFont(
+      'Helvetica', ['bold', 'italic'], undefined, 'Helvetica-BoldOblique'
+    );
+
+    // Same for other standard fonts (Times, Courier, Symbol,...)
   });
 
   this.defaults = {
@@ -58,6 +75,10 @@ var KindaReport = Component.extend('KindaReport', function() {
     return this._footer;
   };
 
+  this.registerFont = function(name, style, path, postScriptName) {
+    // ...
+  };
+
   this.generatePDFFile = function *(path) {
     var options = {
       width: this.width,
@@ -67,7 +88,8 @@ var KindaReport = Component.extend('KindaReport', function() {
       author: this.author,
       subject: this.subject,
       keywords: this.keywords,
-      orientation: this.orientation
+      orientation: this.orientation,
+      registeredFonts: this.registeredFonts
     };
     yield Document.generatePDFFile(path, options, function(document) {
       if (this.getHeader()) {

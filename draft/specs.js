@@ -8,6 +8,21 @@
 
 var report = KindaReport.create({ title: 'Lunch Friday 20th, 2014' });
 
+report.registerFont('Helvetica', ['bold', 'italic'], undefined, 'Helvetica-Bold');
+
+registeredFonts: []
+
+Font: {
+  name: 'Helvetica',
+  style: ['bold', 'italic'],
+  path: 'fonts/Times.ttc',
+  postScriptName: 'Times-Roman'
+}
+
+// standard pdf fonts
+// custom TTF fonts
+// custom TTC fonts
+
 report.addHeader(function(header) {
   header.addText(
     '{{reportTitle}}',

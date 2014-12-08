@@ -60,6 +60,8 @@ var Document = Block.extend('Document', function() {
       layout: this.orientation,
       info: info
     });
+
+    // register fonts in this.pdf
   });
 
   this.addPage = function() {

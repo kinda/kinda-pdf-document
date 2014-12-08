@@ -18,10 +18,9 @@ var options = {
 
 var report = Report.create(options);
 
-report.addHeader(function(header) {
+report.addHeader({ style: 'bold' }, function(header) {
   header.addText(
-    '{{reportTitle}}',
-    { style: 'bold' }
+    '{{reportTitle}}'
   );
   header.addText(
     '5 chekings',
@@ -34,6 +33,8 @@ report.addHeader(function(header) {
 });
 
 report.addBody(function(body) {
+  // body.addTitle('...');
+
   var options = {
     columns: [
       { width: undefined }, { width: undefined },
