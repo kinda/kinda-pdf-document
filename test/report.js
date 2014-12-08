@@ -3,12 +3,11 @@ var co = require('co');
 var Report = require('../');
 var Table = require('../component/table');
 
-var fonts = ['Helvetica', 'Alegreya', 'Thabit']; // 'Times-Roman',
-var fontSizes = [10, 10, 10];
+var fonts = ['Helvetica', 'Alegreya', 'Thabit', 'Chalkboard']; // 'Times-Roman',
+var fontSizes = [10, 14, 24];
 // var fontSizes = [36, 36, 36];
 var colors = ['red', '#FFCC33', 'grey'];
-var fontStyles = ['bold', 'italic', ['italic', 'bold'], 'bold', 'italic'];
-// var fontStyles = [];
+var fontStyles = ['bold', 'bold'];
 var options = {
   fontTypeFace: 'Helvetica',
   title: 'Lunch Friday 20th, 2014',
@@ -29,11 +28,8 @@ report.registerFont('Thabit', ['bold'], 'test/font/Thabit-Bold.ttf');
 report.registerFont('Thabit', ['italic'], 'test/font/Thabit-Oblique.ttf');
 report.registerFont('Thabit', ['bold', 'italic'], 'test/font/Thabit-BoldOblique.ttf');
 
-// report.registerFont('wqy-zenhei', [], './font/wqy-zenhei.ttc', 'wqy-zenhei');
-// report.registerFont('wqy-zenhei', [], './font/wqy-zenhei.ttc', 'wqy-zenhei');
-// report.registerFont('wqy-zenhei', [], './font/wqy-zenhei.ttc', 'wqy-zenhei');
-// report.registerFont('wqy-zenhei', [], './font/wqy-zenhei.ttc', 'wqy-zenhei');
-
+report.registerFont('Chalkboard', [], 'test/font/Chalkboard.ttc', 'Chalkboard');
+report.registerFont('Chalkboard', ['bold'], 'test/font/Chalkboard.ttc', 'Chalkboard-Bold');
 
 report.addHeader(function(header) {
   header.addText(
