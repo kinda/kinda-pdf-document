@@ -3,10 +3,12 @@ var co = require('co');
 var Report = require('../');
 var Table = require('../component/table');
 
-var fonts = ['Helvetica']; // 'Times-Roman',
+var fonts = ['Helvetica', 'Alegreya', 'Thabit']; // 'Times-Roman',
 var fontSizes = [10, 10, 10];
 // var fontSizes = [36, 36, 36];
 var colors = ['red', '#FFCC33', 'grey'];
+var fontStyles = ['bold', 'italic', ['italic', 'bold'], 'bold', 'italic'];
+// var fontStyles = [];
 var options = {
   fontTypeFace: 'Helvetica',
   title: 'Lunch Friday 20th, 2014',
@@ -17,8 +19,23 @@ var options = {
 }
 
 var report = Report.create(options);
+report.registerFont('Alegreya', [], 'test/font/Alegreya-Regular.ttf');
+report.registerFont('Alegreya', ['bold'], 'test/font/Alegreya-Bold.ttf');
+report.registerFont('Alegreya', ['italic'], 'test/font/Alegreya-Italic.ttf');
+report.registerFont('Alegreya', ['bold', 'italic'], 'test/font/Alegreya-BoldItalic.ttf');
 
-report.addHeader({ style: 'bold' }, function(header) {
+report.registerFont('Thabit', [], 'test/font/Thabit.ttf');
+report.registerFont('Thabit', ['bold'], 'test/font/Thabit-Bold.ttf');
+report.registerFont('Thabit', ['italic'], 'test/font/Thabit-Oblique.ttf');
+report.registerFont('Thabit', ['bold', 'italic'], 'test/font/Thabit-BoldOblique.ttf');
+
+// report.registerFont('wqy-zenhei', [], './font/wqy-zenhei.ttc', 'wqy-zenhei');
+// report.registerFont('wqy-zenhei', [], './font/wqy-zenhei.ttc', 'wqy-zenhei');
+// report.registerFont('wqy-zenhei', [], './font/wqy-zenhei.ttc', 'wqy-zenhei');
+// report.registerFont('wqy-zenhei', [], './font/wqy-zenhei.ttc', 'wqy-zenhei');
+
+
+report.addHeader(function(header) {
   header.addText(
     '{{reportTitle}}'
   );
@@ -64,31 +81,35 @@ report.addBody(function(body) {
       for (var i = 1; i <= 50; i++) {
         body.addRow(function(row) {
           row.addCell(function(cell) {
-            cell.addText(i, {
+            cell.addText(fonts[i%fonts.length] + '-' + fontStyles[i%fontStyles.length], {
               fontTypeFace: fonts[i%fonts.length],
               fontSize: fontSizes[i%fontSizes.length],
-              color: colors[i%colors.length]
+              color: colors[i%colors.length],
+              fontStyle: fontStyles[i%fontStyles.length]
             });
           });
           row.addCell(function(cell) {
-            cell.addText('Bbbbbbbbbbbbbbbbbbbbb', {
+            cell.addText(fonts[i%fonts.length] + '-' + fontStyles[i%fontStyles.length], {
               fontTypeFace: fonts[i%fonts.length],
               fontSize: fontSizes[i%fontSizes.length],
-              color: colors[i%colors.length]
+              color: colors[i%colors.length],
+              fontStyle: fontStyles[i%fontStyles.length]
             });
           });
           row.addCell(function(cell) {
-            cell.addText('Blah', {
+            cell.addText(fonts[i%fonts.length] + '-' + fontStyles[i%fontStyles.length], {
               fontTypeFace: fonts[i%fonts.length],
               fontSize: fontSizes[i%fontSizes.length],
-              color: colors[i%colors.length]
+              color: colors[i%colors.length],
+              fontStyle: fontStyles[i%fontStyles.length]
             });
           });
           row.addCell(function(cell) {
-            cell.addText('Pirate Bay', {
+            cell.addText(fonts[i%fonts.length] + '-' + fontStyles[i%fontStyles.length], {
               fontTypeFace: fonts[i%fonts.length],
               fontSize: fontSizes[i%fontSizes.length],
-              color: colors[i%colors.length]
+              color: colors[i%colors.length],
+              fontStyle: fontStyles[i%fontStyles.length]
             });
           });
         });

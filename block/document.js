@@ -61,7 +61,8 @@ var Document = Block.extend('Document', function() {
       info: info
     });
 
-    // register fonts in this.pdf
+    this.registeredFonts = options.registeredFonts;
+    // options.registeredFonts
   });
 
   this.addPage = function() {

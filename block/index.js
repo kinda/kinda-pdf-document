@@ -62,7 +62,7 @@ var Block = KindaObject.extend('Block', function() {
   });
 
   this.computeWidthOfString = function(str, options) {
-    this.document.pdf.font(options.fontTypeFace);
+    this.document.pdf.font(options.font.fontName, options.font.postScriptName);
     this.document.pdf.fontSize(options.fontSize);
     var width = this.document.pdf.widthOfString(str);
     width = this.ptToMm(width);
@@ -71,7 +71,7 @@ var Block = KindaObject.extend('Block', function() {
   };
 
   this.computeHeightOfString = function(str, options) {
-    this.document.pdf.font(options.fontTypeFace);
+    this.document.pdf.font(options.font.fontName, options.font.postScriptName);
     this.document.pdf.fontSize(options.fontSize);
     var height = this.document.pdf.heightOfString(
       str,

@@ -28,6 +28,70 @@ var Component = KindaObject.extend('Component', function() {
     }
   });
 
+  Object.defineProperty(this, 'fontFace', {
+    get: function() {
+      if (!_.isUndefined(this._fontFace))
+        return this._fontFace;
+      else if (this.parentComponent)
+        return this.parentComponent.fontFace;
+    },
+    set: function(value) {
+      this._fontFace = value;
+    }
+  });
+
+  Object.defineProperty(this, 'fontWeight', {
+    get: function() {
+      if (!_.isUndefined(this._fontWeight))
+        return this._fontWeight;
+      else if (this.parentComponent)
+        return this.parentComponent.fontWeight;
+    },
+    set: function(value) {
+      this._fontWeight = value;
+    }
+  });
+
+  Object.defineProperty(this, 'fontStyle', {
+    get: function() {
+      if (!_.isUndefined(this._fontStyle))
+        return this._fontStyle;
+      else if (this.parentComponent)
+        return this.parentComponent.fontStyle;
+    },
+    set: function(fontStyle) {
+      if (_.isString(fontStyle)) {
+        fontStyle = [fontStyle];
+      }
+
+      this._fontStyle = fontStyle;
+    }
+  });
+
+  Object.defineProperty(this, 'fontColor', {
+    get: function() {
+      if (!_.isUndefined(this._fontColor))
+        return this._fontColor;
+      else if (this.parentComponent)
+        return this.parentComponent.fontColor;
+    },
+    set: function(value) {
+      this._fontColor = value;
+    }
+  });
+
+  // Object.defineProperty(this, 'font', {
+  //   get: function() {
+  //     return {
+  //       fontFace: this.fontFace,
+  //       fontSize: this.fontSize,
+  //       fontWeight: this.fontWeight,
+  //       fontStyle: this.fontStyle,
+  //       fontColor: this.fontColor
+  //     }
+  //   }
+  // });
+
   Object.defineProperty(this, 'fontSize', {
     get: function() {
       if (!_.isUndefined(this._fontSize)) {

@@ -21,7 +21,15 @@ var Text = Component.extend('Text', function() {
       var y = block.mmToPt(block.y + block.paddings.top);
       var width = block.width - (block.paddings.left + block.paddings.right)
 
-      pdf.font(this.fontTypeFace);
+      var font = this.getFont(block, this.fontTypeFace, this.fontStyle);
+
+      // console.log(font);
+      // console.log('=============');
+
+      if (font) {
+        pdf.font(font.fontName, font.postScriptName);
+      }
+
       pdf.fontSize(this.fontSize);
       pdf.fillColor(this.color);
 
@@ -31,6 +39,39 @@ var Text = Component.extend('Text', function() {
         align: this.alignment
       });
     }.bind(this));
+  };
+
+  this.getFont = function(block, fontTypeFace, fontStyle) {
+    var candidateFonts = block.document.registeredFonts;
+
+    candidateFonts = _.filter(candidateFonts, function(candidateFont) {
+      return candidateFont.name === fontTypeFace;
+    });
+
+    candidateFonts = _.filter(candidateFonts, function(candidateFont) {
+      if (_.isUndefined(fontStyle)) fontStyle = [];
+      return candidateFont.style.length === fontStyle.length;
+    });
+
+    candidateFonts = _.filter(candidateFonts, function(candidateFont) {
+      return _.every(fontStyle, function(stl) {
+        return _.contains(candidateFont.style, stl);
+      });
+    });
+
+    if (candidateFonts.length > 0) {
+      var candidate = candidateFonts[0];
+
+      // console.log(candidate);
+      // console.log('====================');
+
+      return {
+        fontName: candidate.path == null ? candidate.postScriptName : candidate.path,
+        postScriptName: candidate.postScriptName
+      };
+    } else {
+      return undefined;
+    }
   };
 
   this.parseVariables = function(str, block) {
@@ -59,18 +100,21 @@ var Text = Component.extend('Text', function() {
   this.computeWidth = function(block) {
     var str = this.parseVariables(this.value, block);
     var options = {
-      fontTypeFace: this.fontTypeFace,
+      font: this.getFont(block, this.fontTypeFace, this.fontStyle),
       fontSize: this.fontSize
     };
+
     return block.computeWidthOfString(str, options);;
   };
 
   this.computeHeight = function(block) {
     var str = this.parseVariables(this.value, block);
+
     var options = {
-      fontTypeFace: this.fontTypeFace,
+      font: this.getFont(block, this.fontTypeFace, this.fontStyle),
       fontSize: this.fontSize
     };
+
     return block.computeHeightOfString(str, options);
   };
 });

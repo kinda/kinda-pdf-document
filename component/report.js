@@ -6,14 +6,37 @@ var ReportHeader = require('./report-header');
 var ReportBody = require('./report-body');
 var ReportFooter = require('./report-footer');
 var Document = require('../block/document');
+var Font = require('../font');
 
 var KindaReport = Component.extend('KindaReport', function() {
+  this.defaults = {
+    width: 210,
+    height: 297,
+    paddings: 10,
+    fontTypeFace: 'Helvetica',
+    fontStyle: [],
+    fontSize: 10,
+    color: 'black'
+  };
+
   var superCreator = this.getCreator();
   this.setCreator(function(options, fn) {
     superCreator.call(this, undefined, options, fn);
 
     this.registeredFonts = [];
 
+    this.registerFont(
+      'Courier', [], undefined, 'Courier'
+    );
+    this.registerFont(
+      'Courier', ['bold'], undefined, 'Courier-Bold'
+    );
+    this.registerFont(
+      'Courier', ['italic'], undefined, 'Courier-Oblique'
+    );
+    this.registerFont(
+      'Courier', ['bold', 'italic'], undefined, 'Courier-BoldOblique'
+    );
     this.registerFont(
       'Helvetica', [], undefined, 'Helvetica'
     );
@@ -26,18 +49,25 @@ var KindaReport = Component.extend('KindaReport', function() {
     this.registerFont(
       'Helvetica', ['bold', 'italic'], undefined, 'Helvetica-BoldOblique'
     );
-
-    // Same for other standard fonts (Times, Courier, Symbol,...)
+    this.registerFont(
+      'Times', [], undefined, 'Times-Roman'
+    );
+    this.registerFont(
+      'Times', ['bold'], undefined, 'Times-Bold'
+    );
+    this.registerFont(
+      'Times', ['italic'], undefined, 'Times-Italic'
+    );
+    this.registerFont(
+      'Times', ['bold', 'italic'], undefined, 'Times-BoldItalic'
+    );
+    this.registerFont(
+      'Symbol', [], undefined, 'Symbol'
+    );
+    this.registerFont(
+      'ZapfDingbats', [], undefined, 'ZapfDingbats'
+    );
   });
-
-  this.defaults = {
-    width: 210,
-    height: 297,
-    paddings: 10,
-    fontTypeFace: 'Helvetica',
-    fontSize: 10,
-    color: 'black'
-  };
 
   this.addHeader = function(options, fn) {
     if (this._header) {
@@ -76,7 +106,12 @@ var KindaReport = Component.extend('KindaReport', function() {
   };
 
   this.registerFont = function(name, style, path, postScriptName) {
-    // ...
+    if (_.isString(path) && path.slice(-4) === '.ttc' && _.isUndefined(postScriptName)) {
+      throw new Error('PostScriptName is required when use TrueType Font collection (.ttc)');
+    }
+
+    var font = Font.create(name, style, path, postScriptName);
+    this.registeredFonts.push(font);
   };
 
   this.generatePDFFile = function *(path) {
