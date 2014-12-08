@@ -66,7 +66,7 @@ report.addHeader(function(header) {
 });
 
 report.addBody(function(body) {
-  body.addTitle().addText('Basic Table');
+  body.addTitle('Basic Table by shortcut');
 
   var options = {
     columns: [
@@ -167,7 +167,7 @@ report.addBody(function(body) {
     });
    });
 
-   body.addTitle().addText('Basic Table');
+   body.addTitle().addText('Basic Table in normal');
 
    body.addTable(options, function(table) {
      table.addHeader({ alignment: 'center' }, function(header) {

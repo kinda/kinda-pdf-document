@@ -17,8 +17,19 @@ var ReportBody = Component.extend('ReportBody', function() {
     }
   });
 
-  this.addTitle = function(options, fn) {
+  this.addTitle = function(value, options, fn) {
+    if (!_.isString(value) && _.isUndefined(fn)) {
+      fn = options;
+      options = value;
+      value = undefined;
+    }
+
     var title = Title.create(this, options, fn);
+
+    if (!_.isUndefined(value)) {
+      title.addText(value);
+    }
+
     this.components.push(title);
     return title;
   };
