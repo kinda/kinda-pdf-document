@@ -2,6 +2,7 @@
 
 var _ = require('lodash');
 var Component = require('./');
+var Title = require('./title');
 var Table = require('./table').Table;
 
 var ReportBody = Component.extend('ReportBody', function() {
@@ -15,6 +16,12 @@ var ReportBody = Component.extend('ReportBody', function() {
       return this._components;
     }
   });
+
+  this.addTitle = function(options, fn) {
+    var title = Title.create(this, options, fn);
+    this.components.push(title);
+    return title;
+  };
 
   this.addTable = function(options, fn) {
     var table = Table.create(this, options, fn);

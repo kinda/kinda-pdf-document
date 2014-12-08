@@ -66,7 +66,7 @@ report.addHeader(function(header) {
 });
 
 report.addBody(function(body) {
-  // body.addTitle('...');
+  body.addTitle().addText('Basic Table');
 
   var options = {
     columns: [
@@ -165,6 +165,82 @@ report.addBody(function(body) {
         });
       });
     });
+   });
+
+   body.addTitle().addText('Basic Table');
+
+   body.addTable(options, function(table) {
+     table.addHeader({ alignment: 'center' }, function(header) {
+       header.addRow(function(row) {
+         row.addCell(function(cell) {
+           cell.addText('A');
+         });
+         row.addCell(function(cell) {
+           cell.addText('B');
+         });
+         row.addCell(function(cell) {
+           cell.addText('C');
+         });
+         row.addCell(function(cell) {
+           cell.addText('D');
+         });
+       });
+     });
+
+     table.addBody(function(body) {
+       for (var i = 1; i <= 20; i++) {
+         body.addRow(function(row) {
+           row.addCell(function(cell) {
+             cell.addText(i, {
+               fontTypeFace: fonts[i%fonts.length],
+               fontSize: fontSizes[i%fontSizes.length],
+               color: colors[i%colors.length]
+             });
+           });
+           row.addCell(function(cell) {
+             cell.addText('Bbbbbbbbbbbbbbbbbbbbb', {
+               fontTypeFace: fonts[i%fonts.length],
+               fontSize: fontSizes[i%fontSizes.length],
+               color: colors[i%colors.length]
+             });
+           });
+           row.addCell(function(cell) {
+             cell.addText('Blah', {
+               fontTypeFace: fonts[i%fonts.length],
+               fontSize: fontSizes[i%fontSizes.length],
+               color: colors[i%colors.length]
+             });
+           });
+           row.addCell(function(cell) {
+             cell.addText('Pirate Bay', {
+               fontTypeFace: fonts[i%fonts.length],
+               fontSize: fontSizes[i%fontSizes.length],
+               color: colors[i%colors.length]
+             });
+           });
+         });
+       }
+     });
+
+     table.addFooter(function(footer) {
+       footer.addRow(function(row) {
+         row.addCell(function(cell) {
+           cell.addText('footer abc');
+         });
+
+         row.addCell(function(cell) {
+           cell.addText('fooooooter');
+         });
+
+         row.addCell(function(cell) {
+           cell.addText('footer');
+         });
+
+         row.addCell(function(cell) {
+           cell.addText('footer mno');
+         });
+       });
+     });
    });
 });
 
