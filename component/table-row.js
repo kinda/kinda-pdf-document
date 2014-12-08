@@ -12,8 +12,19 @@ var TableRow = Component.extend('TableRow', function() {
     }
   });
 
-  this.addCell = function(options, fn) {
+  this.addCell = function(value, options, fn) {
+    if (!_.isString(value) && _.isUndefined(fn)) {
+      fn = options;
+      options = value;
+      value = undefined;
+    }
+
     var cell = TableCell.create(this, options, fn);
+
+    if (_.isString(value)) {
+      cell.addText(value);
+    }
+
     this.cells.push(cell);
     var table = this.findComponent('Table');
     if (this.cells.length > table.columns.length) {

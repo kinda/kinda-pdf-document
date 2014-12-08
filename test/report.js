@@ -91,9 +91,23 @@ report.addBody(function(body) {
           cell.addText('D');
         });
       });
+
+      header.addRow(function(row) {
+        row.addCell('header cell');
+        row.addCell('added');
+        row.addCell('by');
+        row.addCell('shortcut');
+      });
     });
 
     table.addBody(function(body) {
+      body.addRow(function(row) {
+        row.addCell('cell');
+        row.addCell('added');
+        row.addCell('by');
+        row.addCell('shortcut');
+      });
+
       for (var i = 1; i <= 50; i++) {
         body.addRow(function(row) {
           row.addCell(function(cell) {
