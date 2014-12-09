@@ -4,34 +4,14 @@ var co = require('co');
 var Document = require('../');
 var Table = require('../component/table');
 
-var fonts = ['Helvetica', 'Alegreya', 'Thabit']; // 'Times-Roman',
-var fontSizes = [10, 14, 24];
-// var fontSizes = [36, 36, 36];
-var colors = ['red', '#FFCC33', 'grey'];
-var fontStyles = ['bold', 'italic'];
-
 var options = {
-  fontTypeFace: 'Helvetica',
-  title: 'Lunch Friday 20th, 2014',
+  title: 'Kinda Document tests',
   author: 'fishead <zhchuan7@gmail.com>',
-  subject: 'Just a report',
+  subject: 'Kinda Document tests',
   keywords: 'Visitor PDFKit Node.js',
-  orientation: 'portrait'
 }
 var report = Document.create(options);
 
-report.registerFont('Alegreya', [],
-  nodePath.join(__dirname, 'fonts', 'Alegreya-Regular.ttf')
-);
-report.registerFont('Alegreya', ['bold'],
-  nodePath.join(__dirname, 'fonts', 'Alegreya-Bold.ttf')
-);
-report.registerFont('Alegreya', ['italic'],
-  nodePath.join(__dirname, 'fonts', 'Alegreya-Italic.ttf')
-);
-report.registerFont('Alegreya', ['bold', 'italic'],
-  nodePath.join(__dirname, 'fonts', 'Alegreya-BoldItalic.ttf')
-);
 report.registerFont('Thabit', [],
   nodePath.join(__dirname, 'fonts', 'Thabit.ttf')
 );
@@ -44,12 +24,12 @@ report.registerFont('Thabit', ['italic'],
 report.registerFont('Thabit', ['bold', 'italic'],
   nodePath.join(__dirname, 'fonts', 'Thabit-BoldOblique.ttf')
 );
-// report.registerFont('Chalkboard', [],
-//   nodePath.join(__dirname, 'fonts', 'Chalkboard.ttc'), 'Chalkboard'
-// );
-// report.registerFont('Chalkboard', ['bold'],
-//  nodePath.join(__dirname, 'fonts', 'Chalkboard.ttc'), 'Chalkboard-Bold'
-// );
+report.registerFont('Chalkboard', [],
+  nodePath.join(__dirname, 'fonts', 'Chalkboard.ttc'), 'Chalkboard'
+);
+report.registerFont('Chalkboard', ['bold'],
+  nodePath.join(__dirname, 'fonts', 'Chalkboard.ttc'), 'Chalkboard-Bold'
+);
 
 report.addHeader(function(header) {
   header.addText(
@@ -66,182 +46,372 @@ report.addHeader(function(header) {
 });
 
 report.addBody(function(body) {
-  body.addTitle('Basic Table by shortcut');
-
-  var options = {
-    columns: [
-      { width: undefined }, { width: undefined },
-      { width: undefined }, { width: undefined }
-    ],
-    alignment: 'left'
-  };
-  body.addTable(options, function(table) {
-    table.addHeader({ alignment: 'center' }, function(header) {
-      header.addRow(function(row) {
-        row.addCell(function(cell) {
-          cell.addText('A');
-        });
-        row.addCell(function(cell) {
-          cell.addText('B');
-        });
-        row.addCell(function(cell) {
-          cell.addText('C');
-        });
-        row.addCell(function(cell) {
-          cell.addText('D');
-        });
+  /***********************************************************/
+  body.addTitle('title adds with shortcut');
+  body.addTable(function(table) {
+    table.addBody(function(body) {
+      body.addRow(function(row) {
+        row.addCell('cell adds with shortcut');
+        row.addCell('cell adds with shortcut');
       });
+    });
+  });
 
+  /************************************************************/
+  body.addTitle('default table header');
+  body.addTable(function(table) {
+    table.addHeader(function(header) {
       header.addRow(function(row) {
-        row.addCell('header cell');
-        row.addCell('added');
-        row.addCell('by');
-        row.addCell('shortcut');
+        row.addCell('default header cell');
+        row.addCell('default header cell');
+        row.addCell('default header cell');
+        row.addCell('default header cell');
+      });
+    });
+  });
+
+  /************************************************************/
+  body.addTitle('default table body');
+  body.addTable(function(table) {
+    table.addBody(function(body) {
+      body.addRow(function(row) {
+        row.addCell('default body cell');
+        row.addCell('default body cell');
+        row.addCell('default body cell');
+        row.addCell('default body cell');
+      });
+    });
+  });
+
+  /************************************************************/
+  body.addTitle('default table footer');
+  body.addTable(function(table) {
+    table.addFooter(function(footer) {
+      footer.addRow(function(row) {
+        row.addCell('default footer cell');
+        row.addCell('default footer cell');
+        row.addCell('default footer cell');
+        row.addCell('default footer cell');
+      });
+    });
+  });
+
+  /************************************************************/
+  body.addTitle('default table with header');
+  body.addTable(function(table) {
+    table.addHeader(function(header) {
+      header.addRow(function(row) {
+        row.addCell('default header cell');
+        row.addCell('default header cell');
+        row.addCell('default header cell');
+        row.addCell('default header cell');
       });
     });
 
     table.addBody(function(body) {
       body.addRow(function(row) {
-        row.addCell('cell');
-        row.addCell('added');
-        row.addCell('by');
-        row.addCell('shortcut');
+        row.addCell('default body cell');
+        row.addCell('default body cell');
+        row.addCell('default body cell');
+        row.addCell('default body cell');
       });
+    });
+  });
 
-      for (var i = 1; i <= 50; i++) {
-        body.addRow(function(row) {
-          row.addCell(function(cell) {
-            cell.addText(fonts[i%fonts.length] + '-' + fontStyles[i%fontStyles.length], {
-              fontTypeFace: fonts[i%fonts.length],
-              fontSize: fontSizes[i%fontSizes.length],
-              color: colors[i%colors.length],
-              fontStyle: fontStyles[i%fontStyles.length]
-            });
-          });
-          row.addCell(function(cell) {
-            cell.addText(fonts[i%fonts.length] + '-' + fontStyles[i%fontStyles.length], {
-              fontTypeFace: fonts[i%fonts.length],
-              fontSize: fontSizes[i%fontSizes.length],
-              color: colors[i%colors.length],
-              fontStyle: fontStyles[i%fontStyles.length]
-            });
-          });
-          row.addCell(function(cell) {
-            cell.addText(fonts[i%fonts.length] + '-' + fontStyles[i%fontStyles.length], {
-              fontTypeFace: fonts[i%fonts.length],
-              fontSize: fontSizes[i%fontSizes.length],
-              color: colors[i%colors.length],
-              fontStyle: fontStyles[i%fontStyles.length]
-            });
-          });
-          row.addCell(function(cell) {
-            cell.addText(fonts[i%fonts.length] + '-' + fontStyles[i%fontStyles.length], {
-              fontTypeFace: fonts[i%fonts.length],
-              fontSize: fontSizes[i%fontSizes.length],
-              color: colors[i%colors.length],
-              fontStyle: fontStyles[i%fontStyles.length]
-            });
-          });
-        });
-      }
+  /************************************************************/
+  body.addTitle('default table with footer');
+  body.addTable(function(table) {
+    table.addBody(function(body) {
+      body.addRow(function(row) {
+        row.addCell('default body cell');
+        row.addCell('default body cell');
+        row.addCell('default body cell');
+        row.addCell('default body cell');
+      });
     });
 
     table.addFooter(function(footer) {
       footer.addRow(function(row) {
-        row.addCell(function(cell) {
-          cell.addText('footer abc');
-        });
+        row.addCell('default footer cell');
+        row.addCell('default footer cell');
+        row.addCell('default footer cell');
+        row.addCell('default footer cell');
+      });
+    });
+  });
 
-        row.addCell(function(cell) {
-          cell.addText('fooooooter');
-        });
+  /************************************************************/
+  body.addTitle('default table without body');
+  body.addTable(function(table) {
+    table.addHeader(function(header) {
+      header.addRow(function(row) {
+        row.addCell('default header cell');
+        row.addCell('default header cell');
+        row.addCell('default header cell');
+        row.addCell('default header cell');
+      });
+    });
 
-        row.addCell(function(cell) {
-          cell.addText('footer');
-        });
+    table.addFooter(function(footer) {
+      footer.addRow(function(row) {
+        row.addCell('default footer cell');
+        row.addCell('default footer cell');
+        row.addCell('default footer cell');
+        row.addCell('default footer cell');
+      });
+    });
+  });
 
-        row.addCell(function(cell) {
-          cell.addText('footer mno');
+  /************************************************************/
+  body.addTitle('default table with header & footer');
+  body.addTable(function(table) {
+    table.addHeader(function(header) {
+      header.addRow(function(row) {
+        row.addCell('default header cell');
+        row.addCell('default header cell');
+        row.addCell('default header cell');
+        row.addCell('default header cell');
+      });
+    });
+
+    table.addBody(function(body) {
+      body.addRow(function(row) {
+        row.addCell('default body cell');
+        row.addCell('default body cell');
+        row.addCell('default body cell');
+        row.addCell('default body cell');
+      });
+    });
+
+    table.addFooter(function(footer) {
+      footer.addRow(function(row) {
+        row.addCell('default footer cell');
+        row.addCell('default footer cell');
+        row.addCell('default footer cell');
+        row.addCell('default footer cell');
+      });
+    });
+  });
+
+  /*************************************************************/
+  body.addTitle('Table spread two page');
+  body.addTable(function(table) {
+    table.addHeader(function(header) {
+      header.addRow(function(row) {
+        row.addCell('header at every page', { color: 'red' });
+        row.addCell('header at every page', { color: 'red' });
+        row.addCell('header at every page', { color: 'red' });
+        row.addCell('header at every page', { color: 'red' });
+      });
+    });
+
+    table.addBody(function(body) {
+      body.addRow(function(row) {
+        row.addCell('default body cell');
+        row.addCell('default body cell');
+        row.addCell('default body cell');
+        row.addCell('default body cell');
+      });
+      body.addRow(function(row) {
+        row.addCell('default body cell');
+        row.addCell('default body cell');
+        row.addCell('default body cell');
+        row.addCell('default body cell');
+      });
+      body.addRow(function(row) {
+        row.addCell('default body cell');
+        row.addCell('default body cell');
+        row.addCell('default body cell');
+        row.addCell('default body cell');
+      });
+      body.addRow(function(row) {
+        row.addCell('default body cell');
+        row.addCell('default body cell');
+        row.addCell('default body cell');
+        row.addCell('default body cell');
+      });
+    });
+
+    table.addFooter(function(footer) {
+      footer.addRow(function(row) {
+        row.addCell('footer only at the end', { color: 'green' });
+        row.addCell('footer only at the end', { color: 'green' });
+        row.addCell('footer only at the end', { color: 'green' });
+        row.addCell('footer only at the end', { color: 'green' });
+      });
+    });
+  });
+
+  /************************************************************/
+  body.addTitle('font size');
+  body.addTable(function(table) {
+    table.addBody(function(body) {
+      body.addRow(function(row) {
+        row.addCell('default font size');
+        row.addCell('12 px font size', {
+          fontSize: 12
+        });
+        row.addCell('16 px font size', {
+          fontSize: 14
+        });
+        row.addCell('20 px font size', {
+          fontSize: 18
         });
       });
     });
-   });
+  });
 
-   body.addTitle().addText('Basic Table in normal');
+  /************************************************************/
+  body.addTitle('font color');
+  body.addTable(function(table) {
+    table.addBody(function(body) {
+      body.addRow(function(row) {
+        row.addCell('default font color');
+        row.addCell('blue font color', {
+          color: 'blue'
+        });
+        row.addCell('gray font color', {
+          color: 'gray'
+        });
+        row.addCell('#A52A2A (brown) font size', {
+          color: '#A52A2A'
+        });
+      });
+    });
+  });
 
-   body.addTable(options, function(table) {
-     table.addHeader({ alignment: 'center' }, function(header) {
-       header.addRow(function(row) {
-         row.addCell(function(cell) {
-           cell.addText('A');
-         });
-         row.addCell(function(cell) {
-           cell.addText('B');
-         });
-         row.addCell(function(cell) {
-           cell.addText('C');
-         });
-         row.addCell(function(cell) {
-           cell.addText('D');
-         });
-       });
-     });
+  /************************************************************/
+  body.addTitle('font style');
+  body.addTable(function(table) {
+    table.addBody(function(body) {
+      body.addRow(function(row) {
+        row.addCell('default font style');
+        row.addCell('bold font style', {
+          fontStyle: 'bold'
+        });
+        row.addCell('italic font style', {
+          fontStyle: 'italic'
+        });
+        row.addCell('bold & italic font style', {
+          fontStyle: ['bold', 'italic']
+        });
+      });
+    });
+  });
 
-     table.addBody(function(body) {
-       for (var i = 1; i <= 20; i++) {
-         body.addRow(function(row) {
-           row.addCell(function(cell) {
-             cell.addText(i, {
-               fontTypeFace: fonts[i%fonts.length],
-               fontSize: fontSizes[i%fontSizes.length],
-               color: colors[i%colors.length]
-             });
-           });
-           row.addCell(function(cell) {
-             cell.addText('Bbbbbbbbbbbbbbbbbbbbb', {
-               fontTypeFace: fonts[i%fonts.length],
-               fontSize: fontSizes[i%fontSizes.length],
-               color: colors[i%colors.length]
-             });
-           });
-           row.addCell(function(cell) {
-             cell.addText('Blah', {
-               fontTypeFace: fonts[i%fonts.length],
-               fontSize: fontSizes[i%fontSizes.length],
-               color: colors[i%colors.length]
-             });
-           });
-           row.addCell(function(cell) {
-             cell.addText('Pirate Bay', {
-               fontTypeFace: fonts[i%fonts.length],
-               fontSize: fontSizes[i%fontSizes.length],
-               color: colors[i%colors.length]
-             });
-           });
-         });
-       }
-     });
+  /************************************************************/
+  body.addTitle('font face');
+  body.addTable(function(table) {
+    table.addBody(function(body) {
+      body.addRow(function(row) {
+        row.addCell('default font face');
+        row.addCell('helvetica, standard font', {
+          fontTypeFace: 'Helvetica'
+        });
+        row.addCell('Thabit, custom ttf font', {
+          fontTypeFace: 'Thabit'
+        });
+        row.addCell('Chalkboard, custom ttc font', {
+          fontTypeFace: 'Chalkboard'
+        });
+      });
+    });
+  });
 
-     table.addFooter(function(footer) {
-       footer.addRow(function(row) {
-         row.addCell(function(cell) {
-           cell.addText('footer abc');
-         });
+  /************************************************************/
+  var leftAlign = { alignment: 'left' };
+  body.addTitle().addText('left align title & Table', leftAlign);
+  body.addTable(leftAlign, function(table) {
+    table.addBody(function(body) {
+      body.addRow(function(row) {
+        row.addCell('default body cell');
+        row.addCell('default body cell');
+        row.addCell('default body cell');
+        row.addCell('default body cell');
+      });
+    });
+  });
 
-         row.addCell(function(cell) {
-           cell.addText('fooooooter');
-         });
+  /*************************************************************/
+  var centerAlign = { alignment: 'center' };
+  body.addTitle().addText('center align title & Table', centerAlign);
+  body.addTable(centerAlign, function(table) {
+    table.addBody(function(body) {
+      body.addRow(function(row) {
+        row.addCell('default body cell');
+        row.addCell('default body cell');
+        row.addCell('default body cell');
+        row.addCell('default body cell');
+      });
+    });
+  });
 
-         row.addCell(function(cell) {
-           cell.addText('footer');
-         });
+  /***********************************************************/
+  var rightAlign = { alignment: 'right' };
+  body.addTitle().addText('right align title & Table', rightAlign);
+  body.addTable(rightAlign, function(table) {
+    table.addBody(function(body) {
+      body.addRow(function(row) {
+        row.addCell('default body cell');
+        row.addCell('default body cell');
+        row.addCell('default body cell');
+        row.addCell('default body cell');
+      });
+    });
+  });
 
-         row.addCell(function(cell) {
-           cell.addText('footer mno');
-         });
-       });
-     });
-   });
+  /***********************************************************/
+  body.addTitle().addText('columns width (all fixed to 40)');
+  var options = { columns: [{ width: 40 }, { width: 40 }, { width: 40 }] }
+  body.addTable(options, function(table) {
+    table.addBody(function(body) {
+      body.addRow(function(row) {
+        row.addCell('short content');
+        row.addCell('this content just so long');
+        row.addCell('longer content will wrap by default');
+      });
+    });
+  });
+
+  /***********************************************************/
+  body.addTitle().addText('columns width (half fixed to 40, half is automatic)');
+  var options = { columns: [{ width: 40 }, { width: undefined }, { width: 40 }] }
+  body.addTable(options, function(table) {
+    table.addBody(function(body) {
+      body.addRow(function(row) {
+        row.addCell('fixed width column, short content', { color: 'green' });
+        row.addCell('automatic adjust column, this content just so long and', { color: 'cyan' });
+        row.addCell('fixed width column, longer content will wrap by default', { color: 'green' });
+        row.addCell('automatic adjust column, longer content will wrap by default', { color: 'cyan' });
+      });
+    });
+  });
+
+  /***********************************************************/
+  body.addTitle().addText('columns width (all automatic, scale to fit content)');
+  body.addTable(function(table) {
+    table.addBody(function(body) {
+      body.addRow(function(row) {
+        row.addCell('nothing here', { color: 'cyan' });
+        row.addCell('tiny content dont need too much', { color: 'cyan' });
+        row.addCell('one more, please', { color: 'cyan' });
+        row.addCell('is it enough?', { color: 'cyan' });
+      });
+    });
+  });
+
+  /***********************************************************/
+  body.addTitle().addText('columns width (all automatic, use all of the width)');
+  body.addTable(function(table) {
+    table.addBody(function(body) {
+      body.addRow(function(row) {
+        row.addCell('nothing here', { color: 'cyan' });
+        row.addCell('tiny content dont need too much', { color: 'cyan' });
+        row.addCell('fat content want eat up most of the width, one more, please', { color: 'cyan' });
+        row.addCell('is it enough?', { color: 'cyan' });
+      });
+    });
+  });
 });
 
 report.addFooter(function(footer) {

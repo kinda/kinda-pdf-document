@@ -27,6 +27,7 @@ var Text = Component.extend('Text', function() {
       pdf.fillColor(this.color);
 
       var str = this.parseVariables(this.value, block);
+
       pdf.text(str, x, y, {
         width: block.mmToPt(width),
         align: this.alignment

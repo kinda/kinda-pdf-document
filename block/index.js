@@ -65,6 +65,7 @@ var Block = KindaObject.extend('Block', function() {
     var font = this.document.getFont(options.fontTypeFace, options.fontStyle);
     this.document.pdf.font(font.name, font.postScriptName);
     this.document.pdf.fontSize(options.fontSize);
+
     var width = this.document.pdf.widthOfString(str);
     width = this.ptToMm(width);
     width += this.paddings.left + this.paddings.right + 0.000001;
@@ -75,10 +76,13 @@ var Block = KindaObject.extend('Block', function() {
     var font = this.document.getFont(options.fontTypeFace, options.fontStyle);
     this.document.pdf.font(font.name, font.postScriptName);
     this.document.pdf.fontSize(options.fontSize);
+    var width = this.width - (this.paddings.left + this.paddings.right);
     var height = this.document.pdf.heightOfString(
       str,
-      { width: this.mmToPt(this.width) }
+      { width: this.mmToPt(width) }
     );
+    // remove last line gap
+    height -= this.document.pdf.currentLineHeight(true) - this.document.pdf.currentLineHeight(false);
     height = this.ptToMm(height);
     height += this.paddings.top + this.paddings.bottom;
     return height;
