@@ -1,7 +1,7 @@
 var nodePath = require('path');
 var _ = require('lodash');
 var co = require('co');
-var Report = require('../');
+var Document = require('../');
 var Table = require('../component/table');
 
 var fonts = ['Helvetica', 'Alegreya', 'Thabit']; // 'Times-Roman',
@@ -18,7 +18,7 @@ var options = {
   keywords: 'Visitor PDFKit Node.js',
   orientation: 'portrait'
 }
-var report = Report.create(options);
+var report = Document.create(options);
 
 report.registerFont('Alegreya', [],
   nodePath.join(__dirname, 'fonts', 'Alegreya-Regular.ttf')
@@ -256,7 +256,7 @@ report.addFooter(function(footer) {
 
 co(function *() {
   yield report.generatePDFFile('test.pdf');
-  console.log('Report generated');
+  console.log('Document generated');
 }).catch(function(err) {
   console.error(err.stack);
 });

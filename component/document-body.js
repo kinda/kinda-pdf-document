@@ -5,7 +5,7 @@ var Component = require('./');
 var Title = require('./title');
 var Table = require('./table').Table;
 
-var ReportBody = Component.extend('ReportBody', function() {
+var DocumentBody = Component.extend('DocumentBody', function() {
   this.defaults = {
     alignment: 'left'
   };
@@ -42,4 +42,4 @@ var ReportBody = Component.extend('ReportBody', function() {
   };
 });
 
-module.exports = ReportBody;
+module.exports = DocumentBody;

@@ -3,7 +3,7 @@
 var _ = require('lodash');
 var Box = require('./box');
 
-var ReportFooter = Box.extend('ReportFooter', function() {
+var DocumentFooter = Box.extend('DocumentFooter', function() {
   this.defaults = {
     marginTop: 5,
     alignment: 'left'
@@ -18,4 +18,4 @@ var ReportFooter = Box.extend('ReportFooter', function() {
   };
 });
 
-module.exports = ReportFooter;
+module.exports = DocumentFooter;

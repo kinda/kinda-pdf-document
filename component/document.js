@@ -2,13 +2,13 @@
 
 var _ = require('lodash');
 var Component = require('./');
-var ReportHeader = require('./report-header');
-var ReportBody = require('./report-body');
-var ReportFooter = require('./report-footer');
+var DocumentHeader = require('./document-header');
+var DocumentBody = require('./document-body');
+var DocumentFooter = require('./document-footer');
 var Document = require('../block/document');
 var Font = require('../font');
 
-var KindaReport = Component.extend('KindaReport', function() {
+var KindaDocument = Component.extend('KindaDocument', function() {
   this.defaults = {
     width: 210,
     height: 297,
@@ -71,9 +71,9 @@ var KindaReport = Component.extend('KindaReport', function() {
 
   this.addHeader = function(options, fn) {
     if (this._header) {
-      throw new Error('a report cannot have more than one header');
+      throw new Error('a document cannot have more than one header');
     }
-    this._header = ReportHeader.create(this, options, fn);
+    this._header = DocumentHeader.create(this, options, fn);
     return this._header;
   };
 
@@ -83,9 +83,9 @@ var KindaReport = Component.extend('KindaReport', function() {
 
   this.addBody = function(options, fn) {
     if (this._body) {
-      throw new Error('a report cannot have more than one body');
+      throw new Error('a document cannot have more than one body');
     }
-    this._body = ReportBody.create(this, options, fn);
+    this._body = DocumentBody.create(this, options, fn);
     return this._body;
   };
 
@@ -95,9 +95,9 @@ var KindaReport = Component.extend('KindaReport', function() {
 
   this.addFooter = function(options, fn) {
     if (this._footer) {
-      throw new Error('a report cannot have more than one footer');
+      throw new Error('a document cannot have more than one footer');
     }
-    this._footer = ReportFooter.create(this, options, fn);
+    this._footer = DocumentFooter.create(this, options, fn);
     return this._footer;
   };
 
@@ -165,4 +165,4 @@ var KindaReport = Component.extend('KindaReport', function() {
   };
 });
 
-module.exports = KindaReport;
+module.exports = KindaDocument;

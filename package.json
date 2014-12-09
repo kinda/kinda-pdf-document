@@ -1,12 +1,12 @@
 {
-  "name": "kinda-report",
+  "name": "kinda-document",
   "version": "0.1.0",
   "description": "",
   "author": "Manuel Vila <mvila@3base.com>",
-  "main": "component/report.js",
-  "repository": "git://github.com/kinda/kinda-report",
+  "main": "component/document.js",
+  "repository": "git://github.com/kinda/kinda-document",
   "scripts": {
-    "test": "node test.js"
+    "test": "node --harmony test/document.js"
   },
   "license": "MIT",
   "engines": {
