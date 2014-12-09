@@ -1,13 +1,15 @@
+var nodePath = require('path');
 var _ = require('lodash');
 var co = require('co');
 var Report = require('../');
 var Table = require('../component/table');
 
-var fonts = ['Helvetica', 'Alegreya', 'Thabit', 'Chalkboard']; // 'Times-Roman',
+var fonts = ['Helvetica', 'Alegreya', 'Thabit']; // 'Times-Roman',
 var fontSizes = [10, 14, 24];
 // var fontSizes = [36, 36, 36];
 var colors = ['red', '#FFCC33', 'grey'];
-var fontStyles = ['bold', 'bold'];
+var fontStyles = ['bold', 'italic'];
+
 var options = {
   fontTypeFace: 'Helvetica',
   title: 'Lunch Friday 20th, 2014',
@@ -16,20 +18,38 @@ var options = {
   keywords: 'Visitor PDFKit Node.js',
   orientation: 'portrait'
 }
-
 var report = Report.create(options);
-report.registerFont('Alegreya', [], 'test/font/Alegreya-Regular.ttf');
-report.registerFont('Alegreya', ['bold'], 'test/font/Alegreya-Bold.ttf');
-report.registerFont('Alegreya', ['italic'], 'test/font/Alegreya-Italic.ttf');
-report.registerFont('Alegreya', ['bold', 'italic'], 'test/font/Alegreya-BoldItalic.ttf');
 
-report.registerFont('Thabit', [], 'test/font/Thabit.ttf');
-report.registerFont('Thabit', ['bold'], 'test/font/Thabit-Bold.ttf');
-report.registerFont('Thabit', ['italic'], 'test/font/Thabit-Oblique.ttf');
-report.registerFont('Thabit', ['bold', 'italic'], 'test/font/Thabit-BoldOblique.ttf');
-
-report.registerFont('Chalkboard', [], 'test/font/Chalkboard.ttc', 'Chalkboard');
-report.registerFont('Chalkboard', ['bold'], 'test/font/Chalkboard.ttc', 'Chalkboard-Bold');
+report.registerFont('Alegreya', [],
+  nodePath.join(__dirname, 'fonts', 'Alegreya-Regular.ttf')
+);
+report.registerFont('Alegreya', ['bold'],
+  nodePath.join(__dirname, 'fonts', 'Alegreya-Bold.ttf')
+);
+report.registerFont('Alegreya', ['italic'],
+  nodePath.join(__dirname, 'fonts', 'Alegreya-Italic.ttf')
+);
+report.registerFont('Alegreya', ['bold', 'italic'],
+  nodePath.join(__dirname, 'fonts', 'Alegreya-BoldItalic.ttf')
+);
+report.registerFont('Thabit', [],
+  nodePath.join(__dirname, 'fonts', 'Thabit.ttf')
+);
+report.registerFont('Thabit', ['bold'],
+  nodePath.join(__dirname, 'fonts', 'Thabit-Bold.ttf')
+);
+report.registerFont('Thabit', ['italic'],
+  nodePath.join(__dirname, 'fonts', 'Thabit-Oblique.ttf')
+);
+report.registerFont('Thabit', ['bold', 'italic'],
+  nodePath.join(__dirname, 'fonts', 'Thabit-BoldOblique.ttf')
+);
+// report.registerFont('Chalkboard', [],
+//   nodePath.join(__dirname, 'fonts', 'Chalkboard.ttc'), 'Chalkboard'
+// );
+// report.registerFont('Chalkboard', ['bold'],
+//  nodePath.join(__dirname, 'fonts', 'Chalkboard.ttc'), 'Chalkboard-Bold'
+// );
 
 report.addHeader(function(header) {
   header.addText(

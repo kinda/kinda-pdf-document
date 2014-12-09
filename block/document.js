@@ -41,6 +41,8 @@ var Document = Block.extend('Document', function() {
     this.subject = options.subject;
     this.orientation = options.orientation;
 
+    this.registeredFonts = options.registeredFonts;
+
     this.pageNumber = 1;
     this.numberOfPages = 1;
 
@@ -60,9 +62,6 @@ var Document = Block.extend('Document', function() {
       layout: this.orientation,
       info: info
     });
-
-    this.registeredFonts = options.registeredFonts;
-    // options.registeredFonts
   });
 
   this.addPage = function() {
@@ -97,6 +96,47 @@ var Document = Block.extend('Document', function() {
       fn.call(undefined, this.pdf);
     }.bind(this));
     this.drawBuffer.length = 0;
+  };
+
+  this.getFont = function(typeFace, style) {
+    if (!style) style = [];
+
+    var candidateFonts = this.registeredFonts;
+
+    candidateFonts = _.filter(candidateFonts, function(candidateFont) {
+      return candidateFont.name === typeFace;
+    });
+
+    // Optimization
+    candidateFonts = _.filter(candidateFonts, function(candidateFont) {
+      return candidateFont.style.length === style.length;
+    });
+
+    candidateFonts = _.filter(candidateFonts, function(candidateFont) {
+      return _.every(style, function(stl) {
+        return _.contains(candidateFont.style, stl);
+      });
+    });
+
+    if (!candidateFonts.length) {
+      throw new Error('font not found (unknown combination of typeFace and style)');
+    }
+
+    if (!candidateFonts.length > 1) {
+      throw new Error('duplicate fonts found');
+    }
+
+    var candidate = candidateFonts[0];
+    if (candidate.path) {
+      return {
+        name: candidate.path,
+        postScriptName: candidate.postScriptName
+      };
+    } else {
+      return {
+        name: candidate.postScriptName
+      }
+    }
   };
 });
 

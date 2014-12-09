@@ -26,10 +26,7 @@ var Font = KindaObject.extend('Font', function() {
       return this._style;
     },
     set: function(style) {
-      if (_.isString(style)) {
-        style = [style];
-      }
-
+      if (_.isString(style)) style = [style];
       this._style = style;
     }
   });

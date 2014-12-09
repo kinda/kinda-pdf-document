@@ -106,10 +106,9 @@ var KindaReport = Component.extend('KindaReport', function() {
   };
 
   this.registerFont = function(name, style, path, postScriptName) {
-    if (_.isString(path) && path.slice(-4) === '.ttc' && _.isUndefined(postScriptName)) {
-      throw new Error('PostScriptName is required when use TrueType Font collection (.ttc)');
+    if (path && path.slice(-4) === '.ttc' && !postScriptName) {
+      throw new Error('PostScriptName is required when use TrueType Collection (.ttc)');
     }
-
     var font = Font.create(name, style, path, postScriptName);
     this.registeredFonts.push(font);
   };
