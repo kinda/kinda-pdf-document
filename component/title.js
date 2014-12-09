@@ -1,7 +1,6 @@
 "use strict";
 
 var _ = require('lodash');
-var Row = require('../block/row');
 var Box = require('./box');
 
 var Title = Box.extend('Title', function() {
@@ -14,10 +13,14 @@ var Title = Box.extend('Title', function() {
 
   var superRender = this.render;
   this.render = function(block) {
-    block.y += this.margins.top;
-    block.addRow({ isFloating: false }, function(block) {
+    if (block.y !== block.document.top) {
+      // marginTop should be ignored when y is at the top of the page
+      block.y += this.margins.top;
+    }
+    block.addRow({}, function(block) {
       superRender.call(this, block);
     }.bind(this));
+    block.y += this.margins.bottom;
   };
 });
 
