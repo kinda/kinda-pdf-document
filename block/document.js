@@ -6,6 +6,15 @@ var PDFDocument = require('pdfkit');
 var Block = require('./');
 var Row = require('./row');
 
+/**
+ * Class Document, extend from {@link module:kinda-document.Block Block}.
+ *
+ * @class Document
+ * @memberof module:kinda-document
+ * @param {Object} options - Init config options.
+ * @example // how to create instance?
+ * var instance = Document.create({});
+ */
 var Document = Block.extend('Document', function() {
   this.setCreator(function(options) {
     if (!options) options = {};
@@ -64,6 +73,13 @@ var Document = Block.extend('Document', function() {
     });
   });
 
+  /**
+   * Add a page to pdfkit.
+   *
+   * @function addPage
+   * @memberof module:kinda-document.Document
+   * @instance
+   */
   this.addPage = function() {
     this.pdf.addPage();
     this.y = this.top;
@@ -71,6 +87,15 @@ var Document = Block.extend('Document', function() {
     this.emit('didAddPage');
   };
 
+  /**
+   * Add a {@link module:kinda-document.Row Row}.
+   *
+   * @function addRow
+   * @memberof module:kinda-document.Document
+   * @instance
+   * @param {object=} options - Init config options.
+   * @param {function} fn - Init function.
+   */
   this.addRow = function(options, fn) {
     var block = Row.create(this, options);
     fn(block);
@@ -140,6 +165,16 @@ var Document = Block.extend('Document', function() {
   };
 });
 
+/**
+ * Generate pdf file.
+ * 
+ * @function generatePDFFile
+ * @memberof module:kinda-document.Document
+ * @param {String} path - Path for output generated PDF file.
+ * @param {Object} options - Init config options.
+ * @param {Function} fn - Init function.
+ * @returns {Function}
+ */
 Document.generatePDFFile = function *(path, options, fn) {
   var stream = fs.createWriteStream(path);
   var document = this.create(options);

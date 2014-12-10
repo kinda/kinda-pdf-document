@@ -3,6 +3,16 @@
 var _ = require('lodash');
 var KindaObject = require('kinda-object');
 
+/**
+ * Class Component, extend from KindaObject.
+ * @class Component
+ * @memberof module:kinda-document
+ * @param {Component} parent - Parent of component
+ * @param {Object} options - Init options.
+ * @param {Function} fn - Init function.
+ * @example // how to create instance?
+ * var instance = Component.create({}, function() {});
+ */
 var Component = KindaObject.extend('Component', function() {
   this.setCreator(function(parent, options, fn) {
     if (_.isFunction(options)) {

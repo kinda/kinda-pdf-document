@@ -4,6 +4,20 @@ var _ = require('lodash');
 var _ = require('lodash');
 var KindaObject = require('kinda-object');
 
+/**
+ * Class Font, extend from KindaObject.
+ *
+ * @class Font
+ * @memberof module:kinda-document
+ * @param {String} name - Font name.
+ * @param {Array=} style - If passed, the value should be the subset of ['bold', 'italic'].
+ * @param {String} path - File path of font.
+ * @param {String} postScriptName - font's PostScript Name, If the font is
+ * {@link http://en.wikipedia.org/wiki/TrueType#TrueType_Collection TrueType Collection},
+ * the name should be the font style.
+ * @example // how to create instance?
+ * var instance = Font.create({}, function() {});
+ */
 var Font = KindaObject.extend('Font', function() {
   this.setCreator(function(name, style, path, postScriptName) {
     this.name = name;

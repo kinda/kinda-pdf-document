@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: component/text.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: component/text.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>"use strict";
+
+var _ = require('lodash');
+var Component = require('./');
+
+/**
+ * Class Text, extend from {@link module:kinda-document.Component Component}.
+ * @class Text
+ * @memberof module:kinda-document
+ * @param {Object} options - Init options.
+ * @param {Function} fn - Init function.
+ * @example // how to create instance?
+ * var instance = Text.create({}, function() {});
+ */
+var Text = Component.extend('Text', function() {
+  var superCreator = this.getCreator();
+  this.setCreator(function(parent, value, options, fn) {
+    if (value == null) throw new Error('undefined value');
+    value = String(value);
+    superCreator.call(this, parent, options, fn);
+    this.value = value;
+  });
+
+  this.render = function(block) {
+    var height = this.computeHeight(block);
+    if (height > block.height) block.height = height;
+
+    block.document.draw(function(pdf) {
+      var x = block.mmToPt(block.x + block.paddings.left);
+      var y = block.mmToPt(block.y + block.paddings.top);
+      var width = block.width - (block.paddings.left + block.paddings.right)
+
+      var font = block.document.getFont(this.fontTypeFace, this.fontStyle);
+      pdf.font(font.name, font.postScriptName);
+      pdf.fontSize(this.fontSize);
+      pdf.fillColor(this.color);
+
+      var str = this.parseVariables(this.value, block);
+
+      pdf.text(str, x, y, {
+        width: block.mmToPt(width),
+        align: this.alignment
+      });
+    }.bind(this));
+  };
+
+  this.parseVariables = function(str, block) {
+    var variables = [
+      {
+        placeholder: '{{reportTitle}}',
+        replacement: function() { return block.document.title; }
+      },
+      {
+        placeholder: '{{pageNumber}}',
+        replacement: function() { return block.document.pageNumber; }
+      },
+      {
+        placeholder: '{{numberOfPages}}',
+        replacement: function() { return block.document.numberOfPages; }
+      }
+    ];
+
+    variables.forEach(function(variable) {
+      str = str.replace(variable.placeholder, variable.replacement);
+    });
+
+    return str;
+  };
+
+  this.computeWidth = function(block) {
+    var str = this.parseVariables(this.value, block);
+    var options = {
+      fontTypeFace: this.fontTypeFace,
+      fontStyle: this.fontStyle,
+      fontSize: this.fontSize
+    };
+    return block.computeWidthOfString(str, options);;
+  };
+
+  this.computeHeight = function(block) {
+    var str = this.parseVariables(this.value, block);
+    var options = {
+      fontTypeFace: this.fontTypeFace,
+      fontStyle: this.fontStyle,
+      fontSize: this.fontSize
+    };
+    return block.computeHeightOfString(str, options);
+  };
+});
+
+module.exports.Text = Text;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-kinda-document.html">kinda-document</a></li></ul><h3>Classes</h3><ul><li><a href="module-kinda-document.Block.html">Block</a></li><li><a href="module-kinda-document.Box.html">Box</a></li><li><a href="module-kinda-document.Column.html">Column</a></li><li><a href="module-kinda-document.Component.html">Component</a></li><li><a href="module-kinda-document.Document.html">Document</a></li><li><a href="module-kinda-document.DocumentBody.html">DocumentBody</a></li><li><a href="module-kinda-document.DocumentFooter.html">DocumentFooter</a></li><li><a href="module-kinda-document.DocumentHeader.html">DocumentHeader</a></li><li><a href="module-kinda-document.Font.html">Font</a></li><li><a href="module-kinda-document.KindaDocument.html">KindaDocument</a></li><li><a href="module-kinda-document.Row.html">Row</a></li><li><a href="module-kinda-document.Table.html">Table</a></li><li><a href="module-kinda-document.TableBody.html">TableBody</a></li><li><a href="module-kinda-document.TableCell.html">TableCell</a></li><li><a href="module-kinda-document.TableFooter.html">TableFooter</a></li><li><a href="module-kinda-document.TableHeader.html">TableHeader</a></li><li><a href="module-kinda-document.TableRow.html">TableRow</a></li><li><a href="module-kinda-document.Text.html">Text</a></li><li><a href="module-kinda-document.Title.html">Title</a></li></ul>
+</nav>
+
+<br clear="both">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha11</a> on Wed Dec 10 2014 17:20:10 GMT+0800 (CST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

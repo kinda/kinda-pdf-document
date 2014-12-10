@@ -3,6 +3,16 @@
 var _ = require('lodash');
 var Block = require('./');
 
+/**
+ * Class Column, extend from {@link module:kinda-document.Block Block}.
+ * 
+ * @class Column
+ * @memberof module:kinda-document
+ * @param {Block} parent - Parent of self.
+ * @param {Object} options - Init config options.
+ * @example // how to create instance?
+ * var instance = Column.create({}, function() {});
+ */
 var Column = Block.extend('Column', function() {
   this.setCreator(function(parent, options) {
     if (!options) options = {};

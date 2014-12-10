@@ -1,5 +1,9 @@
 "use strict";
 
+/**
+ * @module kinda-document
+ */
+
 var _ = require('lodash');
 var Component = require('./');
 var DocumentHeader = require('./document-header');
@@ -8,6 +12,16 @@ var DocumentFooter = require('./document-footer');
 var Document = require('../block/document');
 var Font = require('../font');
 
+/**
+ * Class KindaDocument, extend from {@link module:kinda-document.Component Component}.
+ *
+ * @class KindaDocument
+ * @memberof module:kinda-document
+ * @param {Object} options - Init options.
+ * @param {Function} fn - Init function.
+ * @example // how to create instance?
+ * var instance = KindaDocument.create({}, function() {});
+ */
 var KindaDocument = Component.extend('KindaDocument', function() {
   this.defaults = {
     width: 210,
@@ -69,6 +83,17 @@ var KindaDocument = Component.extend('KindaDocument', function() {
     );
   });
 
+  /**
+   * Add a {@link module:kinda-document.DocumentHeader DocumentHeader} instance to self.
+   *
+   * @function addHeader
+   * @instance
+   * @memberof module:kinda-document.KindaDocument
+   * @param {Object=} options - Init config options.
+   * @param {Function} fn - Init function.
+   * @throws {Error} Will throw an Error if invoke this method more than once.
+   * @returns {DocumentHeader} {@link module:kinda-document.DocumentHeader DocumentHeader} instance
+   */
   this.addHeader = function(options, fn) {
     if (this._header) {
       throw new Error('a document cannot have more than one header');
@@ -77,10 +102,29 @@ var KindaDocument = Component.extend('KindaDocument', function() {
     return this._header;
   };
 
+  /**
+   * Get a {@link module:kinda-document.DocumentHeader DocumentHeader} instance to self.
+   *
+   * @function getHeader
+   * @instance
+   * @memberof module:kinda-document.KindaDocument
+   * @returns {DocumentHeader} {@link module:kinda-document.DocumentHeader DocumentHeader} instance
+   */
   this.getHeader = function() {
     return this._header;
   };
 
+  /**
+   * Add a {@link module:kinda-document.DocumentBody DocumentBody} instance to self.
+   *
+   * @function addBody
+   * @instance
+   * @memberof module:kinda-document.KindaDocument
+   * @param {Object=} options - Init config options.
+   * @param {Function} fn - Init function.
+   * @throws {Error} Will throw an Error if invoke this method more than once.
+   * @returns {DocumentBody} {@link module:kinda-document.DocumentBody DocumentBody} instance
+   */
   this.addBody = function(options, fn) {
     if (this._body) {
       throw new Error('a document cannot have more than one body');
@@ -89,10 +133,29 @@ var KindaDocument = Component.extend('KindaDocument', function() {
     return this._body;
   };
 
+  /**
+   * Get a {@link module:kinda-document.DocumentBody DocumentBody} instance to self.
+   *
+   * @function getBody
+   * @instance
+   * @memberof module:kinda-document.KindaDocument
+   * @returns {DocumentBody} {@link module:kinda-document.DocumentBody DocumentBody} instance
+   */
   this.getBody = function() {
     return this._body;
   };
 
+  /**
+   * Add a {@link module:kinda-document.DocumentFooter DocumentFooter} instance to self.
+   *
+   * @function addFooter
+   * @instance
+   * @memberof module:kinda-document.KindaDocument
+   * @param {Object=} options - Init config options.
+   * @param {Function} fn - Init function.
+   * @throws {Error} Will throw an Error if invoke this method more than once.
+   * @returns {DocumentFooter} {@link module:kinda-document.DocumentFooter DocumentFooter} instance
+   */
   this.addFooter = function(options, fn) {
     if (this._footer) {
       throw new Error('a document cannot have more than one footer');
@@ -101,10 +164,39 @@ var KindaDocument = Component.extend('KindaDocument', function() {
     return this._footer;
   };
 
+  /**
+   * Get a {@link module:kinda-document.DocumentFooter DocumentFooter} instance to self.
+   *
+   * @function getFooter
+   * @memberof module:kinda-document.KindaDocument
+   * @instance
+   * @returns {DocumentFooter} {@link module:kinda-document.DocumentFooter DocumentFooter} instance
+   */
   this.getFooter = function() {
     return this._footer;
   };
 
+  /**
+   * Register a {@link module:kinda-document.Font Font}.
+   *
+   * @function registerFont
+   * @instance
+   * @memberof module:kinda-document.KindaDocument
+   * @param {String} name - Font name.
+   * @param {Array=} style - If passed, the value should be the subset of ['bold', 'italic'].
+   * @param {String} path - File path of font.
+   * @param {String} postScriptName - font's PostScript Name, If the font is
+   * {@link http://en.wikipedia.org/wiki/TrueType#TrueType_Collection TrueType Collection},
+   * the name should be the font style.
+   * @example // how to use it?
+   * report.registerFont('Thabit', ['bold', 'italic'],
+   *   nodePath.join(__dirname, 'fonts', 'Thabit-BoldOblique.ttf')
+   * );
+   *
+   * report.registerFont('Chalkboard', ['bold'],
+   *   nodePath.join(__dirname, 'fonts', 'Chalkboard.ttc'), 'Chalkboard-Bold'
+   * );
+   */
   this.registerFont = function(name, style, path, postScriptName) {
     if (path && path.slice(-4) === '.ttc' && !postScriptName) {
       throw new Error('PostScriptName is required when use TrueType Collection (.ttc)');
@@ -113,6 +205,14 @@ var KindaDocument = Component.extend('KindaDocument', function() {
     this.registeredFonts.push(font);
   };
 
+  /**
+   * Generate PDF file.
+   *
+   * @function generatePDFFile
+   * @instance
+   * @memberof module:kinda-document.KindaDocument
+   * @param {String} path - Path to save the generated file.
+   */
   this.generatePDFFile = function *(path) {
     var options = {
       width: this.width,

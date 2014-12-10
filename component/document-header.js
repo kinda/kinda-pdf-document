@@ -3,6 +3,16 @@
 var _ = require('lodash');
 var Box = require('./box');
 
+/**
+ * Class DocumentHeader, extend from {@link module:kinda-document.Box Box}.
+ * 
+ * @class DocumentHeader
+ * @memberof module:kinda-document
+ * @param {Object} options - Init options.
+ * @param {Function} fn - Init function.
+ * @example // how to create instance?
+ * var instance = DocumentHeader.create({}, function() {});
+ */
 var DocumentHeader = Box.extend('DocumentHeader', function() {
   this.defaults = {
     marginBottom: 5,
