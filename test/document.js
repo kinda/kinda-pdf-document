@@ -2,15 +2,13 @@ var nodePath = require('path');
 var _ = require('lodash');
 var co = require('co');
 var Document = require('../');
-var Table = require('../component/table');
 
-var options = {
-  title: 'Kinda Document tests',
+var report = Document.create({
+  title: 'KindaDocument tests',
   author: 'fishead <zhchuan7@gmail.com>',
-  subject: 'Kinda Document tests',
-  keywords: 'Visitor PDFKit Node.js',
-}
-var report = Document.create(options);
+  subject: 'KindaDocument tests',
+  keywords: 'Document, generator, PDFKit, Node.js',
+});
 
 report.registerFont('Thabit', [],
   nodePath.join(__dirname, 'fonts', 'Thabit.ttf')
@@ -36,7 +34,7 @@ report.addHeader(function(header) {
     '{{reportTitle}}'
   );
   header.addText(
-    '5 chekings',
+    'Center',
     { alignment: 'center' }
   );
   header.addText(
@@ -47,18 +45,18 @@ report.addHeader(function(header) {
 
 report.addBody(function(body) {
   /***********************************************************/
-  body.addTitle('title adds with shortcut');
+  body.addTitle('Simple title');
   body.addTable(function(table) {
     table.addBody(function(body) {
       body.addRow(function(row) {
-        row.addCell('cell adds with shortcut');
-        row.addCell('cell adds with shortcut');
+        row.addCell('simple cell');
+        row.addCell('simple cell');
       });
     });
   });
 
   /************************************************************/
-  body.addTitle('default table header');
+  body.addTitle('Default table header');
   body.addTable(function(table) {
     table.addHeader(function(header) {
       header.addRow(function(row) {
@@ -71,7 +69,7 @@ report.addBody(function(body) {
   });
 
   /************************************************************/
-  body.addTitle('default table body');
+  body.addTitle('Default table body');
   body.addTable(function(table) {
     table.addBody(function(body) {
       body.addRow(function(row) {
@@ -84,7 +82,7 @@ report.addBody(function(body) {
   });
 
   /************************************************************/
-  body.addTitle('default table footer');
+  body.addTitle('Default table footer');
   body.addTable(function(table) {
     table.addFooter(function(footer) {
       footer.addRow(function(row) {
@@ -97,7 +95,7 @@ report.addBody(function(body) {
   });
 
   /************************************************************/
-  body.addTitle('default table with header');
+  body.addTitle('Default table with header');
   body.addTable(function(table) {
     table.addHeader(function(header) {
       header.addRow(function(row) {
@@ -107,7 +105,6 @@ report.addBody(function(body) {
         row.addCell('default header cell');
       });
     });
-
     table.addBody(function(body) {
       body.addRow(function(row) {
         row.addCell('default body cell');
@@ -119,7 +116,7 @@ report.addBody(function(body) {
   });
 
   /************************************************************/
-  body.addTitle('default table with footer');
+  body.addTitle('Default table with footer');
   body.addTable(function(table) {
     table.addBody(function(body) {
       body.addRow(function(row) {
@@ -129,7 +126,6 @@ report.addBody(function(body) {
         row.addCell('default body cell');
       });
     });
-
     table.addFooter(function(footer) {
       footer.addRow(function(row) {
         row.addCell('default footer cell');
@@ -141,7 +137,7 @@ report.addBody(function(body) {
   });
 
   /************************************************************/
-  body.addTitle('default table without body');
+  body.addTitle('Default table without body');
   body.addTable(function(table) {
     table.addHeader(function(header) {
       header.addRow(function(row) {
@@ -151,7 +147,6 @@ report.addBody(function(body) {
         row.addCell('default header cell');
       });
     });
-
     table.addFooter(function(footer) {
       footer.addRow(function(row) {
         row.addCell('default footer cell');
@@ -163,7 +158,7 @@ report.addBody(function(body) {
   });
 
   /************************************************************/
-  body.addTitle('default table with header & footer');
+  body.addTitle('Default table with header & footer');
   body.addTable(function(table) {
     table.addHeader(function(header) {
       header.addRow(function(row) {
@@ -173,7 +168,6 @@ report.addBody(function(body) {
         row.addCell('default header cell');
       });
     });
-
     table.addBody(function(body) {
       body.addRow(function(row) {
         row.addCell('default body cell');
@@ -182,7 +176,6 @@ report.addBody(function(body) {
         row.addCell('default body cell');
       });
     });
-
     table.addFooter(function(footer) {
       footer.addRow(function(row) {
         row.addCell('default footer cell');
@@ -194,17 +187,16 @@ report.addBody(function(body) {
   });
 
   /*************************************************************/
-  body.addTitle('Table spread two page');
+  body.addTitle('This table should spread two pages');
   body.addTable(function(table) {
-    table.addHeader(function(header) {
+    table.addHeader({ color: 'red' }, function(header) {
       header.addRow(function(row) {
-        row.addCell('header at every page', { color: 'red' });
-        row.addCell('header at every page', { color: 'red' });
-        row.addCell('header at every page', { color: 'red' });
-        row.addCell('header at every page', { color: 'red' });
+        row.addCell('header at every page');
+        row.addCell('header at every page');
+        row.addCell('header at every page');
+        row.addCell('header at every page');
       });
     });
-
     table.addBody(function(body) {
       body.addRow(function(row) {
         row.addCell('default body cell');
@@ -231,19 +223,18 @@ report.addBody(function(body) {
         row.addCell('default body cell');
       });
     });
-
-    table.addFooter(function(footer) {
+    table.addFooter({ color: 'green' }, function(footer) {
       footer.addRow(function(row) {
-        row.addCell('footer only at the end', { color: 'green' });
-        row.addCell('footer only at the end', { color: 'green' });
-        row.addCell('footer only at the end', { color: 'green' });
-        row.addCell('footer only at the end', { color: 'green' });
+        row.addCell('footer only at the end');
+        row.addCell('footer only at the end');
+        row.addCell('footer only at the end');
+        row.addCell('footer only at the end');
       });
     });
   });
 
   /************************************************************/
-  body.addTitle('font size');
+  body.addTitle('Font sizes');
   body.addTable(function(table) {
     table.addBody(function(body) {
       body.addRow(function(row) {
@@ -262,7 +253,7 @@ report.addBody(function(body) {
   });
 
   /************************************************************/
-  body.addTitle('font color');
+  body.addTitle('Font colors');
   body.addTable(function(table) {
     table.addBody(function(body) {
       body.addRow(function(row) {
@@ -281,7 +272,7 @@ report.addBody(function(body) {
   });
 
   /************************************************************/
-  body.addTitle('font style');
+  body.addTitle('Font styles');
   body.addTable(function(table) {
     table.addBody(function(body) {
       body.addRow(function(row) {
@@ -300,7 +291,7 @@ report.addBody(function(body) {
   });
 
   /************************************************************/
-  body.addTitle('font face');
+  body.addTitle('Font faces');
   body.addTable(function(table) {
     table.addBody(function(body) {
       body.addRow(function(row) {
@@ -320,7 +311,7 @@ report.addBody(function(body) {
 
   /************************************************************/
   var leftAlign = { alignment: 'left' };
-  body.addTitle().addText('left align title & Table', leftAlign);
+  body.addTitle().addText('Left align title & table', leftAlign);
   body.addTable(leftAlign, function(table) {
     table.addBody(function(body) {
       body.addRow(function(row) {
@@ -334,7 +325,7 @@ report.addBody(function(body) {
 
   /*************************************************************/
   var centerAlign = { alignment: 'center' };
-  body.addTitle().addText('center align title & Table', centerAlign);
+  body.addTitle().addText('Center align title & table', centerAlign);
   body.addTable(centerAlign, function(table) {
     table.addBody(function(body) {
       body.addRow(function(row) {
@@ -348,7 +339,7 @@ report.addBody(function(body) {
 
   /***********************************************************/
   var rightAlign = { alignment: 'right' };
-  body.addTitle().addText('right align title & Table', rightAlign);
+  body.addTitle().addText('Right align title & table', rightAlign);
   body.addTable(rightAlign, function(table) {
     table.addBody(function(body) {
       body.addRow(function(row) {
@@ -361,7 +352,7 @@ report.addBody(function(body) {
   });
 
   /***********************************************************/
-  body.addTitle().addText('columns width (all fixed to 40)');
+  body.addTitle().addText('Columns width (all fixed to 40)');
   var options = { columns: [{ width: 40 }, { width: 40 }, { width: 40 }] }
   body.addTable(options, function(table) {
     table.addBody(function(body) {
@@ -374,41 +365,41 @@ report.addBody(function(body) {
   });
 
   /***********************************************************/
-  body.addTitle().addText('columns width (half fixed to 40, half is automatic)');
+  body.addTitle().addText('Columns width (first and third are fixed to 40, other are automatic)');
   var options = { columns: [{ width: 40 }, { width: undefined }, { width: 40 }] }
   body.addTable(options, function(table) {
     table.addBody(function(body) {
       body.addRow(function(row) {
         row.addCell('fixed width column, short content', { color: 'green' });
-        row.addCell('automatic adjust column, this content just so long and', { color: 'cyan' });
+        row.addCell('automatic adjust column, this content just so long and', { color: 'orange' });
         row.addCell('fixed width column, longer content will wrap by default', { color: 'green' });
-        row.addCell('automatic adjust column, longer content will wrap by default', { color: 'cyan' });
+        row.addCell('automatic adjust column, longer content will wrap by default', { color: 'orange' });
       });
     });
   });
 
   /***********************************************************/
-  body.addTitle().addText('columns width (all automatic, scale to fit content)');
+  body.addTitle().addText('Columns width (all automatic, scale to fit content)');
   body.addTable(function(table) {
     table.addBody(function(body) {
       body.addRow(function(row) {
-        row.addCell('nothing here', { color: 'cyan' });
-        row.addCell('tiny content dont need too much', { color: 'cyan' });
-        row.addCell('one more, please', { color: 'cyan' });
-        row.addCell('is it enough?', { color: 'cyan' });
+        row.addCell('nothing here', { color: 'orange' });
+        row.addCell('tiny content dont need too much', { color: 'orange' });
+        row.addCell('one more, please', { color: 'orange' });
+        row.addCell('is it enough?', { color: 'orange' });
       });
     });
   });
 
   /***********************************************************/
-  body.addTitle().addText('columns width (all automatic, use all of the width)');
+  body.addTitle().addText('Columns width (all automatic, use all of the width)');
   body.addTable(function(table) {
     table.addBody(function(body) {
       body.addRow(function(row) {
-        row.addCell('nothing here', { color: 'cyan' });
-        row.addCell('tiny content dont need too much', { color: 'cyan' });
-        row.addCell('fat content want eat up most of the width, one more, please', { color: 'cyan' });
-        row.addCell('is it enough?', { color: 'cyan' });
+        row.addCell('nothing here', { color: 'orange' });
+        row.addCell('tiny content dont need too much', { color: 'orange' });
+        row.addCell('fat content want eat up most of the width, one more, please', { color: 'orange' });
+        row.addCell('is it enough?', { color: 'orange' });
       });
     });
   });
@@ -416,10 +407,10 @@ report.addBody(function(body) {
 
 report.addFooter(function(footer) {
   footer.addText(
-    'Alpha Visa Congrès'
+    'Kinda Ltd'
   );
   footer.addText(
-    '01/01/2014 14:05',
+    'December 10th, 2014 - 14:05',
     { alignment: 'right' }
   );
 });
