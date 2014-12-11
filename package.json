@@ -6,6 +6,7 @@
   "main": "component/document.js",
   "repository": "git://github.com/kinda/kinda-document",
   "scripts": {
+    "build-doc": "./node_modules/.bin/jsdoc block/ component/ font.js -r -d docs/",
     "test": "node --harmony test/document.js"
   },
   "license": "MIT",
@@ -16,5 +17,8 @@
     "co": "^4.0.0",
     "lodash": "^2.4.1",
     "pdfkit": "^0.7.0"
+  },
+  "devDependencies": {
+    "jsdoc": "^3.3.0-alpha11"
   }
 }

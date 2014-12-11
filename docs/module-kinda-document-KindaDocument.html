@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: block/column.js</title>
+    <title>JSDoc: Class: KindaDocument</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,64 +17,135 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: block/column.js</h1>
+    <h1 class="page-title">Class: KindaDocument</h1>
 
     
 
 
 
+
+<section>
+
+<header>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>"use strict";
+        <h2>
+            <span class="ancestors"><a href="module-kinda-document.html">kinda-document</a>~</span>
+        
+        KindaDocument
+        </h2>
+        
+    
+</header>
 
-var _ = require('lodash');
-var Block = require('./');
+<article>
+    <div class="container-overview">
+    
+        
+<dt>
+    
+        
+        <h2>Constructor</h2>
+        
 
-/**
- * Class Column, extend from {@link module:kinda-document.Block Block}.
- * 
- * @class Column
- * @memberof module:kinda-document
- * @param {Block} parent - Parent of self.
- * @param {Object} options - Init config options.
- * @example // how to create instance?
- * var instance = Column.create({}, function() {});
- */
-var Column = Block.extend('Column', function() {
-  this.setCreator(function(parent, options) {
-    if (!options) options = {};
-    this.row = parent;
-    this.document = parent.document;
-    this.width = options.width || 0;
-    this.paddings = options.paddings || 0;
-    this.x = parent.x;
-  });
+        <h4 class="name" id="KindaDocument"><span class="type-signature"></span>new KindaDocument<span class="signature">()</span><span class="type-signature"></span></h4>
 
-  Object.defineProperty(this, 'y', {
-    get: function() {
-      return this.row.y;
-    },
-    set: function(y) {
-      this.row.y = y;
-    }
-  });
+        
+    
+</dt>
+<dd>
 
-  Object.defineProperty(this, 'height', {
-    get: function() {
-      return this.row.height;
-    },
-    set: function(height) {
-      this.row.height = height;
-    },
-    configurable: true
-  });
-});
+    
 
-module.exports = Column;
-</code></pre>
-        </article>
-    </section>
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="component_document.js.html">component/document.js</a>, <a href="component_document.js.html#line16">line 16</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 

@@ -7,6 +7,7 @@ var KindaObject = require('kinda-object');
  * Class Block, extend from KindaObject.
  * @class Block
  * @memberof module:kinda-document
+ * @private
  * @param {Object} options - Init options.
  * @param {Function} fn - Init function.
  * @example // how to create instance?
