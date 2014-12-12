@@ -1,142 +1,122 @@
 # kinda-document
 
-  PDF generator based on [pdfkit](https://github.com/pdfkit/pdfkit).
+Easily generate any kind of PDF documents such as reports including headers, footers, tables, etc.
 
 ## Installation
-
-  You can clone it in to your project
-
-```
-$ git clone https://github.com/kinda/kinda-document.git
-```
-
-  or simply install it use npm
 
 ```
 $ npm install kinda-document
 ```
 
-  to use kinda-document, you need node `0.11.9` or higher for generator support,
-  and must run node with the --harmony flag.
+To use kinda-document, you need node `0.11.9` or higher for generator support, and must run node with the --harmony flag.
 
- ```
- $ node --harmony doc.js
- ```
+```
+$ node --harmony test/document.js
+```
 
 ## How to use it?
 
-  First we need to create an instance
+First you create an instance of KindaDocument:
 
 ```js
 var KindaDocument = require('kinda-document');
-// we create an instance called report
 var doc = KindaDocument.create();
 ```
 
-  now we have a instance called `doc`. After this, we can specify a document
-  header to document, It will be apear on every page of pdf file, of course on
-  the top of page. we can do it like this
+After, you can specify a document header. It will apear on the top of every pages. You can do it like this:
 
 ```js
 doc.addHeader(function(header) {
-    // ...
+  // ...
 });
-
 ```
 
-  then we can add some text in the header.
+Then you can add some text in the header:
 
 ```js
-header.addText('a demo header');
+header.addText('A demo header');
 ```
 
-  also wo can make it center or right align just pass an option object to it
+Also you can align the text to center or right:
 
 ```js
-header.addText('I will be enter', { alignment: 'center' });
+header.addText('I will be in the center', { alignment: 'center' });
 ```
 
-  we can do even more
+And you can do even more:
 
 ```js
 header.addText('Page {{pageNumber}} of {{numberOfPages}}');
 ```
 
-  We can see that there are two variable in the text, It will be replaced by
-  real value when render this PDF. for now we support several variable
+You see that there are two variables in the text. They will be replaced by real values when the PDF is rendered. For now, a few variables are supported:
 
-  - `reportTitle` is the metadata of a PDF file, can be specified when create KindaDocument.
-  - `pageNumber` current page number.
-  - `numberOfPages` how many pages this document have
+  - `reportTitle`: can be specified when you create a KindaDocument,
+  - `pageNumber`: current page number,
+  - `numberOfPages`: how many pages the document have.
 
-just wrap the variable in double braces `{{reportTitle}}` and that's all.
-  
-  So we have a page header now. We can also add a page footer to the document.
-  Here is the code
+Just wrap the variable in double braces `{{reportTitle}}` and that's all.
+
+So, there is a header now. You can also add a footer:
 
 ```js
 doc.addFooter(function(footer) {
-    footer.addText('Kinda Ltd');
-    footer.addText('December 10th, 2014', { alignment: 'right' });
+  footer.addText('Kinda Ltd');
+  footer.addText('December 10th, 2014', { alignment: 'right' });
 });
 ```
 
-  And we can see that there is no big diffrence than add page header.
-
-  We need a body to complete whole page. So here we come
+Now, it's time to complete the document with a body. So here we come:
 
 ```js
 doc.addBody(function(body) {
-    // ... body is a big part
+  // ... body is a big part!
 });
 ```
 
-  If we want add some text to the body, we can do it like this
+If you want to add some text in the body, you can do it like this:
 
 ```js
 body.addTitle('Simple title');
 ```
 
-  the most power feature is add a table
+The most powerful feature is the ability to add tables:
 
 ```js
 body.addTable(function(table) {// add a table
-    table.addBody(function(tableBody) {// add a table body
-        tableBody.addRow(function(tableRow) {// add a table row
-            // add a table cell then add some text in it
-            tableRow.addCell().addText('simple cell');
-            // this is a convenient shortcut to add text in the table cell
-            tableRow.addCell('simple cell');
-        });
+  table.addBody(function(tableBody) {// add a table body
+    tableBody.addRow(function(tableRow) {// add a table row
+      // add a table cell then add some text in it:
+      tableRow.addCell().addText('simple cell');
+      // or, use a convenient shortcut:
+      tableRow.addCell('simple cell');
     });
+  });
 });
 ```
 
-  in the same way, wo can add table header and table footer, if the table spread
-  to more than one page, the table header will display on every page, but the
-  table footer only display on the end.
+In the same way, you can add a table header and a table footer. If the table takes more than one page, the table header will appear on every pages but the table footer will only appear on the end of the table.
 
 ```js
 table.addHeader(function(tableHeader) {
-    tableHeader.addRow(function(tableRow) {
-        // ...add table cell and put something in it
-    });
+  tableHeader.addRow(function(tableRow) {
+    // ...add a table cell and put something in it
+  });
 });
 
 table.addFooter(function(tableFooter) {
-    // ...
+  // ...
 })
 ```
 
-  After we put everything we need in the document. we can use it to generate a
-  pdf file. we call report.generatePDFFile('path/to/file.pdf') to do the magic.
+Finally, you can generate a PDF file. Just yield doc.generatePDFFile('path/to/file.pdf') to do the magic.
 
 ```js
-doc.generatePDFFile('test.pdf');
+yield doc.generatePDFFile('test.pdf');
 ```
 
-  and it's done! Want more detail, read the API document.
+And voilà! For more details, read the API documentation.
 
 ## License
 
-  one license
+MIT

@@ -1,8 +1,11 @@
 {
   "name": "kinda-document",
   "version": "0.1.0",
-  "description": "",
-  "author": "Manuel Vila <mvila@3base.com>",
+  "description": "Easily generate any kind of PDF documents such as reports including headers, footers, tables, etc.",
+  "contributors": [
+    "Manuel Vila <mvila@3base.com>",
+    "Chuan Zhang <zhchuan7@gmail.com>"
+  ],
   "main": "component/document.js",
   "repository": "git://github.com/kinda/kinda-document",
   "scripts": {
