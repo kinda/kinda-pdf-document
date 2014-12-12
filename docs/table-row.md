@@ -1,6 +1,6 @@
 # TableRow
 
-Class extend from [Component](component.md). Use it with [TableHeader](table-header.md#addBody) [TableBody](table-body.md#addBody) or [TableFooter](table-footer.md#addBody), don't directly use it.
+Class extend from [Component](component.md). Use it with [TableHeader](table-header.md#addheaderoptions-fn) [TableBody](table-body.md#addbodyoptions-fn) or [TableFooter](table-footer.md#addfooteroptions-fn), don't directly use it.
 
 ## .cells
 

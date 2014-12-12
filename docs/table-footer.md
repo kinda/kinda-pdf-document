@@ -1,6 +1,6 @@
 # TableFooter
 
-Class extend from [Component](component.md). Use it with [Table.addFooter()](table.md#addFooter), don't directly use it.
+Class extend from [Component](component.md). Use it with [Table.addFooter()](table.md#addfooteroptions-fn), don't directly use it.
 
 ## .rows
 

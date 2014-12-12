@@ -1,6 +1,6 @@
 # Table
 
-Class extend from [Component](component.md). Use it with [DocumentBody.addTable()](document-body.md#addTable), don't directly use it.
+Class extend from [Component](component.md). Use it with [DocumentBody.addTable()](document-body.md#addtableoptions-fn), don't directly use it.
 
 ## .columns
 

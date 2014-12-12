@@ -1,6 +1,6 @@
 # TableHeader
 
-Class extend from [Component](component.md). Use it with [Table.addHeader()](table.md#addHeader), don't directly use it.
+Class extend from [Component](component.md). Use it with [Table.addHeader()](table.md#addheaderoptions-fn), don't directly use it.
 
 ## .rows
 

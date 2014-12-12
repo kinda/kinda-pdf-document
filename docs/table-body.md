@@ -1,6 +1,6 @@
 # TableBody
 
-Class extend from [Component](component.md). Use it with [Table.addBody()](table.md#addBody), don't directly use it.
+Class extend from [Component](component.md). Use it with [Table.addBody()](table.md#addbodyoptions-fn), don't directly use it.
 
 ## .rows
 
