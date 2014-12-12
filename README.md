@@ -30,26 +30,21 @@ $ npm install kinda-document
 ```js
 var KindaDocument = require('kinda-document');
 // we create an instance called report
-var report = KindaDocument.create({
-    title: 'KindaDocument tests',
-    author: 'fishead',
-    subject: 'KindaDocument tests',
-    keywords: 'Document, generator, PDFKit',
-});
+var doc = KindaDocument.create();
 ```
 
-  now we have a report. After this, we can specify a page header to document,
-  It will be disapear on every page of pdf file, of course on the top of page.
-  we can do it like this
+  now we have a instance called `doc`. After this, we can specify a document
+  header to document, It will be apear on every page of pdf file, of course on
+  the top of page. we can do it like this
 
 ```js
-report.addHeader(function(header) {
+doc.addHeader(function(header) {
     // ...
 });
 
 ```
 
-  then we can add some text in to the header.
+  then we can add some text in the header.
 
 ```js
 header.addText('a demo header');
@@ -67,7 +62,7 @@ header.addText('I will be enter', { alignment: 'center' });
 header.addText('Page {{pageNumber}} of {{numberOfPages}}');
 ```
 
-  you can see that there are two variable in the text, It will be replaced by
+  We can see that there are two variable in the text, It will be replaced by
   real value when render this PDF. for now we support several variable
 
   - `reportTitle` is the metadata of a PDF file, can be specified when create KindaDocument.
@@ -81,23 +76,23 @@ header.addText('Page {{pageNumber}} of {{numberOfPages}}');
   Here is the code
 
 ```js
-report.addFooter(function(footer) {
+doc.addFooter(function(footer) {
     footer.addText('Kinda Ltd');
     footer.addText('December 10th, 2014', { alignment: 'right' });
 });
 ```
 
-  And you can see that there is no big diffrence than add page header.
-  
+  And we can see that there is no big diffrence than add page header.
+
   We need a body to complete whole page. So here we come
 
 ```js
-report.addBody(function(body) {
+doc.addBody(function(body) {
     // ... body is a big part
 });
 ```
 
-  If you want add some text to the body, you can do it like this
+  If we want add some text to the body, we can do it like this
 
 ```js
 body.addTitle('Simple title');
@@ -138,7 +133,7 @@ table.addFooter(function(tableFooter) {
   pdf file. we call report.generatePDFFile('path/to/file.pdf') to do the magic.
 
 ```js
-report.generatePDFFile('test.pdf');
+doc.generatePDFFile('test.pdf');
 ```
 
   and it's done! Want more detail, read the API document.
