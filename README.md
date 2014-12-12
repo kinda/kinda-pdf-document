@@ -117,6 +117,10 @@ yield doc.generatePDFFile('test.pdf');
 
 And voilà! For more details, read the API documentation.
 
+## Dependencies
+
+KindaDocument uses [PDFKit](https://github.com/devongovett/pdfkit) to render the PDF.
+
 ## License
 
 MIT
