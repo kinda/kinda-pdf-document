@@ -66,12 +66,12 @@ header.addText('Page {{pageNumber}} of {{numberOfPages}}');
   real value when render this PDF. for now we support several variable
 
   - `reportTitle` is the metadata of a PDF file, can be specified when create KindaDocument.
-  - `pageNumber` current page number
+  - `pageNumber` current page number.
   - `numberOfPages` how many pages this document have
 
 
-  just wrap the variable in double braces `{{reportTitle}}` and that's all.
-
+just wrap the variable in double braces `{{reportTitle}}` and that's all.
+  
   So we have a page header now. We can also add a page footer to the document.
   Here is the code
 
