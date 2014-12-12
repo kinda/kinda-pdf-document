@@ -1,17 +1,34 @@
-# Box
-Class extend from [Component](component.md)
+# Component
 
-## create(options, fn)
-create an instance of Box.
+Base class for all component.
 
-** arguments: **
-- `options` is an object have these properties
-- `fn` is a call back function, will be called by the constructor. any passed arguments will be pass to constructor.
+## .creator(parent, options, fn)
 
-## addText(value, options, fn)
-function inherit from Box, add a text to it self.
+### argument:
 
-** arguments: **
-- `value` the text value.
-- `options` *optional*, is an object have these properties.
-- `fn` *optional*, is a call back function, will be called by the constructor. any passed arguments will be pass to constructor.
+- `parent`: parent component
+- `options`: config object, have these properties, Will inherit from parent component if not specifies.
+  - `fontTypeFace`: font face
+  - `fontStyle`: font style, subset of `['bold', 'italic']`
+  - `color`: font color
+  - `fontSize`: font size
+  - `alignment`: text align
+  - `margins`: margins
+    - `top`:
+    - `right`
+    - `bottom`
+    - `left`
+  - `marginTop`: shortcut of `margin.top`
+  - `marginRight`: shortcut of `margin.right`
+  - `marginBottom`: shortcut of `margin.bottom`
+  - `marginLeft`: shortcut of `margin.left`
+  - `paddings`: paddings
+    - `top`
+    - `right`
+    - `bottom`
+    - `left`
+  - `paddingTop`: shortcut of `padding.top`
+  - `paddingRight`: shortcut of `padding.right`
+  - `paddingBottom`: shortcut of `padding.bottom`
+  - `paddingLeft`: shortcut of `padding.left`
+- `fn`

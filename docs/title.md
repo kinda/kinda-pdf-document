@@ -1,12 +1,7 @@
-### Title
-Class extend from Box class
+# Title
 
-### create(options, fn)
-create an instance of Title.
+Class extend from [Box](box.md). Use it with [DocumentBody](document-body.md#addTitle), don't directly use it.
 
-** arguments: **
-- `options` is an object have these properties
-- `fn` is a call back function, will be called by the constructor. any passed arguments will be pass to constructor.
+## .addText(value, options, fn)
 
-### addText
-function inherit from [Box](box.md#addText), add a text to it self.
+Function extend from [Box](box.md#addText)
