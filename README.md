@@ -69,7 +69,6 @@ header.addText('Page {{pageNumber}} of {{numberOfPages}}');
   - `pageNumber` current page number.
   - `numberOfPages` how many pages this document have
 
-
 just wrap the variable in double braces `{{reportTitle}}` and that's all.
   
   So we have a page header now. We can also add a page footer to the document.
