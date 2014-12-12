@@ -10,7 +10,7 @@ var DocumentHeader = require('./document-header');
 var DocumentBody = require('./document-body');
 var DocumentFooter = require('./document-footer');
 var Document = require('../block/document');
-var Font = require('../font');
+var Font = require('../misc/font');
 
 /**
  * Class KindaDocument, extend from {@link module:kinda-document.Component Component}.
