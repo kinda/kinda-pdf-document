@@ -1,5 +1,5 @@
----
----
+# Table of content
+
 [Tourtal](tourtal.html)
 [Component](component.html)
   - [KindaDocument](kinda-document.html)
