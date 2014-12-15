@@ -115,7 +115,7 @@ Finally, you can generate a PDF file. Just yield doc.generatePDFFile('path/to/fi
 yield doc.generatePDFFile('test.pdf');
 ```
 
-And voilà! For more details, read the [API](docs/index.md) documentation.
+And voilà! For more details, read the API documentation.
 
 ## Dependencies
 
