@@ -24,15 +24,15 @@ var kb = KindaDocument.create(options);
 ```
 The parameter `options` is an object with properties listed below:
 
-  - `width`, a number to set the PDF page width in millimeter, default to `210`mm. But there is no need and not allow to append the unit to the value.
+  - `width`, a number to set the PDF page width in millimeter, defaults to `210`mm.
 
   #### example:
   ```js
   var options = {
-      width: 210 // only need a number
+      width: 210
   };
   ```
-  - `height`, a number to set the PDF page height in millimeter, default to `297`mm. Also, ignore the unit when you set it.
+  - `height`, a number to set the PDF page height in millimeter, defaults to `297`mm.
 
   #### example:
   ```js
@@ -40,17 +40,17 @@ The parameter `options` is an object with properties listed below:
       height: 297
   }
   ```
-  - `paddingTop`, a number specify the distance between the component and its content on top side in millimeter, default to `10`mm.
-  - `paddingRight`, padding on the right side, default to `10`mm.
-  - `paddingBottom`, padding on the bottom side, default to `10`mm.
-  - `paddingLeft`, padding on the left side, default to `10`mm.
-  - `paddings`, an object define the distance between this component and its content on each side, Its a combination of `paddingTop` `paddingRight` `paddingBottom` and `paddingLeft`. It has four properties:
+  - `paddingTop`, a number specify the distance between the component and its content on top side in millimeter, defaults to `10`mm.
+  - `paddingRight`, padding on the right side, defaults to `10`mm.
+  - `paddingBottom`, padding on the bottom side, defaults to `10`mm.
+  - `paddingLeft`, padding on the left side, defaults to `10`mm.
+  - `paddings`, an object define all four padding properties on each side, It is a combination of `paddingTop` `paddingRight` `paddingBottom` and `paddingLeft`. It has four properties:
     - `top`, top side.
     - `right`, right side.
     - `bottom`, bottom side.
     - `left`, left side.
 
-  You can set up paddings in these format:
+  You can set up paddings in these formats:
 
   #### example:
   ```js
@@ -72,7 +72,10 @@ The parameter `options` is an object with properties listed below:
     }
   };
 
-  // or you can pass a array. List each padding in [top, right, bottom, left] sequence.
+  // this expression is true, the other three properties is the same
+  paddings.top == paddingTop; //true
+
+  // or you can pass an array. List each padding in [top, right, bottom, left] sequence.
   var options = {
       paddings: [5, 10, 5, 10]
   };
@@ -82,11 +85,11 @@ The parameter `options` is an object with properties listed below:
       paddings: 5
   };
   ```
-  - `marginTop`,  a number specify the distance between the component and its container on top side in millimeter, default to `0`mm.
-  - `marginRight`, margin on the right side, default to `0`mm.
-  - `marginBottom`, margin on the bottom side, default to `0`mm.
-  - `marginLeft`, margin on the left side, default to `0`mm.
-  - `margins`, like the paddings property, We have an object define the distance between this component and its container on each side. It has four properties:
+  - `marginTop`,  a number specify the distance between the component and its container on top side in millimeter, defaults to `0`mm.
+  - `marginRight`, margin on the right side, defaults to `0`mm.
+  - `marginBottom`, margin on the bottom side, defaults to `0`mm.
+  - `marginLeft`, margin on the left side, defaults to `0`mm.
+  - `margins`, like the paddings property, We have a property define all the four margins on each side. It has four properties:  
     - `top`, top side, equals to `marginTop`.
     - `right`, right side, equals to `marginRight`.
     - `bottom`, bottom side, equals to `marginBottom`.
@@ -122,10 +125,11 @@ The parameter `options` is an object with properties listed below:
 
   // or if we only need one style, We can directly pass it
   var options = {
-      fontStyle: 'bold' // its the same with ['bold']
+      fontStyle: 'bold' // it is the same with ['bold']
   }
 
-  // we treat 'oblique' as 'italic'. For Helvetica font, It has an 'oblique' style instead of 'italic', but we still use 'italic'
+  // we treat 'oblique' as 'italic'.
+  // For Helvetica font, It has an 'oblique' style, but we still use 'italic'
   var options = {
       fontTypeFace: 'Helvetica',
       fontStyle: ['italic']
