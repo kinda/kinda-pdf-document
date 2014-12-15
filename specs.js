@@ -104,10 +104,12 @@ yield report.renderToPDFFile('/tmp/report.pdf');
 //     color: undefined
 //     backgroundColor: undefined // For future
 //   Properties without inheritance:
+//     paddings
 //     paddingTop: undefined // For now, only one padding
 //     paddingBottom: undefined
 //     paddingLeft: undefined
 //     paddingRight: undefined
+//     margins
 //     marginTop: undefined
 //     marginBottom: undefined
 
