@@ -2,7 +2,11 @@
 
 Easily generate any kind of PDF documents such as reports including headers, footers, tables, etc.
 
+**NOTE:** This documentation is still work in progress. Please help make it better by adding as much as you can and submitting a pull request.
+
 ## Installation
+
+**NOTE:** This module is not yet published on npm.
 
 ```
 $ npm install kinda-document
@@ -115,7 +119,7 @@ Finally, you can generate a PDF file. Just yield doc.generatePDFFile('path/to/fi
 yield doc.generatePDFFile('test.pdf');
 ```
 
-And voilà! For more details, read the API documentation.
+And voilà! For more details, read the API documentation **[TODO]**.
 
 ## Dependencies
 
