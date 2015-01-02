@@ -1,4 +1,4 @@
-# kinda-document
+# kinda-document [![Build Status](https://travis-ci.org/kinda/kinda-document.svg?branch=master)](https://travis-ci.org/kinda/kinda-document)
 
 Easily generate any kind of PDF documents such as reports including headers, footers, tables, etc.
 

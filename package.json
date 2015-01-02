@@ -2,19 +2,20 @@
   "name": "kinda-document",
   "version": "0.1.0",
   "description": "Easily generate any kind of PDF documents such as reports including headers, footers, tables, etc.",
+  "author": "Manuel Vila <mvila@3base.com>",
   "contributors": [
-    "Manuel Vila <mvila@3base.com>",
     "Chuan Zhang <zhchuan7@gmail.com>"
   ],
   "main": "component/document.js",
   "repository": "git://github.com/kinda/kinda-document",
   "scripts": {
-    "test": "node --harmony test/document.js"
+    "release": "(git checkout --quiet master && test -z \"$(git status --porcelain)\" && npm version $npm_config_release_type && git push --follow-tags) || echo \"An error occured (unclean repository?)\"",
+    "release-patch": "npm run release --release-type=patch",
+    "release-minor": "npm run release --release-type=minor",
+    "release-major": "npm run release --release-type=major",
+    "test": "echo \"Warning: no test specified\" && exit 0"
   },
   "license": "MIT",
-  "engines": {
-    "node": "0.11.x"
-  },
   "dependencies": {
     "co": "^4.0.0",
     "kinda-object": "^0.1.2",
