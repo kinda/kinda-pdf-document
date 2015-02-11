@@ -4,9 +4,9 @@ var co = require('co');
 var Document = require('../');
 
 var report = Document.create({
-  title: 'KindaDocument tests',
+  title: 'KindaPDFDocument tests',
   author: 'fishead <zhchuan7@gmail.com>',
-  subject: 'KindaDocument tests',
+  subject: 'KindaPDFDocument tests',
   keywords: 'Document, generator, PDFKit, Node.js',
 });
 
@@ -31,7 +31,7 @@ report.registerFont('Chalkboard', ['bold'],
 
 report.addHeader(function(header) {
   header.addText(
-    '{{reportTitle}}'
+    '{{documentTitle}}'
   );
   header.addText(
     'Center',
@@ -416,10 +416,10 @@ report.addFooter(function(footer) {
 });
 
 co(function *() {
-  yield report.generatePDFFile('test.pdf');
+  yield report.generatePDFFile(nodePath.join(__dirname, 'test.pdf'));
   console.log('Document generated');
 }).catch(function(err) {
   console.error(err.stack);
 });
 
-setTimeout(function() {}, 1000000000);
+// setTimeout(function() {}, 1000000000);

@@ -4,16 +4,6 @@ var _ = require('lodash');
 var Block = require('./');
 var Column = require('./column');
 
-/**
-* Class Row, extend from {@link module:kinda-document.Block Block}.
-
-* @class Row
-* @memberof module:kinda-document
-* @param {Block} parent - Parent of self.
-* @param {Object} options - Init config options.
-* @example how to create instance
-* var instance = Row.create({}, function() {});
-*/
 var Row = Block.extend('Row', function() {
   this.setCreator(function(parent, options) {
     if (!options) options = {};

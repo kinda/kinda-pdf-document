@@ -4,15 +4,6 @@ var _ = require('lodash');
 var Component = require('./');
 var TableRow = require('./table-row');
 
-/**
- * Class TableFooter, extend from {@link module:kinda-document.Component Component}.
- * @class TableFooter
- * @memberof module:kinda-document
- * @param {Object} options - Init options.
- * @param {Function} fn - Init function.
- * @example // how to create instance?
- * var instance = TableFooter.create({}, function() {});
- */
 var TableFooter = Component.extend('TableFooter', function() {
   this.defaults = {
     alignment: 'left'
@@ -25,16 +16,6 @@ var TableFooter = Component.extend('TableFooter', function() {
     }
   });
 
-  /**
-   * Add a {@link module:kinda-document.TableRow TableRow} instance to self.
-   *
-   * @function addRow
-   * @instance
-   * @memberof module:kinda-document.TableBody
-   * @param {Object=} options - Init config options.
-   * @param {Function} fn - Init function.
-   * @returns {TableRow} {@link module:kinda-document.TableRow TableRow} instance
-   */
   this.addRow = function(options, fn) {
     var row = TableRow.create(this, options, fn);
     this.rows.push(row);

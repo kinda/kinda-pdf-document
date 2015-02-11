@@ -3,16 +3,6 @@
 var _ = require('lodash');
 var KindaObject = require('kinda-object');
 
-/**
- * Class Block, extend from KindaObject.
- * @class Block
- * @memberof module:kinda-document
- * @private
- * @param {Object} options - Init options.
- * @param {Function} fn - Init function.
- * @example // how to create instance?
- * // var  instance = Block.create({}, function() {});
- */
 var Block = KindaObject.extend('Block', function() {
   Object.defineProperty(this, 'paddings', {
     get: function() {

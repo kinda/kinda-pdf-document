@@ -1,6 +1,6 @@
 # Table of content
 
-  - [KindaDocument](kinda-document.md)
+  - [Document](document.md)
   - [DocumentHeader](document-header.md)
   - [DocumentBody](document-body.md)
   - [DocumentFooter](document-footer.md)

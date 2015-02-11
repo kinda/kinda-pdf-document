@@ -1,10 +1,10 @@
-# KindaDocument
+# Document
 
-Main class exposed by require('kinda-document'). But you can not use it with the `new` operator, Call `KindaDocument.create(options)` to create an instance.
+Main class exposed by require('kinda-pdf-document'). But you can not use it with the `new` operator, Call `KindaPDFDocument.create(options)` to create an instance.
 
 ### example:
 ```js
-var KindaDocument = require('kinda-document');
+var KindaPDFDocument = require('kinda-pdf-document');
 
 var options = {
   width: 210,
@@ -20,7 +20,7 @@ var options = {
   keywords: 'ship, gold, wreck'
 };
 
-var kb = KindaDocument.create(options);
+var doc = KindaPDFDocument.create(options);
 ```
 The parameter `options` is an object with properties listed below:
 
@@ -160,7 +160,7 @@ The parameter `options` is an object with properties listed below:
   #### example:
   ```js
   var options = {
-      title: 'KindaDocument tests'
+      title: 'KindaPDFDocument tests'
   };
   ```
   - `author`, a string to specify set the name of the author.
@@ -176,9 +176,9 @@ The parameter `options` is an object with properties listed below:
 
 The last four properties (`title`, `author`, `subject`, `keywords`) are the meta datas of PDF file, Here is a [link](http://en.wikipedia.org/wiki/Portable_Document_Format#Metadata) that will tell you what it is.
 
-## kb.addHeader(options, fn)
+## doc.addHeader(options, fn)
 
-Add a [DocumentHeader](document-header.md) to `kb`, But only can be invoke once, or it will throw an error.
+Add a [DocumentHeader](document-header.md) to `doc`, But only can be invoke once, or it will throw an error.
 
 ### arguments:
 - `options`, object has these properties:
@@ -198,30 +198,30 @@ var headerOptions = {
   marginTop: 5,
   alignment: 'left'
 };
-kb.addHeader(headerOptions, function(header) {
+doc.addHeader(headerOptions, function(header) {
   header.addRow(...);
 });
 ```
 
-## kb.addBody(options, fn)
+## doc.addBody(options, fn)
 
-Add a [DocumentBody](document-body.md) to `kb`, But only can be invoke once, or it will throw an error.
+Add a [DocumentBody](document-body.md) to `doc`, But only can be invoke once, or it will throw an error.
 
 ### arguments:
 These two properties acts almost the same like the arguments in the addHeader function.
 - `options`, an object. But pay attention with the margins. The default margins value is `[0, 0, 0, 0]`.
 - `fn`, a function has an argument named `body`.
 
-## kb.addFooter(options, fn)
+## doc.addFooter(options, fn)
 
-Add a [DocumentFooter](document-footer.md) to `kb`, But only can be invoke once, or it will throw an error.
+Add a [DocumentFooter](document-footer.md) to `doc`, But only can be invoke once, or it will throw an error.
 
 ### arguments:
 These two properties acts almost the same like the arguments in the addHeader function.
 - `options`, an object. The default margins value is `[5, 0, 0, 0]` which means `marginTop` is `5`mm.
 - `fn`, a function has an argument named `footer`.
 
-## kb.registerFont(name, style, path, postScriptName)
+## doc.registerFont(name, style, path, postScriptName)
 
 Register a custom font for further use.
 
@@ -235,7 +235,7 @@ Register a custom font for further use.
 ```js
 // define a ttf font and use it
 var font1 = path.join(__dirname, 'fonts_folder', 'Thabit-BoldOblique.ttf');
-kb.registerFont('Thabit', ['bold', 'italic'], font1);
+doc.registerFont('Thabit', ['bold', 'italic'], font1);
 var options1 = {
   fontTypeFace: 'Thabit',
   fontStyle: ['bold', 'italic']
@@ -243,14 +243,14 @@ var options1 = {
 
 // define a ttc font and use it
 var font2 = path.join(__dirname, 'fonts_folder', 'Chalkboard.ttc');
-kb.registerFont('Chalkboard', ['bold'], font2, 'Chalkboard-Bold' );
+doc.registerFont('Chalkboard', ['bold'], font2, 'Chalkboard-Bold' );
 var options2 = {
   fontTypeFace: 'Chalkboard',
   fontStyle: ['bold']
 }
 ```
 
-## kb.generatePDFFile *(path)
+## doc.generatePDFFile *(path)
 
 Function to output the PDF file to the specified path. It is a generator in ES6, So you need to use it with `yield` keyword.
 
@@ -260,5 +260,5 @@ Function to output the PDF file to the specified path. It is a generator in ES6,
 ### example:
 ```js
 // use it with yield
-yield kb.generatePDFFile('path/to/dest.pdf');
+yield doc.generatePDFFile('path/to/dest.pdf');
 ```

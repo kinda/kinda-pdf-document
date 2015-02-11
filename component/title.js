@@ -3,15 +3,6 @@
 var _ = require('lodash');
 var Box = require('./box');
 
-/**
- * Class Title, extend from {@link module:kinda-document.Box Box}.
- * @class Title
- * @memberof module:kinda-document
- * @param {Object} options - Init options.
- * @param {Function} fn - Init function.
- * @example // how to create instance?
- * var instance = Title.create({}, function() {});
- */
 var Title = Box.extend('Title', function() {
   this.defaults = {
     marginTop: 10,

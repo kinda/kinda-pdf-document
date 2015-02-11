@@ -6,15 +6,6 @@ var TableHeader = require('./table-header');
 var TableBody = require('./table-body');
 var TableFooter = require('./table-footer');
 
-/**
- * Class Table, extend from {@link module:kinda-document.Component Component}.
- * @class Table
- * @memberof module:kinda-document
- * @param {Object} options - Init options.
- * @param {Function} fn - Init function.
- * @example // how to create instance?
- * var instance = Table.create({}, function() {});
- */
 var Table = Component.extend('Table', function() {
   this.defaults = {
     borderWidth: 0.25,
@@ -49,16 +40,6 @@ var Table = Component.extend('Table', function() {
     }
   });
 
-  /**
-   * Add a {@link module:kinda-document.TableHeader TableHeader}.
-   * @function addHeader
-   * @instance
-   * @memberof module:kinda-document.Table
-   * @param {object=} options - Init config options.
-   * @param {function=} fn - Init function.
-   * @throws {Error} Will throw an Error if invoke this method more than once.
-   * @returns {TableHeader} {@link module:kinda-document.TableHeader TableHeader} instance.
-   */
   this.addHeader = function(options, fn) {
     if (this._header) {
       throw new Error('a report cannot have more than one header');
@@ -67,27 +48,10 @@ var Table = Component.extend('Table', function() {
     return this._header;
   };
 
-  /**
-   * Get {@link module:kinda-document.TableHeader TableHeader} instance.
-   * @function getHeader
-   * @instance
-   * @memberof module:kinda-document.Table
-   * @returns {TableHeader} {@link module:kinda-document.TableHeader TableHeader} instance.
-   */
   this.getHeader = function() {
     return this._header;
   };
 
-  /**
-   * Add a {@link module:kinda-document.TableBody TableBody}.
-   * @function addBody
-   * @instance
-   * @memberof module:kinda-document.Table
-   * @param {object} options - Init config options.
-   * @param {function} fn - Init function.
-   * @returns {TableBody} {@link module:kinda-document.TableBody TableBody} instance
-   * @throws {Error} Will throw an Error if invoke this method more than once.
-   */
   this.addBody = function(options, fn) {
     if (this._body) {
       throw new Error('a report cannot have more than one body');
@@ -96,27 +60,10 @@ var Table = Component.extend('Table', function() {
     return this._body;
   };
 
-  /**
-   * Get {@link module:kinda-document.TableBody TableBody} instance.
-   * @function getBody
-   * @instance
-   * @memberof module:kinda-document.Table
-   * @returns {TableBody} {@link module:kinda-document.TableBody TableBody} instance.
-   */
   this.getBody = function() {
     return this._body;
   };
 
-  /**
-   * Add a {@link module:kinda-document.TableFooter TableFooter}.
-   * @function addFooter
-   * @instance
-   * @memberof module:kinda-document.Table
-   * @param {object} options - Init config options.
-   * @param {function} fn - Init function.
-   * @returns {TableFooter} {@link module:kinda-document.TableFooter TableFooter} instance
-   * @throws {Error} Will throw an Error if invoke this method more than once.
-   */
   this.addFooter = function(options, fn) {
     if (this._footer) {
       throw new Error('a table cannot have more than one footer');
@@ -125,13 +72,6 @@ var Table = Component.extend('Table', function() {
     return this._footer;
   };
 
-  /**
-   * Get {@link module:kinda-document.TableFooter TableFooter} instance.
-   * @function getFooter
-   * @instance
-   * @memberof module:kinda-document.Table
-   * @returns {TableFooter} {@link module:kinda-document.TableFooter TableFooter} instance.
-   */
   this.getFooter = function() {
     return this._footer;
   };

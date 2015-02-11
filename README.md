@@ -1,4 +1,4 @@
-# kinda-document [![Build Status](https://travis-ci.org/kinda/kinda-document.svg?branch=master)](https://travis-ci.org/kinda/kinda-document)
+# kinda-pdf-document [![Build Status](https://travis-ci.org/kinda/kinda-pdf-document.svg?branch=master)](https://travis-ci.org/kinda/kinda-pdf-document)
 
 Easily generate any kind of PDF documents such as reports including headers, footers, tables, etc.
 
@@ -9,25 +9,25 @@ Easily generate any kind of PDF documents such as reports including headers, foo
 **NOTE:** This module is not yet published on npm.
 
 ```
-$ npm install kinda-document
+$ npm install kinda-pdf-document
 ```
 
-To use kinda-document, you need node `0.11.9` or higher for generator support, and must run node with the --harmony flag.
+To use kinda-pdf-document, you need node `0.11.9` or higher for generator support, and must run node with the --harmony flag.
 
 ```
-$ node --harmony test/document.js
+$ node --harmony test/pdf.js
 ```
 
 ## How to use it?
 
-First you create an instance of KindaDocument:
+First you create an instance of KindaPDFDocument:
 
 ```js
-var KindaDocument = require('kinda-document');
-var doc = KindaDocument.create();
+var KindaPDFDocument = require('kinda-pdf-document');
+var doc = KindaPDFDocument.create();
 ```
 
-After, you can specify a document header. It will apear on the top of every pages. You can do it like this:
+After, you can specify an header. It will apear on the top of every pages. You can do it like this:
 
 ```js
 doc.addHeader(function(header) {
@@ -55,11 +55,11 @@ header.addText('Page {{pageNumber}} of {{numberOfPages}}');
 
 You see that there are two variables in the text. They will be replaced by real values when the PDF is rendered. For now, a few variables are supported:
 
-  - `reportTitle`: can be specified when you create a KindaDocument,
+  - `documentTitle`: can be specified when you create a document,
   - `pageNumber`: current page number,
   - `numberOfPages`: how many pages the document have.
 
-Just wrap the variable in double braces `{{reportTitle}}` and that's all.
+Just wrap the variable in double braces `{{documentTitle}}` and that's all.
 
 So, there is a header now. You can also add a footer:
 
@@ -123,7 +123,7 @@ And voilà! For more details, read the API documentation **[TODO]**.
 
 ## Dependencies
 
-KindaDocument uses [PDFKit](https://github.com/devongovett/pdfkit) to render the PDF.
+KindaPDFDocument uses [PDFKit](https://github.com/devongovett/pdfkit) to render the PDF.
 
 ## License
 

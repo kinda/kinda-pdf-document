@@ -4,15 +4,6 @@ var _ = require('lodash');
 var Component = require('./');
 var TableCell = require('./table-cell');
 
-/**
- * Class TableRow, extend from {@link module:kinda-document.Component Component}.
- * @class TableRow
- * @memberof module:kinda-document
- * @param {Object} options - Init options.
- * @param {Function} fn - Init function.
- * @example // how to create instance?
- * var instance = TableRow.create({}, function() {});
- */
 var TableRow = Component.extend('TableRow', function() {
   Object.defineProperty(this, 'cells', {
     get: function() {
@@ -21,16 +12,6 @@ var TableRow = Component.extend('TableRow', function() {
     }
   });
 
-  /**
-   * Add a {@link module:kinda-document.TableCell TableCell} instance to self.
-   *
-   * @function addCell
-   * @instance
-   * @memberof module:kinda-document.TableRow
-   * @param {Object=} options - Init config options.
-   * @param {Function} fn - Init function.
-   * @returns {TableCell} {@link module:kinda-document.TableCell TableCell} instance
-   */
   this.addCell = function(value, options, fn) {
     if (!_.isString(value)) {
       fn = options;

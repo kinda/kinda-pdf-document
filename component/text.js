@@ -3,15 +3,6 @@
 var _ = require('lodash');
 var Component = require('./');
 
-/**
- * Class Text, extend from {@link module:kinda-document.Component Component}.
- * @class Text
- * @memberof module:kinda-document
- * @param {Object} options - Init options.
- * @param {Function} fn - Init function.
- * @example // how to create instance?
- * var instance = Text.create({}, function() {});
- */
 var Text = Component.extend('Text', function() {
   var superCreator = this.getCreator();
   this.setCreator(function(parent, value, options, fn) {
@@ -47,7 +38,7 @@ var Text = Component.extend('Text', function() {
   this.parseVariables = function(str, block) {
     var variables = [
       {
-        placeholder: '{{reportTitle}}',
+        placeholder: '{{documentTitle}}',
         replacement: function() { return block.document.title; }
       },
       {

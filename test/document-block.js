@@ -1,9 +1,10 @@
+var nodePath = require('path');
 var co = require('co');
 var Document = require('../block/document');
 
 co(function *() {
   yield Document.generatePDFFile(
-    'test.pdf',
+    nodePath.join(__dirname, 'test.pdf'),
     { width: 210, height: 297 },
     function(document) {
       for (var i = 1; i <= 80; i++) {
@@ -32,4 +33,4 @@ co(function *() {
   console.error(err.stack);
 });
 
-setTimeout(function() {}, 1000000000);
+// setTimeout(function() {}, 1000000000);
