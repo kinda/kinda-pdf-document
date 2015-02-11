@@ -20,7 +20,7 @@ $ node --harmony test/pdf.js
 
 ## How to use it?
 
-First you create an instance of KindaPDFDocument:
+First you create an instance of `KindaPDFDocument`:
 
 ```js
 var KindaPDFDocument = require('kinda-pdf-document');
@@ -113,7 +113,7 @@ table.addFooter(function(tableFooter) {
 })
 ```
 
-Finally, you can generate a PDF file. Just yield doc.generatePDFFile('path/to/file.pdf') to do the magic.
+Finally, you can generate a PDF file. Just yield `doc.generatePDFFile()` to do the magic.
 
 ```js
 yield doc.generatePDFFile('test.pdf');
