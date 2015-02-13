@@ -42,6 +42,18 @@ var Text = Component.extend('Text', function() {
         replacement: function() { return block.document.title; }
       },
       {
+        placeholder: '{{documentAuthor}}',
+        replacement: function() { return block.document.author; }
+      },
+      {
+        placeholder: '{{documentSubject}}',
+        replacement: function() { return block.document.subject; }
+      },
+      {
+        placeholder: '{{documentKeywords}}',
+        replacement: function() { return block.document.keywords; }
+      },
+      {
         placeholder: '{{pageNumber}}',
         replacement: function() { return block.document.pageNumber; }
       },

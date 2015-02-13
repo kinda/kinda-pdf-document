@@ -5,7 +5,7 @@ var Document = require('../');
 
 var report = Document.create({
   title: 'KindaPDFDocument tests',
-  author: 'fishead <zhchuan7@gmail.com>',
+  author: 'Kinda Ltd',
   subject: 'KindaPDFDocument tests',
   keywords: 'Document, generator, PDFKit, Node.js',
 });
@@ -407,7 +407,7 @@ report.addBody(function(body) {
 
 report.addFooter(function(footer) {
   footer.addText(
-    'Kinda Ltd'
+    '{{documentAuthor}}'
   );
   footer.addText(
     'December 10th, 2014 - 14:05',

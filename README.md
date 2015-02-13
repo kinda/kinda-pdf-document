@@ -55,7 +55,7 @@ header.addText('Page {{pageNumber}} of {{numberOfPages}}');
 
 You see that there are two variables in the text. They will be replaced by real values when the PDF is rendered. For now, a few variables are supported:
 
-  - `documentTitle`: can be specified when you create a document,
+  - `documentTitle`, `documentAuthor`, `documentSubject`, `documentKeywords`: can be specified when you create a document,
   - `pageNumber`: current page number,
   - `numberOfPages`: how many pages the document have.
 
