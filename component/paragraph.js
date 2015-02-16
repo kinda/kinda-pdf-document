@@ -3,12 +3,10 @@
 var _ = require('lodash');
 var Box = require('./box');
 
-var Title = Box.extend('Title', function() {
+var Paragraph = Box.extend('Paragraph', function() {
   this.defaults = {
-    marginTop: 10,
-    // marginBottom: 5,
-    fontSize: 14,
-    fontStyle: ['bold']
+    marginTop: 5,
+    // marginBottom: 5
   };
 
   var superRender = this.render;
@@ -24,4 +22,4 @@ var Title = Box.extend('Title', function() {
   };
 });
 
-module.exports = Title;
+module.exports = Paragraph;

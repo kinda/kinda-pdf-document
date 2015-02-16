@@ -3,6 +3,7 @@
 var _ = require('lodash');
 var Component = require('./');
 var Title = require('./title');
+var Paragraph = require('./paragraph');
 var Table = require('./table').Table;
 
 var DocumentBody = Component.extend('DocumentBody', function() {
@@ -18,15 +19,27 @@ var DocumentBody = Component.extend('DocumentBody', function() {
   });
 
   this.addTitle = function(value, options, fn) {
-    if (!_.isString(value)) {
+    if (!(_.isNumber(value) || _.isString(value))) {
       fn = options;
       options = value;
       value = undefined;
     }
     var title = Title.create(this, options, fn);
-    if (value) title.addText(value);
+    if (value != null) title.addText(value);
     this.components.push(title);
     return title;
+  };
+
+  this.addParagraph = function(value, options, fn) {
+    if (!(_.isNumber(value) || _.isString(value))) {
+      fn = options;
+      options = value;
+      value = undefined;
+    }
+    var paragraph = Paragraph.create(this, options, fn);
+    if (value != null) paragraph.addText(value);
+    this.components.push(paragraph);
+    return paragraph;
   };
 
   this.addTable = function(options, fn) {

@@ -8,6 +8,7 @@ var TableFooter = require('./table-footer');
 
 var Table = Component.extend('Table', function() {
   this.defaults = {
+    marginTop: 5,
     borderWidth: 0.25,
     borderColor: 'gray'
   };
@@ -149,6 +150,11 @@ var Table = Component.extend('Table', function() {
   };
 
   this.render = function(block) {
+    if (block.y !== block.document.top) {
+      // marginTop should be ignored when y is at the top of the page
+      block.y += this.margins.top;
+    }
+
     this.computeColumnWidths(block);
 
     var renderHeader;

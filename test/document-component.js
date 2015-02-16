@@ -234,6 +234,11 @@ report.addBody(function(body) {
   });
 
   /************************************************************/
+  body.addTitle('Paragraphs');
+  body.addParagraph('First paragraph');
+  body.addParagraph('Second paragraph');
+
+  /************************************************************/
   body.addTitle('Font sizes');
   body.addTable(function(table) {
     table.addBody(function(body) {
