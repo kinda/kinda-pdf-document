@@ -13,7 +13,7 @@ var TableRow = Component.extend('TableRow', function() {
   });
 
   this.addCell = function(value, options, fn) {
-    if (!_.isString(value)) {
+    if (!(_.isNumber(value) || _.isString(value))) {
       fn = options;
       options = value;
       value = undefined;
@@ -21,7 +21,7 @@ var TableRow = Component.extend('TableRow', function() {
 
     var cell = TableCell.create(this, options, fn);
 
-    if (value) cell.addText(value);
+    if (value != null) cell.addText(value);
 
     this.cells.push(cell);
 
