@@ -80,18 +80,6 @@ var Component = KindaObject.extend('Component', function() {
     }
   });
 
-  // Object.defineProperty(this, 'font', {
-  //   get: function() {
-  //     return {
-  //       fontFace: this.fontFace,
-  //       fontSize: this.fontSize,
-  //       fontWeight: this.fontWeight,
-  //       fontStyle: this.fontStyle,
-  //       fontColor: this.fontColor
-  //     }
-  //   }
-  // });
-
   Object.defineProperty(this, 'fontSize', {
     get: function() {
       if (!_.isUndefined(this._fontSize)) {
@@ -129,6 +117,20 @@ var Component = KindaObject.extend('Component', function() {
     },
     set: function(value) {
       this._alignment = value;
+    }
+  });
+
+  Object.defineProperty(this, 'isStyled', {
+    get: function() {
+      if (!_.isUndefined(this._isStyled)) {
+        return this._isStyled;
+      }
+      else if (this.parentComponent) {
+        return this.parentComponent.isStyled;
+      }
+    },
+    set: function(value) {
+      this._isStyled = value;
     }
   });
 

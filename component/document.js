@@ -16,7 +16,8 @@ var Document = Component.extend('Document', function() {
     fontTypeFace: 'Helvetica',
     fontStyle: [],
     fontSize: 10,
-    color: 'black'
+    color: 'black',
+    isStyled: false
   };
 
   var superCreator = this.getCreator();

@@ -62,6 +62,13 @@ var Document = Block.extend('Document', function() {
       layout: this.orientation,
       info: info
     });
+
+    this.draft = new PDFDocument({
+      // used by computeWidthOfString and computeHeightOfString
+      size: [this.mmToPt(options.width), this.mmToPt(options.height)],
+      margin: 0,
+      layout: this.orientation,
+    });
   });
 
   this.addPage = function() {

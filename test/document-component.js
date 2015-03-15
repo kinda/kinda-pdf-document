@@ -408,6 +408,19 @@ report.addBody(function(body) {
       });
     });
   });
+
+  /************************************************************/
+  body.addTitle('Styled text');
+  body.addTable(function(table) {
+    table.addBody(function(body) {
+      body.addRow(function(row) {
+        row.addCell(
+          'James <strong>Bond</strong> <small>007</small>',
+          { isStyled: true }
+        );
+      });
+    });
+  });
 });
 
 report.addFooter(function(footer) {

@@ -61,28 +61,165 @@ var Block = KindaObject.extend('Block', function() {
     }
   });
 
-  this.computeWidthOfString = function(str, options) {
-    var font = this.document.getFont(options.fontTypeFace, options.fontStyle);
-    this.document.pdf.font(font.name, font.postScriptName);
-    this.document.pdf.fontSize(options.fontSize);
+  var knownStyles = ['strong', 'small'];
 
-    var width = this.document.pdf.widthOfString(str);
-    width = this.ptToMm(width);
+  var parseText = function(text, isStyled) {
+    // TODO: better implementation (should support nested tags)
+    if (!isStyled) return [{ text: text }];
+    var str, index1, index2, index3, style, closingTag;
+    var segments = [];
+    while (text.length) {
+      index1 = text.indexOf('<');
+      if (index1 === -1) {
+        segments.push({ text: text });
+        break;
+      }
+      index1++;
+      index2 = text.indexOf('>', index1);
+      if (index2 === -1) {
+        str = text.substr(0, index1);
+        text = text.substr(index1);
+        segments.push({ text: str });
+        continue;
+      }
+      style = text.slice(index1, index2);
+      index2++;
+      closingTag = '</' + style + '>';
+      index3 = text.indexOf(closingTag, index2);
+      if (!_.contains(knownStyles, style) || index3 === -1) {
+        str = text.substr(0, index2);
+        text = text.substr(index2);
+        segments.push({ text: str });
+        continue;
+      }
+      str = text.substr(0, index1 - 1);
+      if (str) segments.push({ text: str });
+      str = text.slice(index2, index3);
+      text = text.substr(index3 + closingTag.length);
+      segments.push({ text: str, style: style });
+    }
+    return segments;
+  };
+
+  var applyStyle = function(options, style) {
+    options = _.cloneDeep(options);
+    switch (style) {
+      case 'strong':
+        if (!_.contains(options.fontStyle, 'bold')) {
+          options.fontStyle.push('bold');
+        }
+        break;
+      case 'small':
+        options.fontSize = options.fontSize * 0.66;
+        break;
+    }
+    return options;
+  };
+
+  this.renderText = function(pdf, str, options) {
+    var x = this.mmToPt(this.x + this.paddings.left);
+    var y = this.mmToPt(this.y + this.paddings.top);
+    var width = this.width - (this.paddings.left + this.paddings.right)
+    this._renderText(pdf, str, x, y, width, options);
+  };
+
+  this._renderText = function(pdf, str, x, y, width, options) {
+    var segments = parseText(str, options.isStyled);
+    for (var i = 0; i < segments.length; i++) {
+      var segment = segments[i];
+
+      var segmentOptions = applyStyle(options, segment.style);
+      var font = this.document.getFont(
+        segmentOptions.fontTypeFace, segmentOptions.fontStyle
+      );
+      pdf.font(font.name, font.postScriptName);
+      pdf.fontSize(segmentOptions.fontSize);
+      pdf.fillColor(segmentOptions.color);
+
+      var ascender = pdf._font.ascender / 1000; // TODO: clean this ugly code
+      var normalAscender = ascender * options.fontSize;
+      var segmentAscender = ascender * segmentOptions.fontSize;
+      var offsetY = (normalAscender - segmentAscender);
+
+      var opts = {};
+      if (i < segments.length - 1) opts.continued = true;
+      if (i === 0) {
+        opts.width = this.mmToPt(width);
+        opts.align = segmentOptions.alignment;
+        pdf.text(segment.text, x, y + offsetY, opts);
+      } else {
+        pdf.y = pdf.y + offsetY;
+        pdf.text(segment.text, opts);
+      }
+      pdf.y = pdf.y - offsetY; // FIXME: not sure what's happend in case of line break
+    }
+  };
+
+  this.computeWidthOfString = function(str, options) {
+    // var font = this.document.getFont(options.fontTypeFace, options.fontStyle);
+    // this.document.pdf.font(font.name, font.postScriptName);
+    // this.document.pdf.fontSize(options.fontSize);
+    //
+    // var width = this.document.pdf.widthOfString(str);
+    // width = this.ptToMm(width);
+    // width += this.paddings.left + this.paddings.right + 0.000001;
+    // return width;
+
+    var width = 0;
+    var segments = parseText(str, options.isStyled);
+    for (var i = 0; i < segments.length; i++) {
+      var segment = segments[i];
+      var segmentOptions = applyStyle(options, segment.style);
+      var font = this.document.getFont(
+        segmentOptions.fontTypeFace, segmentOptions.fontStyle
+      );
+      this.document.pdf.font(font.name, font.postScriptName);
+      this.document.pdf.fontSize(segmentOptions.fontSize);
+      var w = this.document.pdf.widthOfString(segment.text);
+      w = this.ptToMm(w);
+      width += w;
+    }
     width += this.paddings.left + this.paddings.right + 0.000001;
     return width;
   };
 
   this.computeHeightOfString = function(str, options) {
-    var font = this.document.getFont(options.fontTypeFace, options.fontStyle);
-    this.document.pdf.font(font.name, font.postScriptName);
-    this.document.pdf.fontSize(options.fontSize);
+    // var font = this.document.getFont(options.fontTypeFace, options.fontStyle);
+    // this.document.pdf.font(font.name, font.postScriptName);
+    // this.document.pdf.fontSize(options.fontSize);
+    // var width = this.width - (this.paddings.left + this.paddings.right);
+    // var height = this.document.pdf.heightOfString(
+    //   str,
+    //   { width: this.mmToPt(width) }
+    // );
+    // // remove last line gap
+    // height -= this.document.pdf.currentLineHeight(true) - this.document.pdf.currentLineHeight(false);
+    // height = this.ptToMm(height);
+    // height += this.paddings.top + this.paddings.bottom;
+    // return height;
+
+    // var font = this.document.getFont(options.fontTypeFace, options.fontStyle);
+    // this.document.draft.font(font.name, font.postScriptName);
+    // this.document.draft.fontSize(options.fontSize);
+    // var width = this.width - (this.paddings.left + this.paddings.right);
+    // this.document.draft.text(
+    //   str,
+    //   0,
+    //   0,
+    //   { width: this.mmToPt(width) }
+    // );
+    // var height = this.document.draft.y;
+    // // remove last line gap
+    // height -= this.document.draft.currentLineHeight(true) - this.document.draft.currentLineHeight(false);
+    // height = this.ptToMm(height);
+    // height += this.paddings.top + this.paddings.bottom;
+    // return height;
+
     var width = this.width - (this.paddings.left + this.paddings.right);
-    var height = this.document.pdf.heightOfString(
-      str,
-      { width: this.mmToPt(width) }
-    );
+    this._renderText(this.document.draft, str, 0, 0, width, options);
+    var height = this.document.draft.y;
     // remove last line gap
-    height -= this.document.pdf.currentLineHeight(true) - this.document.pdf.currentLineHeight(false);
+    height -= this.document.draft.currentLineHeight(true) - this.document.draft.currentLineHeight(false);
     height = this.ptToMm(height);
     height += this.paddings.top + this.paddings.bottom;
     return height;
