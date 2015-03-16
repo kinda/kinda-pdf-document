@@ -16,9 +16,6 @@ var Column = Block.extend('Column', function() {
   Object.defineProperty(this, 'y', {
     get: function() {
       return this.row.y;
-    },
-    set: function(y) {
-      this.row.y = y;
     }
   });
 
@@ -28,8 +25,7 @@ var Column = Block.extend('Column', function() {
     },
     set: function(height) {
       this.row.height = height;
-    },
-    configurable: true
+    }
   });
 });
 

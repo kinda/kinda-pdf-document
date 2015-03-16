@@ -49,6 +49,8 @@ var Document = Block.extend('Document', function() {
     this.x = this.left;
     this.y = this.top;
 
+    this.nestedRowCount = 0;
+
     var info = {};
     if (this.title) info.Title = this.title;
     if (this.author) info.Author = this.author;
@@ -79,9 +81,11 @@ var Document = Block.extend('Document', function() {
   };
 
   this.addRow = function(options, fn) {
+    this.nestedRowCount++;
     var block = Row.create(this, options);
     fn(block);
-    this.flush();
+    this.nestedRowCount--;
+    if (this.nestedRowCount === 0) this.flush();
     if (!block.isFloating) {
       this.y += block.height;
     }
