@@ -156,15 +156,6 @@ var Block = KindaObject.extend('Block', function() {
   };
 
   this.computeWidthOfString = function(str, options) {
-    // var font = this.document.getFont(options.fontTypeFace, options.fontStyle);
-    // this.document.pdf.font(font.name, font.postScriptName);
-    // this.document.pdf.fontSize(options.fontSize);
-    //
-    // var width = this.document.pdf.widthOfString(str);
-    // width = this.ptToMm(width);
-    // width += this.paddings.left + this.paddings.right + 0.000001;
-    // return width;
-
     var width = 0;
     var segments = parseText(str, options.isStyled);
     for (var i = 0; i < segments.length; i++) {
@@ -184,37 +175,6 @@ var Block = KindaObject.extend('Block', function() {
   };
 
   this.computeHeightOfString = function(str, options) {
-    // var font = this.document.getFont(options.fontTypeFace, options.fontStyle);
-    // this.document.pdf.font(font.name, font.postScriptName);
-    // this.document.pdf.fontSize(options.fontSize);
-    // var width = this.width - (this.paddings.left + this.paddings.right);
-    // var height = this.document.pdf.heightOfString(
-    //   str,
-    //   { width: this.mmToPt(width) }
-    // );
-    // // remove last line gap
-    // height -= this.document.pdf.currentLineHeight(true) - this.document.pdf.currentLineHeight(false);
-    // height = this.ptToMm(height);
-    // height += this.paddings.top + this.paddings.bottom;
-    // return height;
-
-    // var font = this.document.getFont(options.fontTypeFace, options.fontStyle);
-    // this.document.draft.font(font.name, font.postScriptName);
-    // this.document.draft.fontSize(options.fontSize);
-    // var width = this.width - (this.paddings.left + this.paddings.right);
-    // this.document.draft.text(
-    //   str,
-    //   0,
-    //   0,
-    //   { width: this.mmToPt(width) }
-    // );
-    // var height = this.document.draft.y;
-    // // remove last line gap
-    // height -= this.document.draft.currentLineHeight(true) - this.document.draft.currentLineHeight(false);
-    // height = this.ptToMm(height);
-    // height += this.paddings.top + this.paddings.bottom;
-    // return height;
-
     var width = this.width - (this.paddings.left + this.paddings.right);
     this._renderText(this.document.draft, str, 0, 0, width, options);
     var height = this.document.draft.y;

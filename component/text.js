@@ -28,55 +28,6 @@ var Text = Component.extend('Text', function() {
       }
       block.renderText(pdf, str, options);
     }.bind(this));
-
-    // block.document.draw(function(pdf) {
-    //   var x = block.mmToPt(block.x + block.paddings.left);
-    //   var y = block.mmToPt(block.y + block.paddings.top);
-    //   var width = block.width - (block.paddings.left + block.paddings.right)
-    //
-    //   var str = this.parseVariables(this.value, block);
-    //   var segments = parseStyledText(str);
-    //   for (var i = 0; i < segments.length; i++) {
-    //     var segment = segments[i];
-    //
-    //     var fontTypeFace = this.fontTypeFace;
-    //     var fontStyle = _.clone(this.fontStyle);
-    //     var fontSize = this.fontSize;
-    //     var color = this.color;
-    //     var offsetY = 0;
-    //     switch (segment.style) {
-    //       case 'strong':
-    //         if (!_.contains(fontStyle, 'bold')) fontStyle.push('bold');
-    //         break;
-    //       case 'small':
-    //         // TODO: clean this ugly code
-    //         var font = block.document.getFont(fontTypeFace, fontStyle);
-    //         pdf.font(font.name, font.postScriptName);
-    //         var ascender = pdf._font.ascender / 1000;
-    //         var normalAscender = ascender * fontSize;
-    //         fontSize = fontSize * 0.66;
-    //         var smallAscender = ascender * fontSize;
-    //         offsetY = (normalAscender - smallAscender);
-    //         break;
-    //     }
-    //     var font = block.document.getFont(fontTypeFace, fontStyle);
-    //     pdf.font(font.name, font.postScriptName);
-    //     pdf.fontSize(fontSize);
-    //     pdf.fillColor(color);
-    //
-    //     var options = {};
-    //     if (i < segments.length - 1) options.continued = true;
-    //     if (i === 0) {
-    //       options.width = block.mmToPt(width);
-    //       options.align = this.alignment;
-    //       pdf.text(segment.text, x, y + offsetY, options);
-    //     } else {
-    //       pdf.y = pdf.y + offsetY;
-    //       pdf.text(segment.text, options);
-    //     }
-    //     pdf.y = pdf.y - offsetY; // FIXME: not sure what's happend in case of line break
-    //   }
-    // }.bind(this));
   };
 
   this.parseVariables = function(str, block) {
