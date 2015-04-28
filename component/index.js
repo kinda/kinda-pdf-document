@@ -249,7 +249,7 @@ var Component = KindaObject.extend('Component', function() {
   });
 
   this.findComponent = function(name) {
-    if (this.getClass().name === name)
+    if (this.getClassName() === name)
       return this;
     else if (this.parentComponent)
       return this.parentComponent.findComponent(name);
