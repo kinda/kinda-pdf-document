@@ -13,4 +13,8 @@ pids
 # Dependency directory
 node_modules
 
+# Examples
 test.pdf
+
+# Build directory
+lib

@@ -1,13 +1,16 @@
-var nodePath = require('path');
-var _ = require('lodash');
-var co = require('co');
-var Document = require('../');
+'use strict';
 
-var report = Document.create({
-  title: 'KindaPDFDocument tests',
+// ./node_modules/.bin/babel-node --harmony examples/document-component.js
+
+let nodePath = require('path');
+let co = require('co');
+let Document = require('../src/component/document.js');
+
+let report = Document.create({
+  title: 'KindaPDFDocument examples',
   author: 'Kinda Ltd',
-  subject: 'KindaPDFDocument tests',
-  keywords: 'Document, generator, PDFKit, Node.js',
+  subject: 'KindaPDFDocument examples',
+  keywords: 'Document, generator, PDFKit, Node.js'
 });
 
 report.registerFont('Thabit', [],
@@ -47,8 +50,8 @@ report.addBody(function(body) {
   /***********************************************************/
   body.addTitle('Simple title');
   body.addTable(function(table) {
-    table.addBody(function(body) {
-      body.addRow(function(row) {
+    table.addBody(function(tableBody) {
+      tableBody.addRow(function(row) {
         row.addCell('simple cell');
         row.addCell('simple cell');
       });
@@ -71,8 +74,8 @@ report.addBody(function(body) {
   /************************************************************/
   body.addTitle('Default table body');
   body.addTable(function(table) {
-    table.addBody(function(body) {
-      body.addRow(function(row) {
+    table.addBody(function(tableBody) {
+      tableBody.addRow(function(row) {
         row.addCell('default body cell');
         row.addCell('default body cell');
         row.addCell('default body cell');
@@ -105,8 +108,8 @@ report.addBody(function(body) {
         row.addCell('default header cell');
       });
     });
-    table.addBody(function(body) {
-      body.addRow(function(row) {
+    table.addBody(function(tableBody) {
+      tableBody.addRow(function(row) {
         row.addCell('default body cell');
         row.addCell('default body cell');
         row.addCell('default body cell');
@@ -118,8 +121,8 @@ report.addBody(function(body) {
   /************************************************************/
   body.addTitle('Default table with footer');
   body.addTable(function(table) {
-    table.addBody(function(body) {
-      body.addRow(function(row) {
+    table.addBody(function(tableBody) {
+      tableBody.addRow(function(row) {
         row.addCell('default body cell');
         row.addCell('default body cell');
         row.addCell('default body cell');
@@ -168,8 +171,8 @@ report.addBody(function(body) {
         row.addCell('default header cell');
       });
     });
-    table.addBody(function(body) {
-      body.addRow(function(row) {
+    table.addBody(function(tableBody) {
+      tableBody.addRow(function(row) {
         row.addCell('default body cell');
         row.addCell('default body cell');
         row.addCell('default body cell');
@@ -197,26 +200,26 @@ report.addBody(function(body) {
         row.addCell('header at every page');
       });
     });
-    table.addBody(function(body) {
-      body.addRow(function(row) {
+    table.addBody(function(tableBody) {
+      tableBody.addRow(function(row) {
         row.addCell('default body cell');
         row.addCell('default body cell');
         row.addCell('default body cell');
         row.addCell('default body cell');
       });
-      body.addRow(function(row) {
+      tableBody.addRow(function(row) {
         row.addCell('default body cell');
         row.addCell('default body cell');
         row.addCell('default body cell');
         row.addCell('default body cell');
       });
-      body.addRow(function(row) {
+      tableBody.addRow(function(row) {
         row.addCell('default body cell');
         row.addCell('default body cell');
         row.addCell('default body cell');
         row.addCell('default body cell');
       });
-      body.addRow(function(row) {
+      tableBody.addRow(function(row) {
         row.addCell('default body cell');
         row.addCell('default body cell');
         row.addCell('default body cell');
@@ -241,8 +244,8 @@ report.addBody(function(body) {
   /************************************************************/
   body.addTitle('Font sizes');
   body.addTable(function(table) {
-    table.addBody(function(body) {
-      body.addRow(function(row) {
+    table.addBody(function(tableBody) {
+      tableBody.addRow(function(row) {
         row.addCell('default font size');
         row.addCell('12 px font size', {
           fontSize: 12
@@ -260,8 +263,8 @@ report.addBody(function(body) {
   /************************************************************/
   body.addTitle('Font colors');
   body.addTable(function(table) {
-    table.addBody(function(body) {
-      body.addRow(function(row) {
+    table.addBody(function(tableBody) {
+      tableBody.addRow(function(row) {
         row.addCell('default font color');
         row.addCell('blue font color', {
           color: 'blue'
@@ -279,8 +282,8 @@ report.addBody(function(body) {
   /************************************************************/
   body.addTitle('Font styles');
   body.addTable(function(table) {
-    table.addBody(function(body) {
-      body.addRow(function(row) {
+    table.addBody(function(tableBody) {
+      tableBody.addRow(function(row) {
         row.addCell('default font style');
         row.addCell('bold font style', {
           fontStyle: 'bold'
@@ -298,8 +301,8 @@ report.addBody(function(body) {
   /************************************************************/
   body.addTitle('Font faces');
   body.addTable(function(table) {
-    table.addBody(function(body) {
-      body.addRow(function(row) {
+    table.addBody(function(tableBody) {
+      tableBody.addRow(function(row) {
         row.addCell('default font face');
         row.addCell('helvetica, standard font', {
           fontTypeFace: 'Helvetica'
@@ -315,11 +318,11 @@ report.addBody(function(body) {
   });
 
   /************************************************************/
-  var leftAlign = { alignment: 'left' };
+  let leftAlign = { alignment: 'left' };
   body.addTitle().addText('Left align title & table', leftAlign);
   body.addTable(leftAlign, function(table) {
-    table.addBody(function(body) {
-      body.addRow(function(row) {
+    table.addBody(function(tableBody) {
+      tableBody.addRow(function(row) {
         row.addCell('default body cell');
         row.addCell('default body cell');
         row.addCell('default body cell');
@@ -329,11 +332,11 @@ report.addBody(function(body) {
   });
 
   /*************************************************************/
-  var centerAlign = { alignment: 'center' };
+  let centerAlign = { alignment: 'center' };
   body.addTitle().addText('Center align title & table', centerAlign);
   body.addTable(centerAlign, function(table) {
-    table.addBody(function(body) {
-      body.addRow(function(row) {
+    table.addBody(function(tableBody) {
+      tableBody.addRow(function(row) {
         row.addCell('default body cell');
         row.addCell('default body cell');
         row.addCell('default body cell');
@@ -343,11 +346,11 @@ report.addBody(function(body) {
   });
 
   /***********************************************************/
-  var rightAlign = { alignment: 'right' };
+  let rightAlign = { alignment: 'right' };
   body.addTitle().addText('Right align title & table', rightAlign);
   body.addTable(rightAlign, function(table) {
-    table.addBody(function(body) {
-      body.addRow(function(row) {
+    table.addBody(function(tableBody) {
+      tableBody.addRow(function(row) {
         row.addCell('default body cell');
         row.addCell('default body cell');
         row.addCell('default body cell');
@@ -358,10 +361,10 @@ report.addBody(function(body) {
 
   /***********************************************************/
   body.addTitle().addText('Columns width (all fixed to 40)');
-  var options = { columns: [{ width: 40 }, { width: 40 }, { width: 40 }] }
+  let options = { columns: [{ width: 40 }, { width: 40 }, { width: 40 }] };
   body.addTable(options, function(table) {
-    table.addBody(function(body) {
-      body.addRow(function(row) {
+    table.addBody(function(tableBody) {
+      tableBody.addRow(function(row) {
         row.addCell('short content');
         row.addCell('this content just so long');
         row.addCell('longer content will wrap by default');
@@ -371,10 +374,10 @@ report.addBody(function(body) {
 
   /***********************************************************/
   body.addTitle().addText('Columns width (first and third are fixed to 40, other are automatic)');
-  var options = { columns: [{ width: 40 }, { width: undefined }, { width: 40 }] }
+  options = { columns: [{ width: 40 }, { width: undefined }, { width: 40 }] };
   body.addTable(options, function(table) {
-    table.addBody(function(body) {
-      body.addRow(function(row) {
+    table.addBody(function(tableBody) {
+      tableBody.addRow(function(row) {
         row.addCell('fixed width column, short content', { color: 'green' });
         row.addCell('automatic adjust column, this content just so long and', { color: 'orange' });
         row.addCell('fixed width column, longer content will wrap by default', { color: 'green' });
@@ -386,8 +389,8 @@ report.addBody(function(body) {
   /***********************************************************/
   body.addTitle().addText('Columns width (all automatic, scale to fit content)');
   body.addTable(function(table) {
-    table.addBody(function(body) {
-      body.addRow(function(row) {
+    table.addBody(function(tableBody) {
+      tableBody.addRow(function(row) {
         row.addCell('nothing here', { color: 'orange' });
         row.addCell('tiny content dont need too much', { color: 'orange' });
         row.addCell('one more, please', { color: 'orange' });
@@ -399,8 +402,8 @@ report.addBody(function(body) {
   /***********************************************************/
   body.addTitle().addText('Columns width (all automatic, use all of the width)');
   body.addTable(function(table) {
-    table.addBody(function(body) {
-      body.addRow(function(row) {
+    table.addBody(function(tableBody) {
+      tableBody.addRow(function(row) {
         row.addCell('nothing here', { color: 'orange' });
         row.addCell('tiny content dont need too much', { color: 'orange' });
         row.addCell('fat content want eat up most of the width, one more, please', { color: 'orange' });
@@ -412,8 +415,8 @@ report.addBody(function(body) {
   /************************************************************/
   body.addTitle('Styled text');
   body.addTable(function(table) {
-    table.addBody(function(body) {
-      body.addRow(function(row) {
+    table.addBody(function(tableBody) {
+      tableBody.addRow(function(row) {
         row.addCell(
           'James <strong>Bond</strong> <small>007</small>',
           { isStyled: true }

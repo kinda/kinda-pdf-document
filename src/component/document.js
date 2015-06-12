@@ -1,14 +1,14 @@
-"use strict";
+'use strict';
 
-var _ = require('lodash');
-var Component = require('./');
-var DocumentHeader = require('./document-header');
-var DocumentBody = require('./document-body');
-var DocumentFooter = require('./document-footer');
-var DocumentBlock = require('../block/document');
-var Font = require('../misc/font');
+let _ = require('lodash');
+let Component = require('./');
+let DocumentHeader = require('./document-header');
+let DocumentBody = require('./document-body');
+let DocumentFooter = require('./document-footer');
+let DocumentBlock = require('../block/document');
+let Font = require('../misc/font');
 
-var Document = Component.extend('Document', function() {
+let Document = Component.extend('Document', function() {
   this.defaults = {
     width: 210,
     height: 297,
@@ -20,8 +20,8 @@ var Document = Component.extend('Document', function() {
     isStyled: false
   };
 
-  var superCreator = this.getCreator();
-  this.setCreator(function(options, fn) {
+  let superCreator = this.creator;
+  this.creator = function(options, fn) {
     superCreator.call(this, undefined, options, fn);
 
     this.registeredFonts = [];
@@ -68,7 +68,7 @@ var Document = Component.extend('Document', function() {
     this.registerFont(
       'ZapfDingbats', [], undefined, 'ZapfDingbats'
     );
-  });
+  };
 
   this.addHeader = function(options, fn) {
     if (this._header) {
@@ -107,15 +107,15 @@ var Document = Component.extend('Document', function() {
   };
 
   this.registerFont = function(name, style, path, postScriptName) {
-    if (path && path.slice(-4) === '.ttc' && !postScriptName) {
-      throw new Error('PostScriptName is required when use TrueType Collection (.ttc)');
+    if (path && _.endsWith(path, '.ttc') && !postScriptName) {
+      throw new Error('PostScriptName is required for TrueType Collection (.ttc)');
     }
-    var font = Font.create(name, style, path, postScriptName);
+    let font = Font.create(name, style, path, postScriptName);
     this.registeredFonts.push(font);
   };
 
   this.generatePDFFile = function *(path) {
-    var options = {
+    let options = {
       width: this.width,
       height: this.height,
       paddings: this.paddings.top,
@@ -126,12 +126,13 @@ var Document = Component.extend('Document', function() {
       orientation: this.orientation,
       registeredFonts: this.registeredFonts
     };
-    yield DocumentBlock.generatePDFFile(path, options, function(document) {
+
+    yield DocumentBlock.generatePDFFile(path, options, document => {
       if (this.getHeader()) {
-        var headerHeight;
-        document.addRow({ isFloating: true }, function(block) {
+        let headerHeight;
+        document.addRow({ isFloating: true }, block => {
           headerHeight = this.getHeader().computeHeight(block);
-        }.bind(this));
+        });
         headerHeight += this.getHeader().margins.bottom;
         document.top += headerHeight; // Adjust document top
         document.height -= headerHeight; // Adjust document height
@@ -139,10 +140,10 @@ var Document = Component.extend('Document', function() {
       }
 
       if (this.getFooter()) {
-        var footerHeight;
-        document.addRow({ isFloating: true }, function(block) {
+        let footerHeight;
+        document.addRow({ isFloating: true }, block => {
           footerHeight = this.getFooter().computeHeight(block);
-        }.bind(this));
+        });
         footerHeight += this.getFooter().margins.top;
         document.height -= footerHeight; // Adjust document height
       }
@@ -151,8 +152,8 @@ var Document = Component.extend('Document', function() {
         this.getBody().render(document);
       }
 
-      var range = document.pdf.bufferedPageRange();
-      for (var i = range.start; i < range.count; i += 1) {
+      let range = document.pdf.bufferedPageRange();
+      for (let i = range.start; i < range.count; i += 1) {
         document.pageNumber = i + 1;
         document.pdf.switchToPage(i);
         if (this.getHeader()) {
@@ -162,7 +163,7 @@ var Document = Component.extend('Document', function() {
           this.getFooter().render(document);
         }
       }
-    }.bind(this));
+    });
   };
 });
 

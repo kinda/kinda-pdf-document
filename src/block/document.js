@@ -1,14 +1,16 @@
-"use strict";
+'use strict';
 
-var fs = require('fs');
-var _ = require('lodash');
-var PDFDocument = require('pdfkit');
-var Block = require('./');
-var Row = require('./row');
+let fs = require('fs');
+let _ = require('lodash');
+let PDFDocument = require('pdfkit');
+let KindaEventManager = require('kinda-event-manager');
+let Block = require('./');
+let Row = require('./row');
 
-var Document = Block.extend('Document', function() {
-  this.setCreator(function(options) {
-    if (!options) options = {};
+let Document = Block.extend('Document', function() {
+  this.include(KindaEventManager);
+
+  this.creator = function(options = {}) {
     _.defaults(options, {
       width: 210,
       height: 297,
@@ -51,7 +53,7 @@ var Document = Block.extend('Document', function() {
 
     this.nestedRowCount = 0;
 
-    var info = {};
+    let info = {};
     if (this.title) info.Title = this.title;
     if (this.author) info.Author = this.author;
     if (this.subject) info.Subject = this.subject;
@@ -62,16 +64,16 @@ var Document = Block.extend('Document', function() {
       margin: 0,
       bufferPages: true,
       layout: this.orientation,
-      info: info
+      info
     });
 
     this.draft = new PDFDocument({
       // used by computeWidthOfString and computeHeightOfString
       size: [this.mmToPt(options.width), this.mmToPt(options.height)],
       margin: 0,
-      layout: this.orientation,
+      layout: this.orientation
     });
-  });
+  };
 
   this.addPage = function() {
     this.pdf.addPage();
@@ -82,7 +84,7 @@ var Document = Block.extend('Document', function() {
 
   this.addRow = function(options, fn) {
     this.nestedRowCount++;
-    var block = Row.create(this, options);
+    let block = Row.create(this, options);
     fn(block);
     this.nestedRowCount--;
     if (this.nestedRowCount === 0) this.flush();
@@ -92,7 +94,7 @@ var Document = Block.extend('Document', function() {
   };
 
   Object.defineProperty(this, 'drawBuffer', {
-    get: function() {
+    get() {
       if (!this._drawBuffer) this._drawBuffer = [];
       return this._drawBuffer;
     }
@@ -103,16 +105,16 @@ var Document = Block.extend('Document', function() {
   };
 
   this.flush = function() {
-    this.drawBuffer.forEach(function(fn) {
+    this.drawBuffer.forEach(fn => {
       fn.call(undefined, this.pdf);
-    }.bind(this));
+    });
     this.drawBuffer.length = 0;
   };
 
   this.getFont = function(typeFace, style) {
     if (!style) style = [];
 
-    var candidateFonts = this.registeredFonts;
+    let candidateFonts = this.registeredFonts;
 
     candidateFonts = _.filter(candidateFonts, function(candidateFont) {
       return candidateFont.name === typeFace;
@@ -137,7 +139,7 @@ var Document = Block.extend('Document', function() {
       throw new Error('duplicate fonts found');
     }
 
-    var candidate = candidateFonts[0];
+    let candidate = candidateFonts[0];
     if (candidate.path) {
       return {
         name: candidate.path,
@@ -146,14 +148,14 @@ var Document = Block.extend('Document', function() {
     } else {
       return {
         name: candidate.postScriptName
-      }
+      };
     }
   };
 });
 
 Document.generatePDFFile = function *(path, options, fn) {
-  var stream = fs.createWriteStream(path);
-  var document = this.create(options);
+  let stream = fs.createWriteStream(path);
+  let document = this.create(options);
   document.pdf.pipe(stream);
   fn(document);
   document.pdf.end();

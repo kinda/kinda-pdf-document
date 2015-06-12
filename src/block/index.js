@@ -1,77 +1,77 @@
-"use strict";
+'use strict';
 
-var _ = require('lodash');
-var KindaObject = require('kinda-object');
+let _ = require('lodash');
+let KindaObject = require('kinda-object');
 
-var Block = KindaObject.extend('Block', function() {
+let Block = KindaObject.extend('Block', function() {
   Object.defineProperty(this, 'paddings', {
-    get: function() {
+    get() {
       if (!this._paddings) this._paddings = {};
       return this._paddings;
     },
-    set: function(paddings) {
+    set(paddings) {
       if (_.isNumber(paddings)) paddings = [paddings];
       if (_.isArray(paddings)) {
-        var top = paddings[0];
-        var right = paddings[1];
-        var bottom = paddings[2];
-        var left = paddings[3];
+        let top = paddings[0];
+        let right = paddings[1];
+        let bottom = paddings[2];
+        let left = paddings[3];
         if (right == null) right = top;
         if (bottom == null) bottom = top;
         if (left == null) left = right;
-        paddings = { top: top, right: right, bottom: bottom, left: left};
+        paddings = { top, right, bottom, left };
       }
       this._paddings = paddings;
     }
   });
 
   Object.defineProperty(this, 'paddingLeft', {
-    get: function() {
+    get() {
       return this.paddings.left;
     },
-    set: function(paddingLeft) {
+    set(paddingLeft) {
       this.paddings.left = paddingLeft;
     }
   });
 
   Object.defineProperty(this, 'paddingRight', {
-    get: function() {
+    get() {
       return this.paddings.right;
     },
-    set: function(paddingRight) {
+    set(paddingRight) {
       this.paddings.right = paddingRight;
     }
   });
 
   Object.defineProperty(this, 'paddingTop', {
-    get: function() {
+    get() {
       return this.paddings.top;
     },
-    set: function(paddingTop) {
+    set(paddingTop) {
       this.paddings.top = paddingTop;
     }
   });
 
   Object.defineProperty(this, 'paddingBottom', {
-    get: function() {
+    get() {
       return this.paddings.bottom;
     },
-    set: function(paddingBottom) {
+    set(paddingBottom) {
       this.paddings.bottom = paddingBottom;
     }
   });
 
-  var knownStyles = ['strong', 'small'];
+  let knownStyles = ['strong', 'small'];
 
-  var parseText = function(text, isStyled) {
+  let parseText = function(text, isStyled) {
     // TODO: better implementation (should support nested tags)
-    if (!isStyled) return [{ text: text }];
-    var str, index1, index2, index3, style, closingTag;
-    var segments = [];
+    if (!isStyled) return [{ text }];
+    let str, index1, index2, index3, style, closingTag;
+    let segments = [];
     while (text.length) {
       index1 = text.indexOf('<');
       if (index1 === -1) {
-        segments.push({ text: text });
+        segments.push({ text });
         break;
       }
       index1++;
@@ -96,12 +96,12 @@ var Block = KindaObject.extend('Block', function() {
       if (str) segments.push({ text: str });
       str = text.slice(index2, index3);
       text = text.substr(index3 + closingTag.length);
-      segments.push({ text: str, style: style });
+      segments.push({ text: str, style });
     }
     return segments;
   };
 
-  var applyStyle = function(options, style) {
+  let applyStyle = function(options, style) {
     options = _.cloneDeep(options);
     switch (style) {
       case 'strong':
@@ -117,31 +117,31 @@ var Block = KindaObject.extend('Block', function() {
   };
 
   this.renderText = function(pdf, str, options) {
-    var x = this.mmToPt(this.x + this.paddings.left);
-    var y = this.mmToPt(this.y + this.paddings.top);
-    var width = this.width - (this.paddings.left + this.paddings.right)
+    let x = this.mmToPt(this.x + this.paddings.left);
+    let y = this.mmToPt(this.y + this.paddings.top);
+    let width = this.width - (this.paddings.left + this.paddings.right);
     this._renderText(pdf, str, x, y, width, options);
   };
 
   this._renderText = function(pdf, str, x, y, width, options) {
-    var segments = parseText(str, options.isStyled);
-    for (var i = 0; i < segments.length; i++) {
-      var segment = segments[i];
+    let segments = parseText(str, options.isStyled);
+    for (let i = 0; i < segments.length; i++) {
+      let segment = segments[i];
 
-      var segmentOptions = applyStyle(options, segment.style);
-      var font = this.document.getFont(
+      let segmentOptions = applyStyle(options, segment.style);
+      let font = this.document.getFont(
         segmentOptions.fontTypeFace, segmentOptions.fontStyle
       );
       pdf.font(font.name, font.postScriptName);
       pdf.fontSize(segmentOptions.fontSize);
       pdf.fillColor(segmentOptions.color);
 
-      var ascender = pdf._font.ascender / 1000; // TODO: clean this ugly code
-      var normalAscender = ascender * options.fontSize;
-      var segmentAscender = ascender * segmentOptions.fontSize;
-      var offsetY = (normalAscender - segmentAscender);
+      let ascender = pdf._font.ascender / 1000; // TODO: clean this ugly code
+      let normalAscender = ascender * options.fontSize;
+      let segmentAscender = ascender * segmentOptions.fontSize;
+      let offsetY = (normalAscender - segmentAscender);
 
-      var opts = {};
+      let opts = {};
       if (i < segments.length - 1) opts.continued = true;
       if (i === 0) {
         opts.width = this.mmToPt(width);
@@ -156,17 +156,17 @@ var Block = KindaObject.extend('Block', function() {
   };
 
   this.computeWidthOfString = function(str, options) {
-    var width = 0;
-    var segments = parseText(str, options.isStyled);
-    for (var i = 0; i < segments.length; i++) {
-      var segment = segments[i];
-      var segmentOptions = applyStyle(options, segment.style);
-      var font = this.document.getFont(
+    let width = 0;
+    let segments = parseText(str, options.isStyled);
+    for (let i = 0; i < segments.length; i++) {
+      let segment = segments[i];
+      let segmentOptions = applyStyle(options, segment.style);
+      let font = this.document.getFont(
         segmentOptions.fontTypeFace, segmentOptions.fontStyle
       );
       this.document.pdf.font(font.name, font.postScriptName);
       this.document.pdf.fontSize(segmentOptions.fontSize);
-      var w = this.document.pdf.widthOfString(segment.text);
+      let w = this.document.pdf.widthOfString(segment.text);
       w = this.ptToMm(w);
       width += w;
     }
@@ -175,9 +175,9 @@ var Block = KindaObject.extend('Block', function() {
   };
 
   this.computeHeightOfString = function(str, options) {
-    var width = this.width - (this.paddings.left + this.paddings.right);
+    let width = this.width - (this.paddings.left + this.paddings.right);
     this._renderText(this.document.draft, str, 0, 0, width, options);
-    var height = this.document.draft.y;
+    let height = this.document.draft.y;
     // remove last line gap
     height -= this.document.draft.currentLineHeight(true) - this.document.draft.currentLineHeight(false);
     height = this.ptToMm(height);
@@ -186,14 +186,14 @@ var Block = KindaObject.extend('Block', function() {
   };
 
   this.mmToPt = function(mm) {
-    var inch = mm / 25.4;
-    var pt = inch * 72;
+    let inch = mm / 25.4;
+    let pt = inch * 72;
     return pt;
   };
 
   this.ptToMm = function(pt) {
-    var inch = pt / 72;
-    var mm = inch * 25.4;
+    let inch = pt / 72;
+    let mm = inch * 25.4;
     return mm;
   };
 });

@@ -1,12 +1,10 @@
-"use strict";
+'use strict';
 
-var _ = require('lodash');
-var Block = require('./');
-var Column = require('./column');
+let Block = require('./');
+let Column = require('./column');
 
-var Row = Block.extend('Row', function() {
-  this.setCreator(function(parent, options) {
-    if (!options) options = {};
+let Row = Block.extend('Row', function() {
+  this.creator = function(parent, options = {}) {
     this.document = parent;
     this.height = options.height || 0;
     this.isFloating = !!options.isFloating;
@@ -14,13 +12,13 @@ var Row = Block.extend('Row', function() {
     this.y = parent.y;
     this.width = parent.width;
     this.paddings = 0;
-  });
+  };
 
   Object.defineProperty(this, 'height', {
-    get: function() {
+    get() {
       return this._height;
     },
-    set: function(height) {
+    set(height) {
       if (!this.isFloating) {
         // if page break
         if (this.y + height > this.document.top + this.document.height) {
@@ -33,7 +31,7 @@ var Row = Block.extend('Row', function() {
   });
 
   this.addColumn = function(options, fn) {
-    var block = Column.create(this, options);
+    let block = Column.create(this, options);
     fn(block);
     this.x += block.width;
   };

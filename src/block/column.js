@@ -1,29 +1,27 @@
-"use strict";
+'use strict';
 
-var _ = require('lodash');
-var Block = require('./');
+let Block = require('./');
 
-var Column = Block.extend('Column', function() {
-  this.setCreator(function(parent, options) {
-    if (!options) options = {};
+let Column = Block.extend('Column', function() {
+  this.creator = function(parent, options = {}) {
     this.row = parent;
     this.document = parent.document;
     this.width = options.width || 0;
     this.paddings = options.paddings || 0;
     this.x = parent.x;
-  });
+  };
 
   Object.defineProperty(this, 'y', {
-    get: function() {
+    get() {
       return this.row.y;
     }
   });
 
   Object.defineProperty(this, 'height', {
-    get: function() {
+    get() {
       return this.row.height;
     },
-    set: function(height) {
+    set(height) {
       this.row.height = height;
     }
   });

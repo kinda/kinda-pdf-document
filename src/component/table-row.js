@@ -1,13 +1,13 @@
-"use strict";
+'use strict';
 
-var _ = require('lodash');
-var Component = require('./');
-var TableCell = require('./table-cell');
+let _ = require('lodash');
+let Component = require('./');
+let TableCell = require('./table-cell');
 
-var TableRow = Component.extend('TableRow', function() {
+let TableRow = Component.extend('TableRow', function() {
   Object.defineProperty(this, 'cells', {
-    get: function() {
-      if(!this._cells) this._cells = [];
+    get() {
+      if (!this._cells) this._cells = [];
       return this._cells;
     }
   });
@@ -19,13 +19,13 @@ var TableRow = Component.extend('TableRow', function() {
       value = undefined;
     }
 
-    var cell = TableCell.create(this, options, fn);
+    let cell = TableCell.create(this, options, fn);
 
     if (value != null) cell.addText(value);
 
     this.cells.push(cell);
 
-    var table = this.findComponent('Table');
+    let table = this.findComponent('Table');
     if (this.cells.length > table.columns.length) {
       table.columns.push({ width: undefined });
     }
@@ -34,8 +34,8 @@ var TableRow = Component.extend('TableRow', function() {
   };
 
   this.setCursor = function(block) {
-    var table = this.findComponent('Table');
-    var tableWidth = 0;
+    let table = this.findComponent('Table');
+    let tableWidth = 0;
 
     table.columns.forEach(function(column) {
       tableWidth += column.computedWidth;
@@ -47,48 +47,46 @@ var TableRow = Component.extend('TableRow', function() {
   };
 
   this.render = function(block) {
-    var table = this.findComponent('Table');
+    let table = this.findComponent('Table');
 
-    var tableWidth = 0;
+    let tableWidth = 0;
     table.columns.forEach(function(column) {
       tableWidth += column.computedWidth;
     });
 
     block.width = tableWidth;
 
-    var tableLeft;
+    let tableLeft;
     switch (table.alignment) {
-    case 'left':
-      tableLeft = block.document.left;
-      break;
-    case 'center':
-      tableLeft = block.document.left + (block.document.width - tableWidth) / 2;
-      break;
-    case 'right':
-      tableLeft = block.document.left + block.document.width - tableWidth;
-      break;
-    default:
-      throw new Error('invalid table alignment');
+      case 'left':
+        tableLeft = block.document.left;
+        break;
+      case 'center':
+        tableLeft = block.document.left + (block.document.width - tableWidth) / 2;
+        break;
+      case 'right':
+        tableLeft = block.document.left + block.document.width - tableWidth;
+        break;
+      default:
+        throw new Error('invalid table alignment');
     }
 
     block.x = tableLeft;
 
-    this.cells.forEach(function(cell, index) {
-      var thisColumn = table.columns[index];
-      var width = thisColumn.computedWidth;
-      var options = {
-        width: width,
-        paddings: cell.paddings
-      };
-      block.addColumn(options, function(block) {
-        cell.render(block);
-      }.bind(this));
-    }.bind(this));
+    this.cells.forEach((cell, index) => {
+      let thisColumn = table.columns[index];
+      let width = thisColumn.computedWidth;
+      let options = { width, paddings: cell.paddings };
+      block.addColumn(options, columnBlock => {
+        cell.render(columnBlock);
+      });
+    });
 
     // Render borders
+
     block.x = tableLeft;
 
-    block.document.draw(function(pdf) {
+    block.document.draw(pdf => {
       pdf.lineWidth(table.borderWidth);
       pdf.strokeColor(table.borderColor);
 
@@ -100,8 +98,8 @@ var TableRow = Component.extend('TableRow', function() {
       );
       pdf.stroke();
 
-      var x = block.x;
-      for (var i = 0; i < table.columns.length - 1; i++) {
+      let x = block.x;
+      for (let i = 0; i < table.columns.length - 1; i++) {
         x += table.columns[i].computedWidth;
         pdf.moveTo(block.mmToPt(x), block.mmToPt(block.y));
         pdf.lineTo(block.mmToPt(x), block.mmToPt(block.y + block.height));

@@ -1,50 +1,49 @@
-"use strict";
+'use strict';
 
-var _ = require('lodash');
-var _ = require('lodash');
-var KindaObject = require('kinda-object');
+let _ = require('lodash');
+let KindaObject = require('kinda-object');
 
-var Font = KindaObject.extend('Font', function() {
-  this.setCreator(function(name, style, path, postScriptName) {
+let Font = KindaObject.extend('Font', function() {
+  this.creator = function(name, style, path, postScriptName) {
     this.name = name;
     this.style = style;
     this.path = path;
     this.postScriptName = postScriptName;
-  });
+  };
 
   Object.defineProperty(this, 'name', {
-    get: function() {
+    get() {
       return this._name;
     },
-    set: function(name) {
+    set(name) {
       this._name = name;
     }
   });
 
   Object.defineProperty(this, 'style', {
-    get: function() {
+    get() {
       return this._style;
     },
-    set: function(style) {
+    set(style) {
       if (_.isString(style)) style = [style];
       this._style = style;
     }
   });
 
   Object.defineProperty(this, 'path', {
-    get: function() {
+    get() {
       return this._path;
     },
-    set: function(path) {
+    set(path) {
       this._path = path;
     }
   });
 
   Object.defineProperty(this, 'postScriptName', {
-    get: function() {
+    get() {
       return this._postScriptName;
     },
-    set: function(postScriptName) {
+    set(postScriptName) {
       this._postScriptName = postScriptName;
     }
   });
