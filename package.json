@@ -7,7 +7,7 @@
     "Chuan Zhang <zhchuan7@gmail.com>"
   ],
   "repository": "git://github.com/kinda/kinda-pdf-document",
-  "main": "src/component/document.js",
+  "main": "lib/component/document.js",
   "scripts": {
     "compile": "babel src --out-dir lib",
     "prepublish": "npm run compile",
