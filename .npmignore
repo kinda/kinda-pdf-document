@@ -1,5 +1,5 @@
-# ES6 source directory
+.eslintrc
+.npmignore
+.travis.yml
 src
-
-# Examples
-test.pdf
+examples
