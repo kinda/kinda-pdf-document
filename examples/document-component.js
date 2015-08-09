@@ -47,7 +47,6 @@ report.addHeader(function(header) {
 });
 
 report.addBody(function(body) {
-  /***********************************************************/
   body.addTitle('Simple title');
   body.addTable(function(table) {
     table.addBody(function(tableBody) {
@@ -58,7 +57,6 @@ report.addBody(function(body) {
     });
   });
 
-  /************************************************************/
   body.addTitle('Default table header');
   body.addTable(function(table) {
     table.addHeader(function(header) {
@@ -71,7 +69,6 @@ report.addBody(function(body) {
     });
   });
 
-  /************************************************************/
   body.addTitle('Default table body');
   body.addTable(function(table) {
     table.addBody(function(tableBody) {
@@ -84,7 +81,6 @@ report.addBody(function(body) {
     });
   });
 
-  /************************************************************/
   body.addTitle('Default table footer');
   body.addTable(function(table) {
     table.addFooter(function(footer) {
@@ -97,7 +93,6 @@ report.addBody(function(body) {
     });
   });
 
-  /************************************************************/
   body.addTitle('Default table with header');
   body.addTable(function(table) {
     table.addHeader(function(header) {
@@ -118,7 +113,6 @@ report.addBody(function(body) {
     });
   });
 
-  /************************************************************/
   body.addTitle('Default table with footer');
   body.addTable(function(table) {
     table.addBody(function(tableBody) {
@@ -139,7 +133,6 @@ report.addBody(function(body) {
     });
   });
 
-  /************************************************************/
   body.addTitle('Default table without body');
   body.addTable(function(table) {
     table.addHeader(function(header) {
@@ -160,7 +153,6 @@ report.addBody(function(body) {
     });
   });
 
-  /************************************************************/
   body.addTitle('Default table with header & footer');
   body.addTable(function(table) {
     table.addHeader(function(header) {
@@ -189,7 +181,6 @@ report.addBody(function(body) {
     });
   });
 
-  /*************************************************************/
   body.addTitle('This table should spread two pages');
   body.addTable(function(table) {
     table.addHeader({ color: 'red' }, function(header) {
@@ -236,12 +227,10 @@ report.addBody(function(body) {
     });
   });
 
-  /************************************************************/
   body.addTitle('Paragraphs');
   body.addParagraph('First paragraph');
   body.addParagraph('Second paragraph');
 
-  /************************************************************/
   body.addTitle('Font sizes');
   body.addTable(function(table) {
     table.addBody(function(tableBody) {
@@ -260,7 +249,6 @@ report.addBody(function(body) {
     });
   });
 
-  /************************************************************/
   body.addTitle('Font colors');
   body.addTable(function(table) {
     table.addBody(function(tableBody) {
@@ -279,7 +267,6 @@ report.addBody(function(body) {
     });
   });
 
-  /************************************************************/
   body.addTitle('Font styles');
   body.addTable(function(table) {
     table.addBody(function(tableBody) {
@@ -298,7 +285,6 @@ report.addBody(function(body) {
     });
   });
 
-  /************************************************************/
   body.addTitle('Font faces');
   body.addTable(function(table) {
     table.addBody(function(tableBody) {
@@ -317,7 +303,6 @@ report.addBody(function(body) {
     });
   });
 
-  /************************************************************/
   let leftAlign = { alignment: 'left' };
   body.addTitle().addText('Left align title & table', leftAlign);
   body.addTable(leftAlign, function(table) {
@@ -331,7 +316,6 @@ report.addBody(function(body) {
     });
   });
 
-  /*************************************************************/
   let centerAlign = { alignment: 'center' };
   body.addTitle().addText('Center align title & table', centerAlign);
   body.addTable(centerAlign, function(table) {
@@ -345,7 +329,6 @@ report.addBody(function(body) {
     });
   });
 
-  /***********************************************************/
   let rightAlign = { alignment: 'right' };
   body.addTitle().addText('Right align title & table', rightAlign);
   body.addTable(rightAlign, function(table) {
@@ -359,7 +342,6 @@ report.addBody(function(body) {
     });
   });
 
-  /***********************************************************/
   body.addTitle().addText('Columns width (all fixed to 40)');
   let options = { columns: [{ width: 40 }, { width: 40 }, { width: 40 }] };
   body.addTable(options, function(table) {
@@ -372,7 +354,6 @@ report.addBody(function(body) {
     });
   });
 
-  /***********************************************************/
   body.addTitle().addText('Columns width (first and third are fixed to 40, other are automatic)');
   options = { columns: [{ width: 40 }, { width: undefined }, { width: 40 }] };
   body.addTable(options, function(table) {
@@ -386,7 +367,6 @@ report.addBody(function(body) {
     });
   });
 
-  /***********************************************************/
   body.addTitle().addText('Columns width (all automatic, scale to fit content)');
   body.addTable(function(table) {
     table.addBody(function(tableBody) {
@@ -399,7 +379,6 @@ report.addBody(function(body) {
     });
   });
 
-  /***********************************************************/
   body.addTitle().addText('Columns width (all automatic, use all of the width)');
   body.addTable(function(table) {
     table.addBody(function(tableBody) {
@@ -412,7 +391,6 @@ report.addBody(function(body) {
     });
   });
 
-  /************************************************************/
   body.addTitle('Styled text');
   body.addTable(function(table) {
     table.addBody(function(tableBody) {
