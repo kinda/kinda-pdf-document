@@ -3,7 +3,6 @@
 // ./node_modules/.bin/babel-node --harmony examples/document-component.js
 
 let nodePath = require('path');
-let co = require('co');
 let Document = require('../src/component/document.js');
 
 let report = Document.create({
@@ -414,11 +413,11 @@ report.addFooter(function(footer) {
   );
 });
 
-co(function *() {
-  yield report.generatePDFFile(nodePath.join(__dirname, 'test.pdf'));
+(async function() {
+  await report.generatePDFFile(nodePath.join(__dirname, 'test.pdf'));
   console.log('Document generated');
-}).catch(function(err) {
-  console.error(err.stack);
+})().catch(function(err) {
+  console.error(err.stack || err);
 });
 
 // setTimeout(function() {}, 1000000000);

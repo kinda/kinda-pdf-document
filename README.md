@@ -113,10 +113,10 @@ table.addFooter(function(tableFooter) {
 })
 ```
 
-Finally, you can generate a PDF file. Just yield `doc.generatePDFFile()` to do the magic.
+Finally, you can generate a PDF file. Just await `doc.generatePDFFile()` to do the magic.
 
 ```js
-yield doc.generatePDFFile('test.pdf');
+await doc.generatePDFFile('test.pdf');
 ```
 
 And voilà! For more details, read the API documentation **[TODO]**.

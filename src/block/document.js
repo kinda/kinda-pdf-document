@@ -153,15 +153,15 @@ let Document = Block.extend('Document', function() {
   };
 });
 
-Document.generatePDFFile = function *(path, options, fn) {
+Document.generatePDFFile = function(path, options, fn) {
   let stream = fs.createWriteStream(path);
   let document = this.create(options);
   document.pdf.pipe(stream);
   fn(document);
   document.pdf.end();
-  yield function(cb) {
-    stream.on('finish', cb);
-  };
+  return new Promise(function(resolve) {
+    stream.on('finish', resolve);
+  });
 };
 
 module.exports = Document;

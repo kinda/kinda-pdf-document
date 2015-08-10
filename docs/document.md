@@ -250,15 +250,15 @@ var options2 = {
 }
 ```
 
-## doc.generatePDFFile *(path)
+## doc.generatePDFFile(path)
 
-Function to output the PDF file to the specified path. It is a generator in ES6, So you need to use it with `yield` keyword.
+Function to output the PDF file to the specified path. It is an ES7 async function, So you need to call it with the `await` keyword.
 
 ### argument:
 - `path`, a file path to where save the generated file.
 
 ### example:
 ```js
-// use it with yield
-yield doc.generatePDFFile('path/to/dest.pdf');
+// use it with await
+await doc.generatePDFFile('path/to/dest.pdf');
 ```

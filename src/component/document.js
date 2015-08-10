@@ -114,7 +114,7 @@ let Document = Component.extend('Document', function() {
     this.registeredFonts.push(font);
   };
 
-  this.generatePDFFile = function *(path) {
+  this.generatePDFFile = async function(path) {
     let options = {
       width: this.width,
       height: this.height,
@@ -127,7 +127,7 @@ let Document = Component.extend('Document', function() {
       registeredFonts: this.registeredFonts
     };
 
-    yield DocumentBlock.generatePDFFile(path, options, document => {
+    await DocumentBlock.generatePDFFile(path, options, document => {
       if (this.getHeader()) {
         let headerHeight;
         document.addRow({ isFloating: true }, block => {
