@@ -118,7 +118,7 @@ let Document = Component.extend('Document', function() {
     let options = {
       width: this.width,
       height: this.height,
-      paddings: this.paddings.top,
+      paddings: this.paddings,
       title: this.title,
       author: this.author,
       subject: this.subject,
