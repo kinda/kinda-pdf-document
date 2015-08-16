@@ -401,6 +401,18 @@ report.addBody(function(body) {
       });
     });
   });
+
+  body.addTitle('Styled text with line gap');
+  body.addTable(function(table) {
+    table.addBody(function(tableBody) {
+      tableBody.addRow(function(row) {
+        row.addCell(
+          '<strong>James Bond</strong>\n007',
+          { isStyled: true, lineGap: 5 }
+        );
+      });
+    });
+  });
 });
 
 report.addFooter(function(footer) {

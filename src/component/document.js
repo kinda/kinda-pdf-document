@@ -17,6 +17,7 @@ let Document = Component.extend('Document', function() {
     fontStyle: [],
     fontSize: 10,
     color: 'black',
+    lineGap: 0,
     isStyled: false
   };
 

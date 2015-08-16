@@ -22,6 +22,7 @@ let Text = Component.extend('Text', function() {
         fontStyle: this.fontStyle,
         fontSize: this.fontSize,
         color: this.color,
+        lineGap: this.lineGap,
         alignment: this.alignment,
         isStyled: this.isStyled
       };
@@ -82,6 +83,7 @@ let Text = Component.extend('Text', function() {
       fontTypeFace: this.fontTypeFace,
       fontStyle: this.fontStyle,
       fontSize: this.fontSize,
+      lineGap: this.lineGap,
       isStyled: this.isStyled
     };
     return block.computeWidthOfString(str, options);
@@ -93,6 +95,7 @@ let Text = Component.extend('Text', function() {
       fontTypeFace: this.fontTypeFace,
       fontStyle: this.fontStyle,
       fontSize: this.fontSize,
+      lineGap: this.lineGap,
       isStyled: this.isStyled
     };
     return block.computeHeightOfString(str, options);

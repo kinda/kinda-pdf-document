@@ -135,6 +135,7 @@ let Block = KindaObject.extend('Block', function() {
       pdf.font(font.name, font.postScriptName);
       pdf.fontSize(segmentOptions.fontSize);
       pdf.fillColor(segmentOptions.color);
+      pdf.lineGap(this.mmToPt(segmentOptions.lineGap));
 
       let ascender = pdf._font.ascender / 1000; // TODO: clean this ugly code
       let normalAscender = ascender * options.fontSize;
@@ -181,6 +182,7 @@ let Block = KindaObject.extend('Block', function() {
     // remove last line gap
     height -= this.document.draft.currentLineHeight(true) - this.document.draft.currentLineHeight(false);
     height = this.ptToMm(height);
+    height -= options.lineGap;
     height += this.paddings.top + this.paddings.bottom;
     return height;
   };

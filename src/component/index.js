@@ -97,6 +97,16 @@ let Component = KindaObject.extend('Component', function() {
     }
   });
 
+  Object.defineProperty(this, 'lineGap', {
+    get() {
+      if (!_.isUndefined(this._lineGap)) return this._lineGap;
+      else if (this.parentComponent) return this.parentComponent.lineGap;
+    },
+    set(value) {
+      this._lineGap = value;
+    }
+  });
+
   Object.defineProperty(this, 'isStyled', {
     get() {
       if (!_.isUndefined(this._isStyled)) return this._isStyled;
