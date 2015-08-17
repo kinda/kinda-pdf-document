@@ -37,6 +37,11 @@ let Document = Block.extend('Document', function() {
     this.width -= this.paddings.left + this.paddings.right;
     this.height -= this.paddings.top + this.paddings.bottom;
 
+    this.contentLeft = this.left;
+    this.contentTop = this.top;
+    this.contentWidth = this.width;
+    this.contentHeight = this.height;
+
     this.author = options.author;
     this.title = options.title;
     this.keywords = options.keywords;

@@ -11,8 +11,8 @@ let DocumentFooter = Box.extend('DocumentFooter', function() {
   let superRender = this.render;
   this.render = function(block) {
     block.addRow({ isFloating: true }, rowBlock => {
-      rowBlock.y = rowBlock.document.top + rowBlock.document.height + this.margins.top;
       superRender.call(this, rowBlock);
+      rowBlock.y = rowBlock.document.contentTop + rowBlock.document.contentHeight - rowBlock.height;
     });
   };
 });

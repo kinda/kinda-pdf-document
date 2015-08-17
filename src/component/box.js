@@ -30,8 +30,12 @@ let Box = Component.extend('Box', function() {
   };
 
   this.computeHeight = function(block) {
-    if (!this.components.length) return 0;
-    return _.max(this.components.map(component => component.computeHeight(block)));
+    let maxHeight = this.height || 0;
+    for (let component of this.components) {
+      let height = component.computeHeight(block);
+      if (height > maxHeight) maxHeight = height;
+    }
+    return maxHeight;
   };
 });
 
