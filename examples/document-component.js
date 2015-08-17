@@ -398,6 +398,10 @@ report.addBody(function(body) {
           'James <strong>Bond</strong> <small>007</small>',
           { isStyled: true }
         );
+        row.addCell(
+          '<strong>James Bond</strong>\n<em>Special agent</em>',
+          { isStyled: true }
+        );
       });
     });
   });

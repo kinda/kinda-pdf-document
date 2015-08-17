@@ -61,9 +61,9 @@ let Block = KindaObject.extend('Block', function() {
     }
   });
 
-  let knownStyles = ['strong', 'small'];
+  let knownStyles = ['strong', 'em', 'small'];
 
-  let parseText = function(text, isStyled) {
+  let parseStyles = function(text, isStyled) {
     // TODO: better implementation (should support nested tags)
     if (!isStyled) return [{ text }];
     let str, index1, index2, index3, style, closingTag;
@@ -109,8 +109,13 @@ let Block = KindaObject.extend('Block', function() {
           options.fontStyle.push('bold');
         }
         break;
+      case 'em':
+        if (!_.contains(options.fontStyle, 'italic')) {
+          options.fontStyle.push('italic');
+        }
+        break;
       case 'small':
-        options.fontSize = options.fontSize * 0.66;
+        options.fontSize = options.fontSize * 0.75;
         break;
     }
     return options;
@@ -124,7 +129,8 @@ let Block = KindaObject.extend('Block', function() {
   };
 
   this._renderText = function(pdf, str, x, y, width, options) {
-    let segments = parseText(str, options.isStyled);
+    let segments = parseStyles(str, options.isStyled);
+    let newLine = true;
     for (let i = 0; i < segments.length; i++) {
       let segment = segments[i];
 
@@ -142,9 +148,10 @@ let Block = KindaObject.extend('Block', function() {
       let segmentAscender = ascender * segmentOptions.fontSize;
       let offsetY = (normalAscender - segmentAscender);
 
+      let hasLineBreak = _.endsWith(segment.text, '\n');
       let opts = {};
-      if (i < segments.length - 1) opts.continued = true;
-      if (i === 0) {
+      if (i < segments.length - 1 && !hasLineBreak) opts.continued = true;
+      if (newLine) {
         opts.width = this.mmToPt(width);
         opts.align = segmentOptions.alignment;
         pdf.text(segment.text, x, y + offsetY, opts);
@@ -152,27 +159,52 @@ let Block = KindaObject.extend('Block', function() {
         pdf.y = pdf.y + offsetY;
         pdf.text(segment.text, opts);
       }
-      pdf.y = pdf.y - offsetY; // FIXME: not sure what's happend in case of line break
+      pdf.y = pdf.y - offsetY; // FIXME: is that really working?
+      newLine = hasLineBreak;
+      if (newLine) y = pdf.y;
     }
   };
 
-  this.computeWidthOfString = function(str, options) {
-    let width = 0;
-    let segments = parseText(str, options.isStyled);
-    for (let i = 0; i < segments.length; i++) {
-      let segment = segments[i];
-      let segmentOptions = applyStyle(options, segment.style);
-      let font = this.document.getFont(
-        segmentOptions.fontTypeFace, segmentOptions.fontStyle
-      );
-      this.document.pdf.font(font.name, font.postScriptName);
-      this.document.pdf.fontSize(segmentOptions.fontSize);
-      let w = this.document.pdf.widthOfString(segment.text);
-      w = this.ptToMm(w);
-      width += w;
+  let parseLines = function(segments) {
+    let lines = [];
+    let currentLine;
+    for (let segment of segments) {
+      let texts = segment.text.split('\n');
+      let newLine = false;
+      for (let text of texts) {
+        if (newLine) currentLine = undefined;
+        if (!currentLine) {
+          currentLine = [];
+          lines.push(currentLine);
+        }
+        if (text) currentLine.push({ text, style: segment.style });
+        newLine = true;
+      }
     }
-    width += this.paddings.left + this.paddings.right + 0.000001;
-    return width;
+    return lines;
+  };
+
+  this.computeWidthOfString = function(str, options) {
+    let segments = parseStyles(str, options.isStyled);
+    let lines = parseLines(segments);
+    let maxWidth = 0;
+    for (let line of lines) {
+      let width = 0;
+      for (let segment of line) {
+        let segmentOptions = applyStyle(options, segment.style);
+        let font = this.document.getFont(
+          segmentOptions.fontTypeFace, segmentOptions.fontStyle
+        );
+        this.document.pdf.font(font.name, font.postScriptName);
+        this.document.pdf.fontSize(segmentOptions.fontSize);
+        let w = this.document.pdf.widthOfString(segment.text);
+        w = this.ptToMm(w);
+        width += w;
+      }
+      if (width > maxWidth) maxWidth = width;
+    }
+    maxWidth += this.paddings.left + this.paddings.right + 0.000001;
+    return maxWidth;
   };
 
   this.computeHeightOfString = function(str, options) {
