@@ -417,6 +417,12 @@ report.addBody(function(body) {
       });
     });
   });
+
+  body.addTitle('Images');
+  let imagePath = nodePath.join(__dirname, 'images', 'space-invader.jpg');
+  body.addParagraph().addImage(imagePath);
+  body.addParagraph().addImage(imagePath, { alignment: 'center' });
+  body.addParagraph().addImage(imagePath, { alignment: 'right' });
 });
 
 report.addFooter(function(footer) {

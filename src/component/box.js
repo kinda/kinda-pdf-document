@@ -3,6 +3,7 @@
 let _ = require('lodash');
 let Component = require('./');
 let Text = require('./text').Text;
+let Image = require('./image').Image;
 
 let Box = Component.extend('Box', function() {
   Object.defineProperty(this, 'components', {
@@ -16,6 +17,12 @@ let Box = Component.extend('Box', function() {
     let text = Text.create(this, value, options, fn);
     this.components.push(text);
     return text;
+  };
+
+  this.addImage = function(path, options, fn) {
+    let image = Image.create(this, path, options, fn);
+    this.components.push(image);
+    return image;
   };
 
   this.render = function(block) {

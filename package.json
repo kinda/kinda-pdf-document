@@ -21,6 +21,7 @@
   "license": "MIT",
   "dependencies": {
     "kinda-event-manager": "^0.2.0",
+    "kinda-image-info": "^0.1.1",
     "kinda-object": "^0.3.0",
     "lodash": "^3.9.1",
     "pdfkit": "^0.7.1"
