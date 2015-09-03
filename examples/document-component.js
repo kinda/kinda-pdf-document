@@ -387,6 +387,18 @@ report.addBody(function(body) {
         row.addCell('fat content want eat up most of the width, one more, please', { color: 'orange' });
         row.addCell('is it enough?', { color: 'orange' });
       });
+      tableBody.addRow(function(row) {
+        row.addCell('nothing here', { color: 'orange' });
+        row.addCell('hello there', { color: 'orange' });
+        row.addCell('not too much now', { color: 'orange' });
+        row.addCell('is it enough?', { color: 'orange' });
+      });
+      tableBody.addRow(function(row) {
+        row.addCell('nothing here', { color: 'orange' });
+        row.addCell('and here', { color: 'orange' });
+        row.addCell('one more', { color: 'orange' });
+        row.addCell('is it enough?', { color: 'orange' });
+      });
     });
   });
 

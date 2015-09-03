@@ -1,6 +1,5 @@
 'use strict';
 
-let _ = require('lodash');
 let Component = require('./');
 let TableHeader = require('./table-header');
 let TableBody = require('./table-body');
@@ -78,6 +77,9 @@ let Table = Component.extend('Table', function() {
   };
 
   this.computeColumnWidths = function(block) {
+    // "THE MOST AWFULL ALGORYTM EVER"
+    // TODO: rewrite the all thing
+
     block.document.addRow({ isFloating: true }, rowBlock => {
       let sumOfDefinedWidths = 0;
       let hasUndefinedWidth;
@@ -121,31 +123,64 @@ let Table = Component.extend('Table', function() {
       });
 
       let remainingTableWidth = rowBlock.document.width;
-      let sumOfUnknownWidths = 0;
+      let sumOfMaxColumnWidths = 0;
+      let sumOfAverageColumnWidths = 0;
 
       this.columns.forEach((column, index) => {
-        let maxColumnWidth = _.max(matrix.map(function(row) {
-          return row[index];
-        }));
+        let maxColumnWidth = 0;
+        let sumOfColumnWidths = 0;
+        for (let row of matrix) {
+          let width = row[index];
+          if (width > maxColumnWidth) maxColumnWidth = width;
+          sumOfColumnWidths += width;
+        }
+        let averageColumnWidth = sumOfColumnWidths / matrix.length;
+
         column.maxWidth = maxColumnWidth;
+        column.averageWidth = averageColumnWidth;
+
         if (!column.width) {
-          sumOfUnknownWidths += maxColumnWidth;
+          sumOfMaxColumnWidths += maxColumnWidth;
+          sumOfAverageColumnWidths += averageColumnWidth;
         } else {
           remainingTableWidth -= column.width;
         }
       });
 
-      this.columns.forEach(column => {
-        if (!column.width) {
-          if (remainingTableWidth < sumOfUnknownWidths) {
-            column.computedWidth = (
-              column.maxWidth / sumOfUnknownWidths * remainingTableWidth
-            );
-          } else {
+      if (remainingTableWidth >= sumOfMaxColumnWidths) {
+        this.columns.forEach(column => {
+          if (column.computedWidth == null) {
             column.computedWidth = column.maxWidth;
           }
-        }
+        });
+        return;
+      }
+
+      this.columns.forEach(column => {
+        if (column.computedWidth != null) column.alreadyResized = true;
       });
+
+      let didSomething;
+      do {
+        didSomething = false;
+        let nextRemainingTableWidth = remainingTableWidth;
+        let nextSumOfAverageColumnWidths = 0;
+        this.columns.forEach(column => {
+          if (column.alreadyResized) return;
+          let width = (column.averageWidth / sumOfAverageColumnWidths * remainingTableWidth);
+          if (width > column.maxWidth) {
+            width = column.maxWidth;
+            column.alreadyResized = true;
+            nextRemainingTableWidth -= width;
+            didSomething = true;
+          } else {
+            nextSumOfAverageColumnWidths += column.averageWidth;
+          }
+          column.computedWidth = width;
+        });
+        remainingTableWidth = nextRemainingTableWidth;
+        sumOfAverageColumnWidths = nextSumOfAverageColumnWidths;
+      } while (didSomething);
     });
   };
 
