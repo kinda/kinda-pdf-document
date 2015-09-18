@@ -130,11 +130,11 @@ let Table = Component.extend('Table', function() {
         let maxColumnWidth = 0;
         let sumOfColumnWidths = 0;
         for (let row of matrix) {
-          let width = row[index];
+          let width = row[index] || 0;
           if (width > maxColumnWidth) maxColumnWidth = width;
           sumOfColumnWidths += width;
         }
-        let averageColumnWidth = sumOfColumnWidths / matrix.length;
+        let averageColumnWidth = matrix.length ? sumOfColumnWidths / matrix.length : 0;
 
         column.maxWidth = maxColumnWidth;
         column.averageWidth = averageColumnWidth;
