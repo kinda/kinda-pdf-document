@@ -59,7 +59,7 @@ let Document = Block.extend('Document', function() {
     this.nestedRowCount = 0;
 
     let info = {};
-    if (this.title) info.Title = this.title;
+    if (this.title) info.Title = _.deburr(this.title);
     if (this.author) info.Author = this.author;
     if (this.subject) info.Subject = this.subject;
     if (this.keywords) info.Keywords = this.keywords;
